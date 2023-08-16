@@ -1,4 +1,4 @@
-package com.euparliament;
+package com.euparliament.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
