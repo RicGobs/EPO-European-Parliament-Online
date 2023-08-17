@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  web:
+    image: "epo/web"
+    ports:
+    - "8080:8080"
+  rest:
+    image: "epo/rest"
+    ports:
+    - "5000:5000"
