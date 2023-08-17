@@ -1,4 +1,4 @@
-package com.euparliament.rest.referendumideas;
+package com.euparliament.rest.referendumidea;
 
 import java.util.Objects;
 
@@ -7,14 +7,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-class ReferendumIdeasProposal {
+class ReferendumIdeaProposal {
 
   private @Id @GeneratedValue Long id;
   private String title;
 
-  ReferendumIdeasProposal() {}
+  ReferendumIdeaProposal() {}
 
-  ReferendumIdeasProposal(String title) {
+  ReferendumIdeaProposal(String title) {
 
     this.title = title;
   }
@@ -40,10 +40,10 @@ class ReferendumIdeasProposal {
 
     if (this == o)
       return true;
-    if (!(o instanceof ReferendumIdeasProposal))
+    if (!(o instanceof ReferendumIdeaProposal))
       return false;
-    ReferendumIdeasProposal referendumIdeasProposal = (ReferendumIdeasProposal) o;
-    return Objects.equals(this.id, referendumIdeasProposal.id) && Objects.equals(this.title, referendumIdeasProposal.title);
+    ReferendumIdeaProposal referendumIdeaProposal = (ReferendumIdeaProposal) o;
+    return Objects.equals(this.id, referendumIdeaProposal.id) && Objects.equals(this.title, referendumIdeaProposal.title);
   }
 
   @Override

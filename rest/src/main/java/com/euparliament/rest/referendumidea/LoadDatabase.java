@@ -1,4 +1,4 @@
-package com.euparliament.rest.referendumideas;
+package com.euparliament.rest.referendumidea;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +12,11 @@ class LoadDatabase {
   private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
   @Bean
-  CommandLineRunner initDatabase(ReferendumIdeasProposalRepository repository) {
+  CommandLineRunner initDatabase(ReferendumIdeaProposalRepository repository) {
 
     return args -> {
-      log.info("Preloading " + repository.save(new ReferendumIdeasProposal("Bilbo Baggins")));
-      log.info("Preloading " + repository.save(new ReferendumIdeasProposal("Frodo Baggins")));
+      log.info("Preloading " + repository.save(new ReferendumIdeaProposal("Bilbo Baggins")));
+      log.info("Preloading " + repository.save(new ReferendumIdeaProposal("Frodo Baggins")));
     };
   }
 }

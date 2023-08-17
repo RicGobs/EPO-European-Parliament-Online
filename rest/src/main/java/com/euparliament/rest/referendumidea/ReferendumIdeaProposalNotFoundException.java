@@ -1,4 +1,4 @@
-package com.euparliament.rest.referendumideas;
+package com.euparliament.rest.referendumidea;
 
 public class ReferendumIdeaProposalNotFoundException extends Exception {
 

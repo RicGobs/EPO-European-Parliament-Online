@@ -1,4 +1,4 @@
-package com.euparliament.rest.referendumideas;
+package com.euparliament.rest.referendumidea;
 
 import java.util.List;
 
@@ -10,38 +10,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-class ReferendumIdeasProposalController {
+class ReferendumIdeaProposalController {
 
-  private final ReferendumIdeasProposalRepository repository;
+  private final ReferendumIdeaProposalRepository repository;
 
-  ReferendumIdeasProposalController(ReferendumIdeasProposalRepository repository) {
+  ReferendumIdeaProposalController(ReferendumIdeaProposalRepository repository) {
     this.repository = repository;
   }
 
 
   // Aggregate root
   // tag::get-aggregate-root[]
-  @GetMapping("/referendumideasproposals")
-  List<ReferendumIdeasProposal> all() {
+  @GetMapping("/referendumideaproposals")
+  List<ReferendumIdeaProposal> all() {
     return repository.findAll();
   }
   // end::get-aggregate-root[]
 
-  @PostMapping("/referendumideasproposals")
-  ReferendumIdeasProposal newEmployee(@RequestBody ReferendumIdeasProposal newReferendumIdeasProposal) {
+  @PostMapping("/referendumideaproposals")
+  ReferendumIdeaProposal newEmployee(@RequestBody ReferendumIdeaProposal newReferendumIdeasProposal) {
     return repository.save(newReferendumIdeasProposal);
   }
   
   // Single item
   
-  @GetMapping("/referendumideasproposal/{id}")
-  ReferendumIdeasProposal one(@PathVariable Long id) throws ReferendumIdeaProposalNotFoundException {
+  @GetMapping("/referendumideaproposal/{id}")
+  ReferendumIdeaProposal one(@PathVariable Long id) throws ReferendumIdeaProposalNotFoundException {
     
     return repository.findById(id)
       .orElseThrow(() -> new ReferendumIdeaProposalNotFoundException(id));
   }
 
-  @DeleteMapping("/referendumideasproposal/{id}")
+  @DeleteMapping("/referendumideaproposal/{id}")
   void deleteReferendumIdeasProposal(@PathVariable Long id) {
     repository.deleteById(id);
   }
