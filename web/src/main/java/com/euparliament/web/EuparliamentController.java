@@ -14,6 +14,7 @@ public class EuparliamentController {
 			@RequestParam(name="name", required=false, defaultValue="") String name,
 			Model model
 	){
+		model.addAttribute("name", name);
 		return "index";
 	}
 	
