@@ -15,8 +15,8 @@ class LoadDatabase {
   CommandLineRunner initDatabase(ReferendumIdeaProposalRepository repository) {
 
     return args -> {
-      log.info("Preloading " + repository.save(new ReferendumIdeaProposal("Bilbo Baggins")));
-      log.info("Preloading " + repository.save(new ReferendumIdeaProposal("Frodo Baggins")));
+      //log.info("Preloading " + repository.save(new ReferendumIdeaProposal("Bilbo Baggins")));
+      //log.info("Preloading " + repository.save(new ReferendumIdeaProposal("Frodo Baggins")));
     };
   }
 }
