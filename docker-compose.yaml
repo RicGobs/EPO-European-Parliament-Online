@@ -1,28 +1,37 @@
-version: "3"
+version: '3.9'
 
 services:
-  db:
-    image: mysql
-    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
-    # (this is just an example, not intended to be a production configuration)
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=ThePassword
-      - MYSQL_DATABASE=db_example
-      - MYSQL_USER=springuser
-      - MYSQL_PASSWORD=ThePassword
-    ports:
-    - 3307:3306
   web:
-    image: "epo/web"
+    image: epo/web
+    build: ./web
+    container_name: web
     ports:
-    - "8080:8080"
+    - 8080:8080
+
   rest:
-    image: "epo/rest"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3307/db_example?autoReconnect=true&useSSL=false
+    container_name: rest
+    image: epo/rest
+    build: ./rest
     ports:
-    - "8081:8080"
+      - 8081:8080
+    environment:
+      - DATABASE_URL=jdbc:postgresql://psql_db:5432/postgres
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=postgres
     depends_on:
-       - mysql
+      - psql_db
+
+  psql_db:
+    container_name: psql_db
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}
