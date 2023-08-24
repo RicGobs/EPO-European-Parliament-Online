@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
-public class EuparliamentController {
+public class WebController {
 	
 	@GetMapping("/")
 	public String index(
