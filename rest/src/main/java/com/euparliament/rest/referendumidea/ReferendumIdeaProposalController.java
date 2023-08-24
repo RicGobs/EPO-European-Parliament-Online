@@ -28,7 +28,7 @@ class ReferendumIdeaProposalController {
   // end::get-aggregate-root[]
 
   @PostMapping("/referendumideaproposals")
-  ReferendumIdeaProposal newEmployee(@RequestBody ReferendumIdeaProposal newReferendumIdeasProposal) {
+  ReferendumIdeaProposal newReferendumIdeaProposal(@RequestBody ReferendumIdeaProposal newReferendumIdeasProposal) {
     return repository.save(newReferendumIdeasProposal);
   }
   
