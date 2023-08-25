@@ -1,6 +1,14 @@
-FROM maven:3.5.4-jdk-11
-WORKDIR /app
-COPY . /app/
-RUN mvn clean package -DskipTests
-EXPOSE 8082
-CMD ["mvn", "spring-boot:run"]
+#
+# Build stage
+#
+FROM maven AS build
+COPY src /home/app/src
+COPY pom.xml /home/app
+RUN mvn -f /home/app/pom.xml clean package
+
+#
+# Package stage
+#
+FROM openjdk:17-jdk-alpine
+COPY --from=build /home/app/target/sender-0.0.1-SNAPSHOT.jar /usr/local/lib/app-1.0.0.jar
+ENTRYPOINT ["java","-jar","/usr/local/lib/app-1.0.0.jar"]
