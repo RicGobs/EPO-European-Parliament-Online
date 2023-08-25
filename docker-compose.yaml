@@ -1,17 +1,19 @@
+#Docker-Compose ITA
+
 version: '3.9'
 
 services:
   web:
     image: epo/web
     build: ./web
-    container_name: web
+    container_name: web-ita
     ports:
     - 8080:8080
 
   rest:
     image: epo/rest
     build: ./rest
-    container_name: rest
+    container_name: rest-ita
     ports:
       - 8081:8080
     environment:
@@ -23,9 +25,9 @@ services:
 
   psql_db:
     image: postgres
-    container_name: psql_db
+    container_name: psql_db-ita
     ports:
-      - 5432:5432
+      - 5433:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -34,16 +36,16 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   rabbitmq:
-    container_name: rabbitmq
+    container_name: rabbitmq-ita
     image: rabbitmq:3-management
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "5673:5672"
+      - "15673:15672"
 
   sender:
     image: epo/sender
     build: ./sender
-    container_name: sender
+    container_name: sender-ita
     ports:
       - "8082:8080"
     depends_on:
@@ -52,7 +54,7 @@ services:
   receiver:
     image: epo/receiver
     build: ./receiver
-    container_name: receiver
+    container_name: receiver-ita
     ports:
       - "8083:8080"
     depends_on:
