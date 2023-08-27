@@ -1,0 +1,23 @@
+#Docker-Compose ITA
+
+version: '3.9'
+
+services:
+  listener:
+    image: epo/listener
+    build: ./listener
+    container_name: listener-ita3
+    ports:
+      - "8082:8080"
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    container_name: rabbitmq-ita3
+    image: rabbitmq:3-management
+    ports:
+      - "5674:5672"
+      - "15674:15672"
+
+volumes:
+  pgdata: {}

@@ -56,7 +56,7 @@
 		        <configuration>
 		          <skipTests>true</skipTests>
 		        </configuration>
-		      </plugin>
+		     </plugin>
 		</plugins>
 	</build>
 

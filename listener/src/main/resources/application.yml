@@ -1,13 +1,13 @@
 spring:
     rabbitmq:
         host: localhost
-        port: 5672
+        port: 5673
     multirabbitmq:
         enabled: true
         connections:
             connectionNameA:
                 host: localhost
-                port: 5673
+                port: 5680
             connectionNameB:
                 host: localhost
-                port: 5674
+                port: 5681

@@ -3,12 +3,15 @@
 version: '3.9'
 
 services:
+  
   web:
     image: epo/web
     build: ./web
     container_name: web-ita
     ports:
     - 8080:8080
+    depends_on:
+    - rest
 
   rest:
     image: epo/rest
@@ -35,17 +38,15 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  rabbitmq:
-    container_name: rabbitmq-ita
-    image: rabbitmq:3-management
-    ports:
-      - "5673:5672"
-      - "15673:15672"
-
   sender:
     image: epo/sender
     build: ./sender
     container_name: sender-ita
+    environment:
+      - HOST_FRA=rabbitmq-fra
+      - PORT_FRA=5674
+      - HOST_GER=rabbitmq-ger
+      - PORT_GER=5675
     ports:
       - "8082:8080"
     depends_on:
@@ -60,6 +61,22 @@ services:
     depends_on:
       - sender
       - rabbitmq
+
+  listener:
+    image: epo/listener
+    build: ./listener
+    container_name: listener-ita
+    ports:
+      - "8084:8080"
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    container_name: rabbitmq-ita
+    image: rabbitmq:3-management
+    ports:
+      - "5673:5672"
+      - "15673:15672"
 
 volumes:
   pgdata: {}

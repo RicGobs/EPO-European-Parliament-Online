@@ -10,5 +10,5 @@ RUN mvn -f /home/app/pom.xml clean package
 # Package stage
 #
 FROM openjdk:17-jdk-alpine
-COPY --from=build /home/app/target/sender-0.0.1-SNAPSHOT.jar /usr/local/lib/app-1.0.0.jar
+COPY --from=build /home/app/target/listener-0.0.1-SNAPSHOT.jar /usr/local/lib/app-1.0.0.jar
 ENTRYPOINT ["java","-jar","/usr/local/lib/app-1.0.0.jar"]
