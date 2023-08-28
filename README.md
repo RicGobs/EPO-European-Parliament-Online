@@ -6,7 +6,12 @@
 
 ```
 #to launch and build the application 
-sudo docker compose up 
+sudo docker compose -f docker-compose-all.yaml up
+
+#wait until rabbitmq container ends the initialization
+sudo docker compose -f docker-compose-ita.yaml up
+sudo docker compose -f docker-compose-fra.yaml up
+sudo docker compose -f docker-compose-ger.yaml up
 ```
 
 ### POSSIBLE ERRORS
@@ -41,23 +46,28 @@ Never use this command with /psql (you will delete this container and lose all y
 
 ## Info about Ports and Services
 
+RABBIT_MQ
+
+* port 5672
+* port 15672
+
 EPO-ITA
 
 * web-ita : http://localhost:8080/
 * rest-ita : http://localhost:8081/referendumideaproposals
 * receiver-ita : http://localhost:8082/message_here
-* sender-ita, rabbitmq-ita, psql-ita : not visible
+* sender-ita, psql-ita : not visible
 
 EPO-FRA
 
 * web-fra : http://localhost:8084/
 * rest-fra : http://localhost:8085/referendumideaproposals
 * receiver-fra : http://localhost:8086/message_here
-* sender-fra, rabbitmq-fra, psql-fra : not visible
+* sender-fra, psql-fra : not visible
 
 EPO-GERM
 
 * web-ger : http://localhost:8088/
 * rest-ger : http://localhost:8089/referendumideaproposals
-* receiver-ger : http://localhost:9000/message_here
-* sender-ger, rabbitmq-ger, psql-ger : not visible
+* receiver-ger : http://localhost:8090/message_here
+* sender-ger, psql-ger : not visible
