@@ -10,3 +10,11 @@ services:
     ports:
       - "5673:5672"
       - "15673:15672"
+
+networks:
+  ita-network:
+    external: true
+  ger-network:
+    external: true
+  fra-network:
+    external: true

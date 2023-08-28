@@ -9,6 +9,8 @@ services:
     container_name: web-ger
     ports:
     - 8088:8080
+    networks:
+      - ger-network
 
   rest:
     image: epo/rest
@@ -22,6 +24,8 @@ services:
       - DATABASE_PASSWORD=postgres
     depends_on:
       - psql_db
+    networks:
+      - ger-network
 
   psql_db:
     image: postgres
@@ -34,6 +38,8 @@ services:
       POSTGRES_DB: postgres
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - ger-network
 
   sender:
     image: epo/sender
@@ -41,6 +47,8 @@ services:
     container_name: sender-ger
     ports:
       - "8090:8080"
+    networks:
+      - ger-network
 
   receiver:
     image: epo/receiver
@@ -48,8 +56,13 @@ services:
     container_name: receiver-ger
     ports:
       - "8091:8080"
-    depends_on:
-      - sender
+    networks:
+      - ger-network
+
+networks:
+  ger-network:
+    name: ger-network
+    external: false
 
 volumes:
   pgdata: {}
