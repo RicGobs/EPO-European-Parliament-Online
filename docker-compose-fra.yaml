@@ -9,8 +9,6 @@ services:
     container_name: web-fra
     ports:
     - 8084:8080
-    networks:
-      - fra-network
 
   rest:
     image: epo/rest
@@ -24,8 +22,6 @@ services:
       - DATABASE_PASSWORD=postgres
     depends_on:
       - psql_db
-    networks:
-      - fra-network
 
   psql_db:
     image: postgres
@@ -38,8 +34,6 @@ services:
       POSTGRES_DB: postgres
     volumes:
       - pgdata:/var/lib/postgresql/data
-    networks:
-      - fra-network
 
   sender:
     image: epo/sender
@@ -48,7 +42,7 @@ services:
     ports:
       - "8086:8080"
     networks:
-      - fra-network
+      - network1
 
   receiver:
     image: epo/receiver
@@ -56,13 +50,16 @@ services:
     container_name: receiver-fra
     ports:
       - "8087:8080"
+    depends_on:
+      - sender    
     networks:
-      - fra-network
+      - network1
 
 networks:
-  fra-network:
-    name: fra-network
-    external: false
+  network1:
+    name: rabbitmq-fra
+    external: true
+
 
 volumes:
   pgdata: {}

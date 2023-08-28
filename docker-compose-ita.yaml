@@ -12,8 +12,6 @@ services:
     - 8080:8080
     depends_on:
     - rest
-    networks:
-      - ita-network
 
   rest:
     image: epo/rest
@@ -27,8 +25,6 @@ services:
       - DATABASE_PASSWORD=postgres
     depends_on:
       - psql_db
-    networks:
-      - ita-network
 
   psql_db:
     image: postgres
@@ -41,8 +37,6 @@ services:
       POSTGRES_DB: postgres
     volumes:
       - pgdata:/var/lib/postgresql/data
-    networks:
-      - ita-network
 
   sender:
     image: epo/sender
@@ -51,7 +45,7 @@ services:
     ports:
       - "8082:8080"
     networks:
-      - ita-network
+      - network1
 
   receiver:
     image: epo/receiver
@@ -59,13 +53,15 @@ services:
     container_name: receiver-ita
     ports:
       - "8083:8080"
+    depends_on:
+      - sender
     networks:
-      - ita-network
+      - network1
 
 networks:
-  ita-network:
-    name: ita-network
-    external: false
+  network1:
+    name: rabbitmq-ita
+    external: true
 
 volumes:
   pgdata: {}
