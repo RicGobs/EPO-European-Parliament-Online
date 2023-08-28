@@ -2,7 +2,7 @@
 
 version: '3.9'
 name: epo-all
-services:
+services: 
   
   rabbitmq:
     container_name: rabbitmq
