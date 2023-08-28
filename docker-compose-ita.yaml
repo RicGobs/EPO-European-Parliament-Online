@@ -1,7 +1,7 @@
 #Docker-Compose ITA
 
 version: '3.9'
-
+name: epo-ita
 services:
   
   web:
@@ -44,8 +44,6 @@ services:
     container_name: sender-ita
     ports:
       - "8082:8080"
-    depends_on:
-      - rabbitmq
 
   receiver:
     image: epo/receiver
@@ -55,7 +53,6 @@ services:
       - "8083:8080"
     depends_on:
       - sender
-      - rabbitmq
 
 volumes:
   pgdata: {}

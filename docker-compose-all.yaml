@@ -1,7 +1,7 @@
 #Docker-Compose ITA
 
 version: '3.9'
-
+name: epo-all
 services:
   
   rabbitmq:
