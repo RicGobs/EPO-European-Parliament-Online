@@ -1,0 +1,56 @@
+body {
+    margin: 25px;
+    /*background-color: #003399;*/
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg");
+    background-repeat: no-repeat;
+    background-size: 1190px 650px;
+    font-family: 'Times New Roman', Times, serif, sans-serif;
+    font-size: 14px;
+    text-align: center;
+    color: #FFCC00;
+  }
+
+/* to center the image in the window */
+  .center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* selection bar style */
+  .form-control {
+    width: 100%;
+    min-width: 15ch;
+    max-width: 30ch;
+    border: 1px solid var(--select-border);
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.00rem;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: #fff;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+  }
+
+  /* buttons */
+  .button {
+    background-color: white;
+    border: none;
+    border-radius: 12px;
+    color: black;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.00rem;
+  }
