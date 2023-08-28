@@ -35,31 +35,21 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  rabbitmq:
-    container_name: rabbitmq-ger
-    image: rabbitmq:3-management
-    ports:
-      - "5675:5672"
-      - "15675:15672"
-
   sender:
     image: epo/sender
     build: ./sender
     container_name: sender-ger
     ports:
-      - "9000:8080"
-    depends_on:
-      - rabbitmq
+      - "8090:8080"
 
   receiver:
     image: epo/receiver
     build: ./receiver
     container_name: receiver-ger
     ports:
-      - "9001:8080"
+      - "8091:8080"
     depends_on:
       - sender
-      - rabbitmq
 
 volumes:
   pgdata: {}
