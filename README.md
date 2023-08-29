@@ -13,7 +13,11 @@ sudo docker compose -f docker-compose-ita.yaml up
 sudo docker compose -f docker-compose-fra.yaml up
 sudo docker compose -f docker-compose-ger.yaml up
 ```
-
+Alternative(for linux users): 
+```
+chmod u+x command_start.sh 
+./command_start.sh 
+```
 ### POSSIBLE ERRORS
 
 #### To see which ports are used by the pc
@@ -44,6 +48,12 @@ sudo docker container rm /rest
 
 Never use this command with /psql (you will delete this container and lose all your data)
 
+## Command for the POST
+
+```
+Post request from terminal: curl -X POST localhost:8080/referendumideaproposals -H "Content-type:application/json" -d "{\\"title\\": \\"Samwise Gamgee\\"}"
+```
+ 
 ## Info about Ports and Services
 
 RABBIT_MQ
