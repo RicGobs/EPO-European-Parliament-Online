@@ -7,16 +7,23 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 @SpringBootApplication
+@Component
 public class ReceiverApplication {
 
-  static final String topicExchangeName = "spring-boot-exchange";
+  static final String topicExchangeName = "referendum-exchange";
 
-  static final String queueName = "spring-boot";
+  private String queueName;
+  
+  public ReceiverApplication(@Value("${queue.name}") String queueName) {
+	  this.queueName = queueName;
+  }
 
   @Bean
   Queue queue() {

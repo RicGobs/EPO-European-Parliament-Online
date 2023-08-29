@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class SenderApplication {
 
-  static final String topicExchangeName = "spring-boot-exchange";
+  static final String topicExchangeName = "referendum-exchange";
 
-  static final String queueName = "spring-boot";
+  static final String queueName = "broadcast";
 
   @Bean
   Queue queue() {
