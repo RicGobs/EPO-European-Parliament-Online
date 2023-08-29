@@ -48,10 +48,16 @@ sudo docker container rm /rest
 
 Never use this command with /psql (you will delete this container and lose all your data)
 
+## To clean your system from all containers
+```
+sudo docker system prune --all --force
+```
+
 ## Command for the POST
 
 ```
-Post request from terminal: curl -X POST localhost:8080/referendumideaproposals -H "Content-type:application/json" -d "{\\"title\\": \\"Samwise Gamgee\\"}"
+#Post request from terminal: 
+curl -X POST localhost:8080/referendumideaproposals -H "Content-type:application/json" -d "{\\"title\\": \\"Samwise Gamgee\\"}"
 ```
  
 ## Info about Ports and Services
