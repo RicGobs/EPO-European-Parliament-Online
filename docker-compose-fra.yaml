@@ -39,6 +39,8 @@ services:
     image: epo/sender
     build: ./sender
     container_name: sender-fra
+    environment:
+      - spring_rabbitmq_host=rabbitmq
     ports:
       - "8086:8080"
     networks:
