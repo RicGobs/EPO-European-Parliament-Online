@@ -4,23 +4,26 @@
 
 ### LAUNCH CODE
 
+##### To launch and build the application 
 ```
-#to launch and build the application 
-sudo docker compose -f docker-compose-all.yaml up
+sudo docker compose -f docker-compose-all.yaml up --build
+```
 
-#wait until rabbitmq container ends the initialization
-sudo docker compose -f docker-compose-ita.yaml up
-sudo docker compose -f docker-compose-fra.yaml up
-sudo docker compose -f docker-compose-ger.yaml up
+##### Wait until rabbitmq container ends the initialization
 ```
-Alternative(for linux users): 
+sudo docker compose -f docker-compose-ita.yaml up --build
+sudo docker compose -f docker-compose-fra.yaml up --build
+sudo docker compose -f docker-compose-ger.yaml up --build
+```
+
+##### Alternative(for linux users): 
 ```
 chmod u+x command_start.sh 
 ./command_start.sh 
 ```
 ### POSSIBLE ERRORS
 
-#### To see which ports are used by the pc
+##### To see which ports are used by the pc
 
 ```
 sudo lsof -i -P -n | grep LISTEN
@@ -28,11 +31,13 @@ sudo lsof -i -P -n | grep LISTEN
 
 #### To stop the service on ports that you need
 
+usually for rabbitMQ
 ```
-#usually for rabbitMQ
 sudo fuser -k 5672/tcp 
+```
 
-#usually for MySQL
+usually for MySQL
+```
 sudo fuser -k 5432/tcp
 ```
 
@@ -49,6 +54,7 @@ sudo docker container rm /rest
 Never use this command with /psql (you will delete this container and lose all your data)
 
 ## To clean your system from all containers
+With this command you eliminate all data that you store in Docker, if you have other containers and other images (different from this project), DO NOT USE this command.
 ```
 sudo docker system prune --all --force
 ```
@@ -57,7 +63,11 @@ sudo docker system prune --all --force
 
 ```
 #Post request from terminal: 
-curl -X POST localhost:8080/referendumideaproposals -H "Content-type:application/json" -d "{\\"title\\": \\"Samwise Gamgee\\"}"
+curl -X POST localhost:8082/europeanReferendumBroadcast -H "Content-type:application/json" -d "{\"title\": \"Samwise Gamgee\"}"
+
+curl -X POST localhost:8086/europeanReferendumBroadcast -H "Content-type:application/json" -d "{\"title\": \"Samwise Gamgee\"}"
+
+curl -X POST localhost:8090/europeanReferendumBroadcast -H "Content-type:application/json" -d "{\"title\": \"Samwise Gamgee\"}"
 ```
  
 ## Info about Ports and Services
