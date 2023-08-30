@@ -15,8 +15,6 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class BroadcastApplication {
 
-	/* Receiver */
-
 	static final String topicExchangeName = "referendum-exchange";
 
 	private String queueName;
