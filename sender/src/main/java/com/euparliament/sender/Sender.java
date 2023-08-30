@@ -20,9 +20,7 @@ public class Sender implements CommandLineRunner {
   }
 
   @Override
-  public void run(String... args) throws Exception {
-    System.out.println("Sending message...");
-  }
+  public void run(String... args) throws Exception {}
 
   @PostMapping("/europeanReferendumBroadcast")
   public String sendMessage(@RequestBody EuropeanReferendum referendum) {
