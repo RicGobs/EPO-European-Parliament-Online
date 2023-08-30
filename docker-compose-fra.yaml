@@ -35,28 +35,15 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  sender:
-    image: epo/sender
-    build: ./sender
-    container_name: sender-fra
-    environment:
-      - spring_rabbitmq_host=rabbitmq
-    ports:
-      - "8086:8080"
-    networks:
-      - network1
-
-  receiver:
-    image: epo/receiver
-    build: ./receiver
-    container_name: receiver-fra
-    ports:
-      - "8087:8080"
+  broadcast:
+    image: epo/broadcast
+    build: ./broadcast
+    container_name: broadcast-fra
     environment:
       - spring_rabbitmq_host=rabbitmq
       - QUEUE_NAME=fra
-    depends_on:
-      - sender    
+    ports:
+      - "8086:8080"
     networks:
       - network1
 
