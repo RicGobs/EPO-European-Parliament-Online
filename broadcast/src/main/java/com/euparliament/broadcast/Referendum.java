@@ -1,15 +1,10 @@
-package com.euparliament.rest.referendum;
+package com.euparliament.broadcast;
 
 import java.util.Objects;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 
-@Entity
 class Referendum {
 
-  private @Id @GeneratedValue Long id;
   private String title;
   private String status;
 
@@ -21,20 +16,12 @@ class Referendum {
     this.status = status;
   }
 
-  public Long getId() {
-    return this.id;
-  }
-
   public String getTitle() {
     return this.title;
   }
 
   public String getStatus() {
     return this.status;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public void setStatus(String status) {
@@ -45,8 +32,6 @@ class Referendum {
     this.title = title;
   }
 
-
-
   @Override
   public boolean equals(Object o) {
 
@@ -55,16 +40,16 @@ class Referendum {
     if (!(o instanceof Referendum))
       return false;
     Referendum referendum = (Referendum) o;
-    return Objects.equals(this.id, referendum.id) && Objects.equals(this.title, referendum.title) && Objects.equals(this.status, referendum.status);
+    return Objects.equals(this.title, referendum.title) && Objects.equals(this.status, referendum.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.id, this.title, this.status);
+    return Objects.hash(this.title, this.status);
   }
 
   @Override
   public String toString() {
-    return "Referendum{" + "id=" + this.id + ", title='" + this.title + ", status='" + this.status + '\'' + '}';
+    return "Referendum{" + " title='" + this.title + ", status='" + this.status + '\'' + '}';
   }
 }

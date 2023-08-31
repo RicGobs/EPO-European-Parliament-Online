@@ -81,19 +81,19 @@ EPO-ITA
 
 * web-ita : http://localhost:8080/
 * rest-ita : http://localhost:8081/referendumideaproposals
-* receiver-ita : http://localhost:8082/message_here
-* sender-ita, psql-ita : not visible
+* broadcast-ita : http://localhost:8082/
+* psql-ita : not visible
 
 EPO-FRA
 
 * web-fra : http://localhost:8084/
 * rest-fra : http://localhost:8085/referendumideaproposals
-* receiver-fra : http://localhost:8086/message_here
-* sender-fra, psql-fra : not visible
+* broadcast-fra : http://localhost:8086/
+* psql-fra : not visible
 
 EPO-GERM
 
 * web-ger : http://localhost:8088/
 * rest-ger : http://localhost:8089/referendumideaproposals
-* receiver-ger : http://localhost:8090/message_here
-* sender-ger, psql-ger : not visible
+* broadcast-ger : http://localhost:8090/
+* psql-ger : not visible
