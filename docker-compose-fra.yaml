@@ -42,6 +42,7 @@ services:
     environment:
       - spring_rabbitmq_host=rabbitmq
       - QUEUE_NAME=fra
+      - REST_URL=http://localhost:8085
     ports:
       - "8086:8080"
     networks:

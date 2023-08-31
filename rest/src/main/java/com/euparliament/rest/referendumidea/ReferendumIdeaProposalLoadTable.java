@@ -12,7 +12,7 @@ class ReferendumIdeaProposalLoadTable {
   private static final Logger log = LoggerFactory.getLogger(ReferendumIdeaProposalLoadTable.class);
 
   @Bean
-  CommandLineRunner initDatabase(ReferendumIdeaProposalRepository repository) {
+  CommandLineRunner initDatabaseReferendumIdeaProposal(ReferendumIdeaProposalRepository repository) {
 
     return args -> {
       //log.info("Preloading " + repository.save(new ReferendumIdeaProposal("Bilbo Baggins")));
