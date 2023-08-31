@@ -6,8 +6,21 @@ import com.google.gson.Gson;
 
 public class Referendum {
 
-	private String title;
-	private String status;
+	private String title;  //title
+	private String status; //request proposal: when a nation does the proposal
+	                       //answer proposal: when all nations have to answer to the proposal (1^ consensus)
+	                       //request consensus: when a citizen (after the positive proposal) can vote for the referendum
+						   //answer consensus: when all nations have to answer to the referendum (2^ consensus)
+    
+	//private String argument; //what is about the referendum
+	//private String firstNation; //Nation which has done the proposal
+	
+	//private String dateEndProposal; //last date for vote the proposal
+	//private String dateEndConsensusProposal; //last date for vote the consensus in the proposal
+	//private String dateEndResult; //last date for vote the referendum (proposal has passed)
+    //private String dateEndConsensusProposal; //last date for vote the consensus in the referendum (proposal has passed)
+
+	//private String european; //always YES here 
 
 	public Referendum() {}
 

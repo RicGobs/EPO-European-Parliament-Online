@@ -32,7 +32,7 @@ public class Receiver {
 	    String productCreateResponse = restTemplate
 	               .postForObject(resourceUrl, request, String.class);
 	    
-	    System.out.println("Received <" + productCreateResponse + "> AND ");
+	    System.out.println("Received : " + productCreateResponse);
 	    latch.countDown();
 	}
 
