@@ -21,18 +21,18 @@ public class Receiver {
 	private CountDownLatch latch = new CountDownLatch(1);
 
 	public void receiveMessage(String message) {
-    
+		
+		Referendum referendum = Referendum.toReferendum(message);
+		
 	    String resourceUrl = restUrl + "/referendum";
-	
-	    //WE SHOULD DO A PARSING OF MESSAGE
-	    HttpEntity<Referendum> request = new HttpEntity<Referendum>(
-	            new Referendum("Cannabis for Everyone","active"));
+
+	    HttpEntity<Referendum> request = new HttpEntity<Referendum>(referendum);
 	
 	    RestTemplate restTemplate = new RestTemplate();
 	    String productCreateResponse = restTemplate
 	               .postForObject(resourceUrl, request, String.class);
 	    
-	    System.out.println("Received <" + message + "> AND " + productCreateResponse);
+	    System.out.println("Received <" + productCreateResponse + "> AND ");
 	    latch.countDown();
 	}
 
