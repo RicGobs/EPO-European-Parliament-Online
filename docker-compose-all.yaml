@@ -11,14 +11,14 @@ services:
       - "5672:5672"
       - "15672:15672"
     networks:
-      - network1
-      - network2
-      - network3
+      - network-ita
+      - network-fra
+      - network-ger
 
 networks:
-  network1:
+  network-ita:
       name : rabbitmq-ita
-  network2:
+  network-fra:
       name : rabbitmq-fra
-  network3:
+  network-ger:
       name : rabbitmq-ger

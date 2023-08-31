@@ -9,6 +9,8 @@ services:
     container_name: web-ger
     ports:
     - 8088:8080
+    networks:
+      - network-ger
 
   rest:
     image: epo/rest
@@ -22,6 +24,8 @@ services:
       - DATABASE_PASSWORD=postgres
     depends_on:
       - psql_db
+    networks:
+      - network-ger
 
   psql_db:
     image: postgres
@@ -34,6 +38,8 @@ services:
       POSTGRES_DB: postgres
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - network-ger  
 
   broadcast:
     image: epo/broadcast
@@ -46,10 +52,10 @@ services:
     ports:
       - "8090:8080"
     networks:
-      - network1
+      - network-ger
 
 networks:
-  network1:
+  network-ger:
     name: rabbitmq-ger
     external: true
 
