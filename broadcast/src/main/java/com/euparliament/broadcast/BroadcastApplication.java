@@ -1,4 +1,4 @@
-package com.eparliament.broadcast;
+package com.euparliament.broadcast;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

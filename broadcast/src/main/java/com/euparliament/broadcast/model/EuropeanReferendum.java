@@ -1,4 +1,4 @@
-package com.eparliament.broadcast.model;
+package com.euparliament.broadcast.model;
 
 public class EuropeanReferendum {
 	

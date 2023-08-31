@@ -1,4 +1,4 @@
-package com.eparliament.broadcast;
+package com.euparliament.broadcast;
 
 import java.util.concurrent.CountDownLatch;
 import org.springframework.stereotype.Component;
