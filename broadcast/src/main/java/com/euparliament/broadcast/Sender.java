@@ -5,8 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.euparliament.broadcast.model.EuropeanReferendum;
+import com.euparliament.broadcast.model.Referendum;
 
 @Component
 @RestController
@@ -19,7 +18,7 @@ public class Sender {
   }
 
   @PostMapping("/europeanReferendumBroadcast")
-  public String sendMessage(@RequestBody EuropeanReferendum referendum) {
+  public String sendMessage(@RequestBody Referendum referendum) {
     rabbitTemplate.convertAndSend(BroadcastApplication.topicExchangeName, "foo.bar.baz", referendum.toString());
     return "Message sent: " + referendum.toString();
   }

@@ -1,16 +1,16 @@
-package com.euparliament.broadcast;
+package com.euparliament.broadcast.model;
 
 import java.util.Objects;
 
 
-class Referendum {
+public class Referendum {
 
   private String title;
   private String status;
 
   Referendum() {}
 
-  Referendum(String title, String status) {
+  public Referendum(String title, String status) {
 
     this.title = title;
     this.status = status;
