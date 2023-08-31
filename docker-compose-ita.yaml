@@ -9,9 +9,11 @@ services:
     build: ./web
     container_name: web-ita
     ports:
-    - 8080:8080
+      - 8080:8080
     depends_on:
-    - rest
+      - rest
+    networks:
+      - network-ita
 
   rest:
     image: epo/rest
@@ -25,6 +27,8 @@ services:
       - DATABASE_PASSWORD=postgres
     depends_on:
       - psql_db
+    networks:
+      - network-ita
 
   psql_db:
     image: postgres
@@ -37,6 +41,8 @@ services:
       POSTGRES_DB: postgres
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - network-ita
 
   broadcast:
     image: epo/broadcast
@@ -48,11 +54,13 @@ services:
       - REST_URL=http://localhost:8081
     ports:
       - "8082:8080"
+    depends_on:
+      - rest
     networks:
-      - network1
+      - network-ita
 
 networks:
-  network1:
+  network-ita:
     name: rabbitmq-ita
     external: true
 

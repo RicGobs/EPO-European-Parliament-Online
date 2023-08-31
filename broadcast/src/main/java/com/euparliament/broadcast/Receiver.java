@@ -13,7 +13,7 @@ public class Receiver {
 
   public void receiveMessage(String message) {
     
-    String resourceUrl = "http://rest-ita:8081/referendum";
+    String resourceUrl = "http://rest:8080/referendum";
 
     //WE SHOULD DO A PARSING OF MESSAGE
     HttpEntity<Referendum> request = new HttpEntity<Referendum>(
