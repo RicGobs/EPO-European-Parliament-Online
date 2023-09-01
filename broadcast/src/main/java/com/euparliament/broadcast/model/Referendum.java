@@ -1,44 +1,95 @@
 package com.euparliament.broadcast.model;
 
-import java.util.Objects;
-
 import com.google.gson.Gson;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Referendum {
 
 	private String title;  //title
-	private String status; //request proposal: when a nation does the proposal
-	                       //answer proposal: when all nations have to answer to the proposal (1^ consensus)
-	                       //request consensus: when a citizen (after the positive proposal) can vote for the referendum
-						   //answer consensus: when all nations have to answer to the referendum (2^ consensus)
+	private Integer status; //1 -> request proposal: when a nation does the proposal
+	                       //2 -> answer proposal: when all nations have to answer to the proposal (1^ consensus)
+	                       //3 -> request consensus: when a citizen (after the positive proposal) can vote for the referendum
+						   //4 -> answer consensus: when all nations have to answer to the referendum (2^ consensus)
     
-	//private String argument; //what is about the referendum
-	//private String firstNation; //Nation which has done the proposal
-	
-	//private String dateEndProposal; //last date for vote the proposal
-	//private String dateEndConsensusProposal; //last date for vote the consensus in the proposal
-	//private String dateEndResult; //last date for vote the referendum (proposal has passed)
-    //private String dateEndConsensusProposal; //last date for vote the consensus in the referendum (proposal has passed)
+	private String argument; //what is about the referendum
+	private String firstNation; //Nation which has done the proposal
+	private String dateStartConsensusProposal; //first date for vote the proposal
+	private String dateEndConsensusProposal; //last date for vote the consensus in the proposal
+	private String dateEndResult; //last date for vote the referendum (proposal has passed)
+    private String dateEndConsensusResult; //last date for vote the consensus in the referendum (proposal has passed)
 
-	//private String european; //always YES here 
+	public Referendum() {
 
-	public Referendum() {}
+        this.status = 1;
 
-	public Referendum(String title, String status) {
+		String pattern = "dd/MM/yyyy HH:mm:ss";
+		DateFormat df = new SimpleDateFormat(pattern);
+		Calendar c = Calendar.getInstance();
+        Date today = c.getTime();  
+		String todayAsString = df.format(today);
+
+		this.dateStartConsensusProposal = todayAsString; 
+
+        c.add(Calendar.MINUTE, 1);
+        String todayAsString1 = df.format(c.getTime());
+        
+		c.add(Calendar.MINUTE, 1);
+        String todayAsString2 = df.format(c.getTime());
+
+		c.add(Calendar.MINUTE, 1);
+        String todayAsString3 = df.format(c.getTime());
+
+		this.dateEndConsensusProposal = todayAsString1; 
+		this.dateEndResult = todayAsString2; 
+    	this.dateEndConsensusResult = todayAsString3;
+	}
+
+	public Referendum(String title, String argument, String firstNation) {
+
+		this(); //to create all dates
 
 		this.title = title;
-		this.status = status;
+		this.argument = argument; 
+		this.firstNation = firstNation; 
 	}
 
 	public String getTitle() {
 		return this.title;
 	}
 
-	public String getStatus() {
+	public Integer getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(String status) {
+	public String getArgument() {
+		return this.argument;
+	}
+
+	public String getFirstNation() {
+		return this.firstNation;
+	}
+
+	public String getDateStartConsensusProposal() {
+		return this.dateStartConsensusProposal;
+	}
+
+	public String getDateEndConsensusProposal() {
+		return this.dateEndConsensusProposal;
+	}
+
+	public String getDateEndResult() {
+		return this.dateEndResult;
+	}
+
+	public String getDateEndConsensusResult() {
+		return this.dateEndConsensusResult;
+	}
+
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -46,21 +97,14 @@ public class Referendum {
 		this.title = title;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-
-	    if (this == o)
-	      return true;
-	    if (!(o instanceof Referendum))
-	      return false;
-	    Referendum referendum = (Referendum) o;
-	    return Objects.equals(this.title, referendum.title) && Objects.equals(this.status, referendum.status);
+	public void setArgument(String argument) {
+		this.argument = argument;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.title, this.status);
+	public void setFirstNation(String firstNation) {
+		this.firstNation = firstNation;
 	}
+
 
 	@Override
 	public String toString() {

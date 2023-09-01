@@ -23,17 +23,36 @@ public class Receiver {
 	public void receiveMessage(String message) {
 		
 		Referendum referendum = Referendum.toReferendum(message);
-		
-	    String resourceUrl = restUrl + "/referendum";
 
-	    HttpEntity<Referendum> request = new HttpEntity<Referendum>(referendum);
+		switch(referendum.getStatus()){
+
+			case 1:
+			    String resourceUrl = restUrl + "/referendum";
+
+	    		HttpEntity<Referendum> request = new HttpEntity<Referendum>(referendum);
 	
-	    RestTemplate restTemplate = new RestTemplate();
-	    String productCreateResponse = restTemplate
-	               .postForObject(resourceUrl, request, String.class);
+	    		RestTemplate restTemplate = new RestTemplate();
+	    		String productCreateResponse = restTemplate
+	            		.postForObject(resourceUrl, request, String.class);
 	    
-	    System.out.println("Received : " + productCreateResponse);
-	    latch.countDown();
+	    		System.out.println("Received : " + productCreateResponse);
+	    		latch.countDown();
+				break;
+
+			case 2:
+			    
+				break;
+
+			case 3:
+				break;
+
+			case 4:
+				break;
+
+			default:
+				break;
+		}
+		
 	}
 
 	public CountDownLatch getLatch() {

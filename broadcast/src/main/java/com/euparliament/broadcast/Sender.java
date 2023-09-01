@@ -17,8 +17,15 @@ public class Sender {
     this.rabbitTemplate = rabbitTemplate;
   }
 
-  @PostMapping("/europeanReferendumBroadcast")
-  public String sendMessage(@RequestBody Referendum referendum) {
+  @PostMapping("/europeanReferendumProposal")
+  public String sendEuropeanReferendumProposal(@RequestBody Referendum referendum) {
+    rabbitTemplate.convertAndSend(BroadcastApplication.topicExchangeName, "foo.bar.baz", referendum.toString());
+    return "Message sent: " + referendum.toString();
+  }
+
+  @PostMapping("/europeanReferendumAnswer")
+  public String sendEuropeanReferendumAnswer(@RequestBody Referendum referendum) {
+    referendum.setStatus(2);
     rabbitTemplate.convertAndSend(BroadcastApplication.topicExchangeName, "foo.bar.baz", referendum.toString());
     return "Message sent: " + referendum.toString();
   }

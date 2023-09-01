@@ -1,7 +1,5 @@
 package com.euparliament.rest.referendum;
 
-import java.util.Objects;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -9,62 +7,93 @@ import jakarta.persistence.Id;
 @Entity
 class Referendum {
 
-  private @Id @GeneratedValue Long id;
-  private String title;
-  private String status;
+    private @Id @GeneratedValue Long id;
+  	private String title;
+  	private String status;
 
-  Referendum() {}
+    private String argument; //what is about the referendum
+	private String firstNation; //Nation which has done the proposal
+	private String dateStartConsensusProposal; //first date for vote the proposal
+	private String dateEndConsensusProposal; //last date for vote the consensus in the proposal
+	private String dateEndResult; //last date for vote the referendum (proposal has passed)
+    private String dateEndConsensusResult; //last date for vote the consensus in the referendum (proposal has passed)
 
-  Referendum(String title, String status) {
+	public Referendum() {}
 
-    this.title = title;
-    this.status = status;
-  }
+	public Referendum(String title, String status, String argument, String firstNation, String dateStartConsensusProposal, String dateEndConsensusProposal, String dateEndResult, String dateEndConsensusResult) {
 
-  public Long getId() {
-    return this.id;
-  }
+		this.title = title;
+		this.status = status;
+		this.argument = argument; 
+		this.firstNation = firstNation; 
+		this.dateStartConsensusProposal = dateStartConsensusProposal; 
+		this.dateEndConsensusProposal = dateEndConsensusProposal; 
+		this.dateEndResult = dateEndResult; 
+    	this.dateEndConsensusResult = dateEndConsensusResult;
+	}
 
-  public String getTitle() {
-    return this.title;
-  }
+	public String getTitle() {
+		return this.title;
+	}
 
-  public String getStatus() {
-    return this.status;
-  }
+	public String getStatus() {
+		return this.status;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public String getArgument() {
+		return this.argument;
+	}
 
-  public void setStatus(String status) {
-    this.status = status;
-  }
+	public String getFirstNation() {
+		return this.firstNation;
+	}
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+	public String getDateStartConsensusProposal() {
+		return this.dateStartConsensusProposal;
+	}
 
+	public String getDateEndConsensusProposal() {
+		return this.dateEndConsensusProposal;
+	}
 
+	public String getDateEndResult() {
+		return this.dateEndResult;
+	}
 
-  @Override
-  public boolean equals(Object o) {
+	public String getDateEndConsensusResult() {
+		return this.dateEndConsensusResult;
+	}
 
-    if (this == o)
-      return true;
-    if (!(o instanceof Referendum))
-      return false;
-    Referendum referendum = (Referendum) o;
-    return Objects.equals(this.id, referendum.id) && Objects.equals(this.title, referendum.title) && Objects.equals(this.status, referendum.status);
-  }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.id, this.title, this.status);
-  }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-  @Override
-  public String toString() {
-    return "Referendum{" + "id=" + this.id + ", title='" + this.title + ", status='" + this.status + '\'' + '}';
-  }
+	public void setArgument(String argument) {
+		this.argument = argument;
+	}
+
+	public void setFirstNation(String firstNation) {
+		this.firstNation = firstNation;
+	}
+
+  public void setDateStartConsensusProposal(String dateStartConsensusProposal) {
+		this.dateStartConsensusProposal = dateStartConsensusProposal;
+	}
+
+	public void setDateEndConsensusProposal(String dateEndConsensusProposal) {
+		this.dateEndConsensusProposal = dateEndConsensusProposal;
+	}
+
+	public void setDateEndResult(String dateEndResult) {
+		this.dateEndResult = dateEndResult;
+	}
+
+	public void setDateEndConsensusResult(String dateEndConsensusResult) {
+		this.dateEndConsensusResult = dateEndConsensusResult;
+	}
+
 }
