@@ -58,11 +58,14 @@ sudo docker system prune --all --force
 ## Command for the POST (Send a Message in Broadcast using RabbitMQ)
 ```
 #Post request from terminal: 
-curl -X POST localhost:8082/europeanReferendumBroadcast -H "Content-type:application/json" -d "{\"title\": \"Samwise Gamgee\"}"
+curl -X POST localhost:8082/europeanReferendumBroadcast -H "Content-type:application/json" -d "{\"title\": \"Samwise Gamgee\",\"status\": \"1\",\"argument\": \"yoo\",\"firstNation\":\"yoyoyo\"}"
 
-curl -X POST localhost:8086/europeanReferendumBroadcast -H "Content-type:application/json" -d "{\"title\": \"Samwise Gamgee\"}"
 
-curl -X POST localhost:8090/europeanReferendumBroadcast -H "Content-type:application/json" -d "{\"title\": \"Samwise Gamgee\"}"
+curl -X POST localhost:8086/europeanReferendumBroadcast -H "Content-type:application/json" -d "{\"title\": \"Samwise Gamgee\",\"status\": \"1\",\"argument\": \"yoo\",\"firstNation\":\"yoyoyo\"}"
+
+
+curl -X POST localhost:8090/europeanReferendumBroadcast -H "Content-type:application/json" -d "{\"title\": \"Samwise Gamgee\",\"status\": \"1\",\"argument\": \"yoo\",\"firstNation\":\"yoyoyo\"}"
+
 ```
  
 ## Info about Ports and Services

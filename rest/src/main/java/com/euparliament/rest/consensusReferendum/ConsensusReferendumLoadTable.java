@@ -7,12 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class ReferendumLoadTable {
+class ConsensusReferendumLoadTable {
 
-  private static final Logger log = LoggerFactory.getLogger(ReferendumLoadTable.class);
+  private static final Logger log = LoggerFactory.getLogger(ConsensusReferendumLoadTable.class);
 
   @Bean
-  CommandLineRunner initDatabaseReferendum(ReferendumRepository repository) {
+  CommandLineRunner initDatabaseConsensusReferendum(ConsensusReferendumRepository repository) {
 
     return args -> {
       //log.info("Preloading " + repository.save(new ReferendumIdeaProposal("Bilbo Baggins")));

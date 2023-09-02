@@ -17,6 +17,8 @@ public class Referendum {
     
 	private String argument; //what is about the referendum
 	private String firstNation; //Nation which has done the proposal
+	private Boolean answer;
+
 	private String dateStartConsensusProposal; //first date for vote the proposal
 	private String dateEndConsensusProposal; //last date for vote the consensus in the proposal
 	private String dateEndResult; //last date for vote the referendum (proposal has passed)
@@ -25,6 +27,8 @@ public class Referendum {
 	public Referendum() {
 
         this.status = 1;
+
+		this.answer = false; //initialize the answer with a false value
 
 		String pattern = "dd/MM/yyyy HH:mm:ss";
 		DateFormat df = new SimpleDateFormat(pattern);
@@ -73,6 +77,10 @@ public class Referendum {
 		return this.firstNation;
 	}
 
+	public Boolean getAnswer() {
+		return this.answer;
+	}
+
 	public String getDateStartConsensusProposal() {
 		return this.dateStartConsensusProposal;
 	}
@@ -88,6 +96,8 @@ public class Referendum {
 	public String getDateEndConsensusResult() {
 		return this.dateEndConsensusResult;
 	}
+     
+    // ------------------------------------------------------
 
 	public void setStatus(Integer status) {
 		this.status = status;
@@ -103,6 +113,26 @@ public class Referendum {
 
 	public void setFirstNation(String firstNation) {
 		this.firstNation = firstNation;
+	}
+
+	public void setAnswer(Boolean answer) {
+		this.answer = answer;
+	}
+
+	public void setDateStartConsensusProposal(String dateStartConsensusProposal) {
+		this.dateStartConsensusProposal = dateStartConsensusProposal;
+	}
+	
+	public void setDateEndConsensusProposal(String dateEndConsensusProposal) {
+		this.dateEndConsensusProposal = dateEndConsensusProposal;
+	}
+	
+	public void setDateEndResult(String dateEndResult) {
+		this.dateEndResult = dateEndResult;
+	}
+    
+	public void setDateEndConsensusResult(String dateEndConsensusResult) {
+		this.dateEndConsensusResult = dateEndConsensusResult;
 	}
 
 
