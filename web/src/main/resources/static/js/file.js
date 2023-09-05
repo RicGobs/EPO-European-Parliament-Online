@@ -20,16 +20,3 @@ function selection() {
 
 	redirect(redirect_path);
 }
-
-
-citizen_registration() {
-
-}
-
-citizen_login() {
-
-}
-
-inst_login() {
-	
-}
