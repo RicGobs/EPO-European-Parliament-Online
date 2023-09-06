@@ -1,0 +1,57 @@
+body {
+    margin: 25px;
+    background-color: #003399;
+    /*background-image: url("euroflag.png");*/
+    background-repeat: no-repeat;
+    background-size: auto;
+    font-family: 'Times New Roman', Times, serif, sans-serif;
+    font-size: 14px;
+    text-align: center;
+    color: #FFCC00;
+  }
+
+  /* selection bar style */
+  .selectionBar {
+    width: 100%;
+    min-width: 15ch;
+    max-width: 30ch;
+    border: 1px solid var(--select-border);
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.00rem;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: #fff;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+  }
+
+  /* buttons */
+  .button {
+    position: center;
+    background-color: white;
+    border: none;
+    border-radius: 12px;
+    color: black;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.00rem;
+  }
+
+  /* flags */
+  img {
+    margin: 20px;
+    max-width: 10%;
+    max-height:10%;
+    position: center;
+  }
+
+
+
+  
+
+
+  
