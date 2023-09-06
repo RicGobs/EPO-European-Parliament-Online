@@ -1,6 +1,7 @@
 package com.euparliament.broadcast.model;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -16,19 +17,17 @@ public class Referendum {
 						   //4 -> answer consensus: when all nations have to answer to the referendum (2^ consensus)
     
 	private String argument; //what is about the referendum
-	private String firstNation; //Nation which has done the proposal
-	private Boolean answer;
+	private String nationCreator; //Nation which has created the proposal
+	private Boolean result;
 
 	private String dateStartConsensusProposal; //first date for vote the proposal
 	private String dateEndConsensusProposal; //last date for vote the consensus in the proposal
 	private String dateEndResult; //last date for vote the referendum (proposal has passed)
     private String dateEndConsensusResult; //last date for vote the consensus in the referendum (proposal has passed)
-
-	public Referendum() {
-
-        this.status = 1;
-
-		this.answer = false; //initialize the answer with a false value
+	
+    public Referendum() {
+    	this.result = null; //initialize the answer with a null value
+    	this.status = 1;
 
 		String pattern = "dd/MM/yyyy HH:mm:ss";
 		DateFormat df = new SimpleDateFormat(pattern);
@@ -50,16 +49,7 @@ public class Referendum {
 		this.dateEndConsensusProposal = todayAsString1; 
 		this.dateEndResult = todayAsString2; 
     	this.dateEndConsensusResult = todayAsString3;
-	}
-
-	public Referendum(String title, String argument, String firstNation) {
-
-		this(); //to create all dates
-
-		this.title = title;
-		this.argument = argument; 
-		this.firstNation = firstNation; 
-	}
+    }
 
 	public String getTitle() {
 		return this.title;
@@ -73,12 +63,12 @@ public class Referendum {
 		return this.argument;
 	}
 
-	public String getFirstNation() {
-		return this.firstNation;
+	public String getNationCreator() {
+		return this.nationCreator;
 	}
 
-	public Boolean getAnswer() {
-		return this.answer;
+	public Boolean getResult() {
+		return this.result;
 	}
 
 	public String getDateStartConsensusProposal() {
@@ -110,13 +100,13 @@ public class Referendum {
 	public void setArgument(String argument) {
 		this.argument = argument;
 	}
-
-	public void setFirstNation(String firstNation) {
-		this.firstNation = firstNation;
+	
+	public void setNationCreator(String nationCreator) {
+		this.nationCreator = nationCreator;
 	}
 
-	public void setAnswer(Boolean answer) {
-		this.answer = answer;
+	public void setResult(Boolean result) {
+		this.result = result;
 	}
 
 	public void setDateStartConsensusProposal(String dateStartConsensusProposal) {
@@ -142,8 +132,9 @@ public class Referendum {
 		return gson.toJson(this).toString();
 	}
   
-	public static Referendum toReferendum(String message) {
+	public static Referendum toReferendum(String message) throws JsonSyntaxException{
 		Gson gson = new Gson();
-		return gson.fromJson(message, Referendum.class);
+		Referendum referendum = gson.fromJson(message, Referendum.class);
+		return referendum;
 	}
 }

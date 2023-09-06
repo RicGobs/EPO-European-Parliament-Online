@@ -10,10 +10,10 @@ class Referendum {
     private @Id @GeneratedValue Long id;
   	private String title;
   	private String status;
-	private Boolean answer;
+	private Boolean result;
 
     private String argument; //what is about the referendum
-	private String firstNation; //Nation which has done the proposal
+	private String nationCreator; //Nation which has done the proposal
 	private String dateStartConsensusProposal; //first date for vote the proposal
 	private String dateEndConsensusProposal; //last date for vote the consensus in the proposal
 	private String dateEndResult; //last date for vote the referendum (proposal has passed)
@@ -26,7 +26,7 @@ class Referendum {
 		this.title = title;
 		this.status = status;
 		this.argument = argument; 
-		this.firstNation = firstNation; 
+		this.nationCreator = firstNation; 
 		this.dateStartConsensusProposal = dateStartConsensusProposal; 
 		this.dateEndConsensusProposal = dateEndConsensusProposal; 
 		this.dateEndResult = dateEndResult; 
@@ -46,11 +46,11 @@ class Referendum {
 	}
 
 	public String getFirstNation() {
-		return this.firstNation;
+		return this.nationCreator;
 	}
 
-	public Boolean getAnswer() {
-		return this.answer;
+	public Boolean getResult() {
+		return this.result;
 	}
 
 	public String getDateStartConsensusProposal() {
@@ -82,11 +82,11 @@ class Referendum {
 	}
 
 	public void setFirstNation(String firstNation) {
-		this.firstNation = firstNation;
+		this.nationCreator = firstNation;
 	}
 
-	public void setAnswer(Boolean answer) {
-		this.answer = answer;
+	public void setResult(Boolean result) {
+		this.result = result;
 	}
 
     public void setDateStartConsensusProposal(String dateStartConsensusProposal) {

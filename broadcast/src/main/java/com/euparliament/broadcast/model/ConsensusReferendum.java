@@ -1,10 +1,9 @@
 package com.euparliament.broadcast.model;
 
-class ConsensusReferendum {
+public class ConsensusReferendum {
 
   	private Integer status; // 2 for proposal -  4 for referendum results
-  	private String title;
-	private String dateStart;
+  	private ConsensusReferendumId consensusReferendumid;
 
 	private String correct;
 	private Boolean decision; //answer to proposal or to referendum
@@ -12,19 +11,29 @@ class ConsensusReferendum {
 	private String proposals;
 	private String receivedFrom;
 
-	public ConsensusReferendum() {
+	public ConsensusReferendum() {}
+	
+	public ConsensusReferendum(String title, String dateStart, Integer status) {
+		this.consensusReferendumid = new ConsensusReferendumId(title, dateStart);
+		this.status = status;
+		
+		this.correct = "ita,ger,fra"; // TODO: get from docker-compose-all.yaml
+		this.decision = null;
+		this.round = 1;
+		this.proposals = "";
+		this.receivedFrom = "";
 	}
 
-	public String getTitle() {
-		return this.title;
+	public ConsensusReferendumId getId() {
+		return this.consensusReferendumid;
 	}
-
+	
+	public void setId(ConsensusReferendumId id) {
+		this.consensusReferendumid = id;
+	}
+	
 	public Integer getStatus() {
 		return this.status;
-	}
-
-	public String getDateStart() {
-		return this.dateStart;
 	}
 
 	public String getCorrect() {
@@ -49,14 +58,6 @@ class ConsensusReferendum {
 
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public void setDateStart(String dateStart) {
-		this.dateStart = dateStart;
 	}
 
 	public void setCorrect(String correct) {
