@@ -1,37 +1,39 @@
 package com.euparliament.rest.consensusReferendum;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 
 @Entity
-class ConsensusReferendum {
-
-    private @Id @GeneratedValue Long id;
+@IdClass(ConsensusReferendumId.class)
+public class ConsensusReferendum {
 
   	private Integer status; // 2 for proposal -  4 for referendum results
-  	private String title;
-	private String dateStart;
+	private @Id String title;
+	private @Id String dateStart;
+  	
+	private String correct; // the set of nations
+	private Boolean decision; //answer to proposal or to referendum; null -no decision, else the decision
+	private Integer round; // 1 if there are no crashes
+	private String proposals; // votes received
+	private String receivedFrom; // list of nations who has sent the vote
 
-	private String correct;
-	private Boolean decision; //answer to proposal or to referendum
-	private Integer round;
-	private String proposals;
-	private String receivedFrom;
+	public ConsensusReferendum() {}
 
-	public ConsensusReferendum() {
+	public ConsensusReferendumId getId() {
+		return new ConsensusReferendumId(
+					this.title,
+					this.dateStart					
+				);
 	}
-
-	public String getTitle() {
-		return this.title;
+	
+	public void setId(ConsensusReferendumId id) {
+		this.title = id.getTitle();
+		this.dateStart = id.getDateStart();
 	}
-
+	
 	public Integer getStatus() {
 		return this.status;
-	}
-
-	public String getDateStart() {
-		return this.dateStart;
 	}
 
 	public String getCorrect() {
@@ -56,14 +58,6 @@ class ConsensusReferendum {
 
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public void setDateStart(String dateStart) {
-		this.dateStart = dateStart;
 	}
 
 	public void setCorrect(String correct) {

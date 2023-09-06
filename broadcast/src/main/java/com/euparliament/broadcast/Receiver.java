@@ -29,27 +29,30 @@ public class Receiver {
 
 			case 1:
 			    String resourceUrl1 = restUrl + "/referendum";
-
 	    		HttpEntity<Referendum> request1 = new HttpEntity<Referendum>(referendum);
-	
+	    		
+	    		// store the referendum proposal
 	    		RestTemplate restTemplate1 = new RestTemplate();
 	    		String productCreateResponse1 = restTemplate1.postForObject(resourceUrl1, request1, String.class);
-	    
 	    		System.out.println("Received : " + productCreateResponse1);
+	    		
+	    		// post consensus data structures
 	    		latch.countDown();
 				break;
 
 			case 2:
-			    //take the post of rest/consensusReferendum for change values of first consensus in the database 
-				// use restTemplate
+			    // Update the first consensus in the database 
 				String resourceUrl2 = restUrl + "/firstConsensusReferendum";
-
 	    		HttpEntity<Referendum> request2 = new HttpEntity<Referendum>(referendum);
-	
+	    		
+	    		// get consensus data structures from the database
+	    		
+	    		// put new values in the database
 	    		RestTemplate restTemplate2 = new RestTemplate();
 	    		String productCreateResponse2 = restTemplate2.postForObject(resourceUrl2, request2, String.class);
-	    
 	    		System.out.println("Received : " + productCreateResponse2);
+	    		
+	    		
 	    		latch.countDown();
 				break;
 

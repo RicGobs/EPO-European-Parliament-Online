@@ -21,7 +21,7 @@ class ReferendumController {
 
   // Aggregate root
   // tag::get-aggregate-root[]
-  @GetMapping("/referendum")
+  @GetMapping("/referendums")
   List<Referendum> all() {
     return repository.findAll();
   }
