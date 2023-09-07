@@ -1,5 +1,8 @@
 package com.euparliament.broadcast.model;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+
 public class ConsensusReferendum {
 
   	private Integer status; // 2 for proposal -  4 for referendum results
@@ -77,8 +80,20 @@ public class ConsensusReferendum {
 		this.proposals = proposals;
 	}
 
-	public void getReceivedFrom(String receivedFrom) {
+	public void setReceivedFrom(String receivedFrom) {
 		this.receivedFrom = receivedFrom;
+	}
+
+	@Override
+	public String toString() {
+		Gson gson = new Gson();
+		return gson.toJson(this).toString();
+	}
+  
+	public static ConsensusReferendum toConsensusReferendum(String message) throws JsonSyntaxException{
+		Gson gson = new Gson();
+		ConsensusReferendum consensusReferendum = gson.fromJson(message, ConsensusReferendum.class);
+		return consensusReferendum;
 	}
 
 }

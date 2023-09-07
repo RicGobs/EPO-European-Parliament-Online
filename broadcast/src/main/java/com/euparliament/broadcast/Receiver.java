@@ -66,8 +66,14 @@ public class Receiver {
 					HttpEntity<ConsensusReferendum> consensusReferendumEntity = new HttpEntity<ConsensusReferendum>(consensusReferendum);
 					
 					ResponseEntity<String> response = resourceMapping.getRestTemplate().exchange(resourceMapping.getUrlConsensusReferendum(), HttpMethod.GET, consensusReferendumEntity, String.class); 
-				    response.getBody(); 
+				    String body = response.getBody(); 
                     System.out.println("DONE THE GET");
+
+                    //change value
+					consensusReferendum = ConsensusReferendum.toConsensusReferendum(body);
+					consensusReferendum.setCorrect("RICCARDO HAS MODIFIED IT, YOU ARE REALLY COOL");
+					consensusReferendumEntity = new HttpEntity<ConsensusReferendum>(consensusReferendum);
+
 		    		// put new values in the database
 		    		ResponseEntity<String> productCreateResponse2 = resourceMapping.getRestTemplate().exchange(resourceMapping.getUrlConsensusReferendum(), HttpMethod.PUT, consensusReferendumEntity, String.class); 
 				    System.out.println("Changed in : " + productCreateResponse2);
