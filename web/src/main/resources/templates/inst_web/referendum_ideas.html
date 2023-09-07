@@ -1,0 +1,91 @@
+<html>
+<head>
+
+	<!--<link rel="stylesheet" href="style.css">-->
+	<link rel="stylesheet" th:href="@{/css/inst_style.css}">
+
+</head>
+<body>
+	<!--Navbar-->
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<div class="navbar">
+	<a class="active" href="nav-link"><i class="fa fa-fw fa-home"></i> Home</a>
+	<div class="dropdown2">
+		<button class="btn"><i class="fa fa-fw fa-institution"></i>ISTUser</button>
+		<div class="dropdown-menu">
+			<a href="nav-link"></i>Logout</a>
+		</div>
+		</div>
+	<div class="dropdown">
+		<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
+		<div class="dropdown-menu">
+			<a href="referendum-idea"></i>Referendum Idea</a>
+			<a href="propose-idea">Propose Idea</a>
+		</div>
+		</div>
+		<a href="nav-link"><i class="fa fa-fw fa-gear"></i> Settings</a>
+	</div>
+
+	<!-- Box -->	
+	<br><br>	
+	<div class="box"> 
+		<div>
+			<h2 style="position: absolute; left:50%; top: -16%; color: white; background-color: green; -webkit-text-stroke: 0.2px black;">&nbsp&nbspThreshold reached!&nbsp&nbsp</h2>
+			<img style="left: 88%; top:27%;" src="italy.png">
+			<h3>Referendum Idea 1</h3> 
+			<p class="text">This referendum idea is about ... </p>
+			<p id="boxDate">Valid until 31/12/2023, 23:59</p>
+		</div>
+		<div style="text-align: left;">
+			<button class="button" onclick="alert('Thank you! Your vote has been correctly registered!');">Support</button>
+			<button class="button" onclick="location.href='referendum_ideas_results';">Results</button>	
+			<button class="button" onclick="confirmAction()">Publish</button>	
+		</div>
+	</div>
+
+	<div class="box" id="box2butt"> 
+		<div>
+			<img style="left: 88%; top:27%;" src="italy.png">
+		<h3>Referendum Idea 2</h3> 
+		<p class="text">This referendum idea is about ... </p>
+		<p id="boxDate">Expired</p>
+		</div>
+		<div style="text-align: left;">
+			<button class="button" onclick="location.href='referendum_ideas_results';">Results</button>	
+		</div>
+	</div>
+
+	<div class="box" id="box3butt"> 
+		<div>
+			<img style="left: 88%; top:27%;" src="european-union.png">
+		<h3>Referendum Idea 3</h3> 
+		<p class="text">This referendum idea is about ... </p>
+		<p id="boxDate">Expired</p>
+		</div>
+		<div style="text-align: left;">
+			<button class="button" onclick="location.href='referendum_ideas_results';">Results</button>	
+		</div>
+	</div>
+
+	<script>
+		function confirmAction() {
+	        let confirmAction = confirm("Are you sure to publish this referendum?");
+	        if (confirmAction) {
+	          alert("Referendum published.");
+	        } else {
+	          alert("Publication cancelled.");
+	        }
+      	}
+	</script>
+
+
+
+		
+	
+	
+	
+	
+</body>
+</html>
