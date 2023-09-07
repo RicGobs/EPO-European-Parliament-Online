@@ -1,47 +1,56 @@
 <html>
 <head>
 
-	<link rel="stylesheet" href="style.css">
+	<!--<link rel="stylesheet" href="style.css">-->
+	<link rel="stylesheet" th:href="@{/css/citizen_style.css}">
 
 </head>
 <body>
 
-	<!-- Chiara -->
+	
+	<!--Navbar-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<!-- Votation boxes -->
-	<div id="box"> 
-		<h2>New Referendum</h2>
-		<p>This referendum is about...</p> 
-		<button class="button">Vote</button> 
+	<div class="navbar">
+	<a class="active" href="nav-link"><i class="fa fa-fw fa-home"></i> Home</a>
+	<div class="dropdown2">
+		<button class="btn"><i class="fa fa-fw fa-user"></i>User</button>
+		<div class="dropdown-menu">
+			<a href="nav-link"></i>Logout</a>
+		</div>
+		</div>
+	<div class="dropdown">
+		<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
+		<div class="dropdown-menu">
+			<a href="referendum-idea"></i>Referendum Idea</a>
+			<a href="propose-idea">Propose Idea</a>
+		</div>
+		</div>
+		<a href="nav-link"><i class="fa fa-fw fa-gear"></i> Settings</a>
 	</div>
 
-	<!-- Pasquale -->
-	<nav id="navbar">
-	 <a class="nav-link" href="home">Home</a>
-	    
-	  <div name="referendum-dropdown" id="referendum-dropdown">
-	    <button class="dropbtn"><a href="referendum">Referendum</a></button>
-	    <div class="dropdown-content">
-	      <a href="ideas">Referendum ideas</a>
-	      <a href="propose">Propose idea</a>
-	    </div>
-	  </select>
-	  
-	  <a class="nav-link" href="#">Settings</a>
-	  <a class="nav-link" href="#">User</a> 
-	</nav>
-	
-	<h3>Referendum 2</h3>
-	<p>Referendum 2 Description</p>
-	
-	<p>Vote</p>
-	<form action="" onsubmit="alert('Thank you!Your vote has been correctly registered!');">
-		<input type="radio" id="op1" name="response" value="Yes">
-		<label for="op1">Yes</label><br>
-		<input type="radio" id="op2" name="response" value="No">
-		<label for="op2">No</label><br>
-		<input type="submit" value="Confirm">
-	</form>
+	<!-- Box -->	
+	<br><br>	
+	<div class="box" id="box1"> 
+		<div class="image">
+			<img style="left: 88%; top:27%;" src="european-union.png">
+		<h3>Referendum 3</h3>
+		<p class="text">This referendum propose to ... </p>
+		<p id="boxDate">Valid until 31/12/2023, 23:59</p>
+		</div>
+	</div>
+
+	<!-- radio button -->
+	<div class="radio-button">
+		<form action="" onsubmit="alert('Thank you! Your vote has been correctly registered!');">
+			<h3 class=""text">Vote</h3>
+			<input class="text" type="radio" id="op1" name="response" value="Yes">
+			<label class="text" for="op1">Yes</label><br>
+			<input class="text" type="radio" id="op2" name="response" value="No">
+			<label class="text" for="op2">No</label><br><br>
+			<button class="button">Confirm</button>
+		</form>
+	</div>
 	
 	<!-- Redirect to referendum onclick="location.href='referendum';" in case of success -->
 	

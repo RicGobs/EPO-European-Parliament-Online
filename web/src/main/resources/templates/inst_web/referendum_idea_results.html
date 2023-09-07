@@ -1,27 +1,58 @@
 <html>
 <head>
+
+	<!--<link rel="stylesheet" href="style.css">-->
+	<link rel="stylesheet" th:href="@{/css/inst_style.css}">
+
 </head>
 <body>
-	<nav id="navbar">
-	 <a class="nav-link" href="home">Home</a>
-	    
-	  <div name="referendum-dropdown" id="referendum-dropdown">
-	    <button class="dropbtn"><a href="referendum">Referendum</a></button>
-	    <div class="dropdown-content">
-	      <a href="ideas">Referendum ideas</a>
-	      <a href="propose">Propose idea</a>
-	    </div>
-	  </select>
-	  
-	  <a class="nav-link" href="#">Settings</a>
-	  <a class="nav-link" href="#">User</a> 
-	</nav>
-	
-	<h3>Referendum Idea 2 - Results</h3> <!-- National flag-->
-	<p>Referendum Idea 2 Description</p>
-	
-	<p>Supporters: x</p>
-	<p>Threshold (1%): t</p>
+	<!--Navbar-->
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<div class="navbar">
+	<a class="active" href="nav-link"><i class="fa fa-fw fa-home"></i> Home</a>
+	<div class="dropdown2">
+		<button class="btn"><i class="fa fa-fw fa-institution"></i>ISTUser</button>
+		<div class="dropdown-menu">
+			<a href="nav-link"></i>Logout</a>
+		</div>
+		</div>
+	<div class="dropdown">
+		<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
+		<div class="dropdown-menu">
+			<a href="referendum-idea"></i>Referendum Idea</a>
+			<a href="propose-idea">Propose Idea</a>
+		</div>
+		</div>
+		<a href="nav-link"><i class="fa fa-fw fa-gear"></i> Settings</a>
+	</div>
+
+	<!-- Box -->	
+	<br><br>	
+	<div class="box" id="box1"> 
+		<div>
+			<img style="left: 90%; top:27%;" src="european-union.png">
+		<h3>Referendum Idea 2</h3> 
+		<p class="text">This referendum idea is about ... </p>
+		<p id="boxDate">Valid until 31/12/2023, 23:59</p>
+		</div>
+	</div>
+
+	<!-- Poll -->
+	<section>
+		<h1>Voting results</h1>
+		<h3>Positive Votes: 200</h3>
+		<div class='BlueBar' style='width:10%;'>
+			<p style="text-align: left; color: white;">0%</p>
+			<p style="text-align: right; color: black;">20%</p>
+		</div> <!-- il parametro width deve essere la metà della percentuale che vogliamo rappresentare altrimenti diventa troppo lunga la barra-->
+		<br><br>
+		<h3>Threshold: 800</h3>
+			<p>(how many supporters are missing before the threshold of 1% is reached)</p>
+		</div>
+	</section>
+
 	
 </body>
 </html>

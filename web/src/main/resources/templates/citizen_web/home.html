@@ -1,82 +1,60 @@
 <html>
 <head>
 
-	<link rel="stylesheet" href="style.css">
+	<!-- <link rel="stylesheet" href="style.css"> -->
+	<link rel="stylesheet" th:href="@{/css/citizen_style.css}">
 
 </head>
 <body>
 
-	<!-- Chiara -->
-
-	<!-- Navbar -->
-
+	<!--Navbar-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<div class="navbar">
-	<a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a>
-	<b href="#"><i class="fa fa-fw fa-user"></i> User</b>
+	<a class="active" href="nav-link"><i class="fa fa-fw fa-home"></i> Home</a>
+	<div class="dropdown2">
+		<button class="btn"><i class="fa fa-fw fa-user"></i>User</button>
+		<div class="dropdown-menu">
+		  <a href="nav-link"></i>Logout</a>
+		</div>
+	  </div>
 	<div class="dropdown">
 		<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
 		<div class="dropdown-menu">
-		  <a href="#"></i>Referendum Idea</a>
-		  <a href="#">Propose Idea</a>
+		  <a href="referendum-idea"></i>Referendum Idea</a>
+		  <a href="propose-idea">Propose Idea</a>
 		</div>
 	  </div>
-	  <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+	  <a href="nav-link"><i class="fa fa-fw fa-gear"></i> Settings</a>
 	</div>
 
-<!-- Referendum Boxes-->
-<h3>Latest notifications</h3>
-<div id="box"> 
-	<h2>New Referendum</h2>
-	<p>This referendum is about...</p> 
-</div>
+<!-- Boxes-->
+	<h3 style="text-align: center;">Latest notifications</h3>
 
-
-
-<!-- Pasquale 
-
-	<nav id="navbar">
-	 <a class="nav-link" href="home">Home</a>
-	    
-	  <div name="referendum-dropdown" id="referendum-dropdown">
-	    <button class="dropbtn"><a href="referendum">Referendum</a></button>
-	    <div class="dropdown-content">
-	      <a href="ideas">Referendum ideas</a>
-	      <a href="propose">Propose idea</a>
-	    </div>
-	  </select>
-	  
-	  <a class="nav-link" href="#">Settings</a>
-	  <a class="nav-link" href="#">User</a> 
-	</nav>
-
-	NAVBAR
-
-	<div class="topnav">
-		<a class="active" href="#home">Home</a>
-		<a href="#referendum">Referendum</a>
-		<a href="#settings">Settings</a>
-		<a href="#user">User</a>
-	  </div>
-	  
-	  <div style="padding-left:16px">
-		<h2>Top Navigation Example</h2>
-		<p>Some content..</p>
-	  </div>
-
-	
-	<h3>Latest notifications</h3>
-	<div class="notification">
-		<h3>New Referendum</h3>
-		<p>Referendum/Referendum idea</p>
-		<p>Date Time</p>
+	<div class="box"> 
+		<a href="new-referendum">
+		<h2 id="boxTitle">New Referendum</h2>
+		<h3 id="boxType">Referendum</h3>
+		<p id="boxDate">21/08/2023, 17:43</p>
+		</a>
 	</div>
 
--->
+	<div class="box" id="box2"> 
+		<a href="new-referendum-idea">
+		<h2 id="boxTitle">New Referendum Idea</h2>
+		<h3 id="boxType">Referendum Idea</h3>
+		<p id="boxDate">21/08/2023, 16:24</p>
+		</a>
+	</div>
+
+	<div class="box" id="box3"> 
+		<a href="threshold-reached">
+		<h2 id="boxTitle">Reached Threshold</h2>
+		<h3 id="boxType">Referendum Idea</h3>
+		<p id="boxDate">21/08/2023, 15:13</p>
+		</a>
+	</div>
 
 
-
-	
 </body>
 </html>

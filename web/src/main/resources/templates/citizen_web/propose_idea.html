@@ -6,52 +6,46 @@
 </head>
 <body>
 
-	<!--Chiara-->
+
 	<!--Navbar-->
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 	<div class="navbar">
-		<a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a>
-		<a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-		<b href="#"><i class="fa fa-fw fa-user"></i> User</b>
-		<div class="dropdown">
-			<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
-			<div class="dropdown-menu">
-			  <a href="#"></i>Referendum Idea</a>
-			  <a href="#">Propose Idea</a>
-			</div>
-		  </div>
+	<a class="active" href="nav-link"><i class="fa fa-fw fa-home"></i> Home</a>
+	<div class="dropdown2">
+		<button class="btn"><i class="fa fa-fw fa-user"></i>User</button>
+		<div class="dropdown-menu">
+		  <a href="nav-link"></i>Logout</a>
 		</div>
+	  </div>
+	<div class="dropdown">
+		<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
+		<div class="dropdown-menu">
+		  <a href="referendum-idea"></i>Referendum Idea</a>
+		  <a href="propose-idea">Propose Idea</a>
+		</div>
+	  </div>
+	  <a href="nav-link"><i class="fa fa-fw fa-gear"></i> Settings</a>
+	</div>
 
 	
 	<!--Text Box for Ideas Proposals-->
+	<div class="center">
+		<br><br>
+		<h3 id="notifications">Fill and submit the form to propose your idea</h3>
+		<br><br>
+		<form action="" onsubmit="confirmAction()">
+			<label class="text" for="title">Title</label><br>
+			<textarea class="textarea" name="title" rows="1" cols="60" required></textarea><br><br>
+			<label class="text" for="text">Text</label><br>
+			<textarea class="textarea" name="message" rows="10" cols="60" required></textarea><br><br>
+		</form>
+		<div style="text-align: center;">
+			<button class="button" type="submit" onclick="location.href='home';">Submit</button>
+		</div>
+	</div>
 
-	
-
-	<!-- Pasquale
-	<nav id="navbar">
-	 <a class="nav-link" href="home">Home</a>
-	    
-	  <div name="referendum-dropdown" id="referendum-dropdown">
-	    <button class="dropbtn"><a href="referendum">Referendum</a></button>
-	    <div class="dropdown-content">
-	      <a href="ideas">Referendum ideas</a>
-	      <a href="propose">Propose idea</a>
-	    </div>
-	  </select>
-	  
-	  <a class="nav-link" href="#">Settings</a>
-	  <a class="nav-link" href="#">User</a> 
-	</nav>
-	
-	<form action="" onsubmit="confirmAction()">
-	  <label for="idea-title">Title</label>
-	  <input type="text" id="idea-title" name="idea-title"><br><br>
-	  <label for="idea-text">Text</label>
-	  <input type="text" id="idea-text" name="idea-text"><br><br>
-	  <input type="submit" value="Submit">
-	</form>
-	
 	<script>
 		function confirmAction() {
 	        let confirmAction = confirm("Are you sure to propose this referendum idea?");
@@ -62,8 +56,8 @@
 	        }
       	}
 	</script>
-	!-- Redirect to referendum onclick="location.href='referendum';" in case of success --
-	-->
+	<!-- Redirect to referendum onclick="location.href='referendum';" in case of success -->
+
 
 </body>
 </html>

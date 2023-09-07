@@ -1,19 +1,41 @@
-<!DOCTYPE html>
 <html>
 <head>
+
+	<!-- <link rel="stylesheet" href="forms_style.css"> -->
+	<link rel="stylesheet" th:href="@{/css/citizen_forms_style.css}">
+
 </head>
 <body>
-	<h1>European Parliament</h1>
-	<!-- Nation flag -->
-	<h3>Login</h3>
-	<p>Citizen Access</p>
-	<form action="">
-	  <label for="username">Username</label>
-	  <input type="text" id="username" name="username"><br><br>
-	  <label for="password">Password</label>
-	  <input type="text" id="password" name="password"><br><br>
-	  <input type="submit" value="Login">
-	</form>
-	<button onclick="location.href='/';">Login</button>
+
+	<div>
+		<h1 style="text-align: center;">European Parliament</h1>
+			<div class="image">
+				<img id="itaFlag" src="italy.png">
+			</div>
+		<br><br><br>
+		<h2 style="text-align: center;">Citizen Login</h2>
+	</div>
+	
+	<div style="text-align: center;">
+		<label style="font-size: 16px; text-align: center;" for="uname"><b>Username</b></label>
+		<input class="textarea" type="text" placeholder="Enter Username" name="uname" required>
+	</div>
+	
+	<div style="text-align: center;">
+		<label style="font-size: 16px;" for="psw"><b>Password</b></label>
+		<input class="textarea" type="password" placeholder="Enter Password" name="psw" required>
+	</div>
+	
+	<div style="text-align: center;">
+		<label style="font-size: 16px; text-align:center;">
+			<input type="checkbox" checked="checked" name="remember">Remember me</label>
+	</div>
+	
+	<br><br>
+	
+	<div style="text-align: center;">
+		<button class="button" type="submit" onclick="location.href='home';">Login</button>
+	</div>
+	
 </body>
 </html>
