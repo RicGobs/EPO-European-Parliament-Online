@@ -1,0 +1,67 @@
+<html>
+<head>
+
+	<!--<link rel="stylesheet" href="style.css">-->
+	<link rel="stylesheet" th:href="@{/css/citizen_style.css}">
+
+</head>
+<body>
+	
+	<!--Navbar-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<div class="navbar">
+	<a class="active" href="nav-link"><i class="fa fa-fw fa-home"></i> Home</a>
+	<div class="dropdown2">
+		<button class="btn"><i class="fa fa-fw fa-user"></i>User</button>
+		<div class="dropdown-menu">
+			<a href="nav-link"></i>Logout</a>
+		</div>
+		</div>
+	<div class="dropdown">
+		<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
+		<div class="dropdown-menu">
+			<a href="referendum-idea"></i>Referendum Idea</a>
+			<a href="propose-idea">Propose Idea</a>
+		</div>
+		</div>
+		<a href="nav-link"><i class="fa fa-fw fa-gear"></i> Settings</a>
+	</div>
+
+	<!-- Referendum Boxes -->
+
+	<h3 style="text-align: center" class="text">Referendum</h3>
+
+	<div class="box"> 
+		<div class="image">
+			<img src="italy.png">
+		<a href="referendum_vote">
+		<h2 id="boxTitle">Referendum 1</h2>
+		<button class="button" style="float: right;">Vote</button>
+		<p id="boxDate">Valid until 30/09/2023, 23:59</p>
+		</a>
+		</div>
+	</div>
+
+	<div class="box" id="flagBox2"> 
+		<div class="image">
+			<img src="italy.png">
+		<a href="referendum_results">
+		<h2 id="boxTitle">Referendum 2</h2>
+		<button class="button" style="float: right;">Results</button>
+		<p id="boxDate">Expired</p>
+		</a>
+	</div>
+
+	<div class="box" id="flagBox3"> 
+		<div class="image">
+			<img src="european-union.png">
+		<a href="referendum_results">
+		<h2 id="boxTitle">Referendum 3</h2>
+		<button class="button" style="float: right;">Results</button>
+		<p id="boxDate">Expired</p>
+		</a>
+	</div>
+	
+</body>
+</html>
