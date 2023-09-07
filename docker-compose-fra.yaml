@@ -49,6 +49,7 @@ services:
       - spring_rabbitmq_host=rabbitmq
       - QUEUE_NAME=fra
       - REST_URL=http://rest:8080
+      - LIST=ita,fra,ger
     depends_on:
       - rest
     ports:

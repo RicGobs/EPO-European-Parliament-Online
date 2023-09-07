@@ -14,10 +14,11 @@ public class ConsensusReferendum {
 	public ConsensusReferendum() {}
 	
 	public ConsensusReferendum(String title, String dateStart, Integer status) {
+
 		this.consensusReferendumid = new ConsensusReferendumId(title, dateStart);
 		this.status = status;
 		
-		this.correct = "ita,ger,fra"; // TODO: get from docker-compose-all.yaml
+		this.correct = "ita,ger,fra"; // TODO: get from docker-compose
 		this.decision = null;
 		this.round = 1;
 		this.proposals = "";
