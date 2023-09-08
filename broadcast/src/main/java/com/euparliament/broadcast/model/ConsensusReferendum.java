@@ -28,11 +28,11 @@ public class ConsensusReferendum {
 	}
 
 	public ConsensusReferendumId getId() {
-		return this.consensusReferendumid;
+		return this.id;
 	}
 	
 	public void setId(ConsensusReferendumId id) {
-		this.consensusReferendumid = id;
+		this.id = id;
 	}
 	
 	public Integer getStatus() {
