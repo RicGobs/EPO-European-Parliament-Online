@@ -1,6 +1,7 @@
 package com.euparliament.broadcast;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
@@ -15,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.euparliament.broadcast.model.ConsensusReferendum;
-import com.euparliament.broadcast.model.ConsensusReferendumId;
 import com.euparliament.broadcast.model.Referendum;
 import com.euparliament.broadcast.model.ReferendumMessage;
 import com.euparliament.broadcast.model.ResourceMapping;
@@ -92,11 +92,24 @@ public class Receiver {
 					Boolean answer = referendumMessage.getAnswer();
 					String nation = referendumMessage.getNationSourceAnswer();
 
-					consensusReferendum.
+					List<String> receivedFrom = Parse.parsingMessage(consensusReferendum.getReceivedFrom());
+					List<String> proposals = Parse.parsingMessage(consensusReferendum.getProposals());
+				    if (receivedFrom.contains(nation)){
+						System.out.println("Already VOTED");
+					}
+					else{
+						System.out.println("ELSE");
+						receivedFrom.add(0, nation);
+						String newReceived = Parse.toString(receivedFrom);
+						consensusReferendum.setReceivedFrom(newReceived);
 
-					HttpEntity<ConsensusReferendum> consensusReferendumEntity = new HttpEntity<ConsensusReferendum>(consensusReferendum);
+						proposals.add(0, answer.toString());
+						String newProposals = Parse.toString(proposals);
+						consensusReferendum.setProposals(newProposals);
+					}
 
 		    		// put new values in the database
+					HttpEntity<ConsensusReferendum> consensusReferendumEntity = new HttpEntity<ConsensusReferendum>(consensusReferendum);
 		    		ResponseEntity<String> productCreateResponse2 = resourceMapping.getRestTemplate().exchange(resourceMapping.getUrlConsensusReferendum(), HttpMethod.PUT, consensusReferendumEntity, String.class); 
 				    System.out.println("consensusReferendum PUT : " + productCreateResponse2);
 		    		

@@ -7,8 +7,14 @@ public class Parse {
     
     public static List<String> parsingMessage(String message){
 
-        List<String> nations= Arrays.asList(message.split(","));
-        return nations;
+        return Arrays.asList(message.split(","));
+
+    }
+
+    public static String toString(List<String> list){
+
+        return String.join(",", list);
+        
     }
 
     
