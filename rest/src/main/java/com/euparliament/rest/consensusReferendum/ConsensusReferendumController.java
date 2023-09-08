@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -39,8 +40,9 @@ class ConsensusReferendumController {
   
 	// Single item
 	@GetMapping("/consensusReferendum")
-	ConsensusReferendum oneConsensus(@RequestBody ConsensusReferendum referendum) throws ConsensusReferendumNotFoundException {
-		return repository.findByTitleAndDateStart(referendum.getId().getTitle(), referendum.getId().getDateStart());
+	ConsensusReferendum oneConsensus(@RequestParam("title") String title, @RequestParam("dateStart") String dateStart) 
+			throws ConsensusReferendumNotFoundException {
+		return repository.findByTitleAndDateStart(title, dateStart);
 	}
 
 	@DeleteMapping("/consensusReferendum")

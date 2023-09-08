@@ -6,7 +6,7 @@ import com.google.gson.JsonSyntaxException;
 public class ConsensusReferendum {
 
   	private Integer status; // 2 for proposal -  4 for referendum results
-  	private ConsensusReferendumId consensusReferendumid;
+  	private ConsensusReferendumId id;
 
 	private String correct;
 	private Boolean decision; //answer to proposal or to referendum
@@ -17,11 +17,10 @@ public class ConsensusReferendum {
 	public ConsensusReferendum() {}
 	
 	public ConsensusReferendum(String title, String dateStart, Integer status) {
-
-		this.consensusReferendumid = new ConsensusReferendumId(title, dateStart);
+		this.id = new ConsensusReferendumId(title, dateStart);
 		this.status = status;
 		
-		this.correct = "ita,ger,fra"; // TODO: get from docker-compose
+		this.correct = "ita,ger,fra"; // TODO: get from docker-compose-all.yaml
 		this.decision = null;
 		this.round = 1;
 		this.proposals = "";

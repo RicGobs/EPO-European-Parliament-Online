@@ -129,12 +129,17 @@ public class Referendum {
 	@Override
 	public String toString() {
 		Gson gson = new Gson();
-		return gson.toJson(this).toString();
+		return gson.toJson(this);
 	}
   
-	public static Referendum toReferendum(String message) throws JsonSyntaxException{
+	public static Referendum toReferendum(String message) throws Exception {
 		Gson gson = new Gson();
-		Referendum referendum = gson.fromJson(message, Referendum.class);
-		return referendum;
+		Referendum referendum = null;
+		try {
+			referendum = gson.fromJson(message, Referendum.class);
+		} catch (JsonSyntaxException e) {
+			throw new Exception();
+		}
+ 		return referendum;
 	}
 }

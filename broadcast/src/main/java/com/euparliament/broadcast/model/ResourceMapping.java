@@ -30,7 +30,7 @@ public class ResourceMapping {
     }
     
     public String getQueueName() {
-    	return queueName;
+    	return this.queueName;
     }
     
     public RestTemplate getRestTemplate() {
