@@ -8,24 +8,24 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+
+
 public class Referendum {
 
-	private String title;  //title
-	private Integer status; //1 -> request proposal: when a nation does the proposal
-	                       //2 -> answer proposal: when all nations have to answer to the proposal (1^ consensus)
-	                       //3 -> request consensus: when a citizen (after the positive proposal) can vote for the referendum
-						   //4 -> answer consensus: when all nations have to answer to the referendum (2^ consensus)
-    
+	private ReferendumId id;
+	private Integer status;//1 -> request proposal: when a nation does the proposal
+	                       //2 -> answer proposal sent (1^ consensus)
+	                       //3 -> request consensus: when a citizen can vote for the referendum
+						   //4 -> answer referendum sent (2^ consensus)
 	private String argument; //what is about the referendum
 	private String nationCreator; //Nation which has created the proposal
 	private Boolean result;
-
-	private String dateStartConsensusProposal; //first date for vote the proposal
 	private String dateEndConsensusProposal; //last date for vote the consensus in the proposal
 	private String dateEndResult; //last date for vote the referendum (proposal has passed)
     private String dateEndConsensusResult; //last date for vote the consensus in the referendum (proposal has passed)
 	
     public Referendum() {
+		this.id = new ReferendumId();
     	this.result = null; //initialize the answer with a null value
     	this.status = 1;
 
@@ -35,7 +35,7 @@ public class Referendum {
         Date today = c.getTime();  
 		String todayAsString = df.format(today);
 
-		this.dateStartConsensusProposal = todayAsString; 
+		this.id.setDateStartConsensusProposal(todayAsString); 
 
         c.add(Calendar.MINUTE, 1);
         String todayAsString1 = df.format(c.getTime());
@@ -50,10 +50,6 @@ public class Referendum {
 		this.dateEndResult = todayAsString2; 
     	this.dateEndConsensusResult = todayAsString3;
     }
-
-	public String getTitle() {
-		return this.title;
-	}
 
 	public Integer getStatus() {
 		return this.status;
@@ -71,10 +67,6 @@ public class Referendum {
 		return this.result;
 	}
 
-	public String getDateStartConsensusProposal() {
-		return this.dateStartConsensusProposal;
-	}
-
 	public String getDateEndConsensusProposal() {
 		return this.dateEndConsensusProposal;
 	}
@@ -86,15 +78,23 @@ public class Referendum {
 	public String getDateEndConsensusResult() {
 		return this.dateEndConsensusResult;
 	}
-     
+
+	public ReferendumId getId() {
+		return this.id;
+	}
+	
     // ------------------------------------------------------
 
+	public void setId(ReferendumId id) {
+		this.id = id;
+	}
+	
+	public void setTitle(String title) {
+		this.id.setTitle(title);
+	}
+	
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public void setArgument(String argument) {
@@ -107,10 +107,6 @@ public class Referendum {
 
 	public void setResult(Boolean result) {
 		this.result = result;
-	}
-
-	public void setDateStartConsensusProposal(String dateStartConsensusProposal) {
-		this.dateStartConsensusProposal = dateStartConsensusProposal;
 	}
 	
 	public void setDateEndConsensusProposal(String dateEndConsensusProposal) {
@@ -135,6 +131,7 @@ public class Referendum {
 		Gson gson = new Gson();
 		Referendum referendum = gson.fromJson(message, Referendum.class);
 		if(
+			// attribute in Referendum only and not in ReferendumMessage
 			referendum.nationCreator == null
 		) {
 			throw new JsonSyntaxException("Message is not instanceof Referendum");

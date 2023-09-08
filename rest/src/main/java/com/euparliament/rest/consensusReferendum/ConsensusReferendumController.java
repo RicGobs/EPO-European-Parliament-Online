@@ -32,7 +32,7 @@ class ConsensusReferendumController {
 	ConsensusReferendum newReferendumConsensus(@RequestBody ConsensusReferendum newReferendum) {
 		if(repository.existsByTitleAndDateStart(newReferendum.getId().getTitle(), newReferendum.getId().getDateStart())) {
 			throw new ResponseStatusException(
-					  HttpStatus.CONFLICT, "Consensus referendum already exists"
+					  HttpStatus.CONFLICT, "Referendum already exists"
 					);
 		}
 		return repository.save(newReferendum);

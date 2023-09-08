@@ -1,27 +1,26 @@
 package com.euparliament.rest.referendum;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 
 @Entity
+@IdClass(ReferendumId.class)
 class Referendum {
 
-    private @Id @GeneratedValue Long id;
-  	private String title;
-  	private String status;
-	private Boolean result;
-
+  	private @Id String title;
+  	private @Id String dateStartConsensusProposal; //first date for vote the proposal
+  	private Integer status;
     private String argument; //what is about the referendum
 	private String nationCreator; //Nation which has done the proposal
-	private String dateStartConsensusProposal; //first date for vote the proposal
+	private Boolean result;
 	private String dateEndConsensusProposal; //last date for vote the consensus in the proposal
 	private String dateEndResult; //last date for vote the referendum (proposal has passed)
     private String dateEndConsensusResult; //last date for vote the consensus in the referendum (proposal has passed)
 
 	public Referendum() {}
 
-	public Referendum(String title, String status, String argument, String firstNation, String dateStartConsensusProposal, String dateEndConsensusProposal, String dateEndResult, String dateEndConsensusResult) {
+	public Referendum(String title, Integer status, String argument, String firstNation, String dateStartConsensusProposal, String dateEndConsensusProposal, String dateEndResult, String dateEndConsensusResult) {
 
 		this.title = title;
 		this.status = status;
@@ -32,12 +31,24 @@ class Referendum {
 		this.dateEndResult = dateEndResult; 
     	this.dateEndConsensusResult = dateEndConsensusResult;
 	}
+	
+	public ReferendumId getId() {
+		return new ReferendumId(
+					this.title,
+					this.dateStartConsensusProposal					
+				);
+	}
+	
+	public void setId(ReferendumId id) {
+		this.title = id.getTitle();
+		this.dateStartConsensusProposal = id.getDateStartConsensusProposal();
+	}
 
 	public String getTitle() {
 		return this.title;
 	}
 
-	public String getStatus() {
+	public Integer getStatus() {
 		return this.status;
 	}
 
@@ -45,16 +56,12 @@ class Referendum {
 		return this.argument;
 	}
 
-	public String getFirstNation() {
+	public String getNationCreator() {
 		return this.nationCreator;
 	}
 
 	public Boolean getResult() {
 		return this.result;
-	}
-
-	public String getDateStartConsensusProposal() {
-		return this.dateStartConsensusProposal;
 	}
 
 	public String getDateEndConsensusProposal() {
@@ -69,7 +76,7 @@ class Referendum {
 		return this.dateEndConsensusResult;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -81,18 +88,14 @@ class Referendum {
 		this.argument = argument;
 	}
 
-	public void setFirstNation(String firstNation) {
+	public void setNationCreator(String firstNation) {
 		this.nationCreator = firstNation;
 	}
 
 	public void setResult(Boolean result) {
 		this.result = result;
 	}
-
-    public void setDateStartConsensusProposal(String dateStartConsensusProposal) {
-		this.dateStartConsensusProposal = dateStartConsensusProposal;
-	}
-
+	
 	public void setDateEndConsensusProposal(String dateEndConsensusProposal) {
 		this.dateEndConsensusProposal = dateEndConsensusProposal;
 	}

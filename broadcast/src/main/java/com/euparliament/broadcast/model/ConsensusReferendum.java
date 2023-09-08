@@ -1,5 +1,8 @@
 package com.euparliament.broadcast.model;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -83,6 +86,18 @@ public class ConsensusReferendum {
 		this.receivedFrom = receivedFrom;
 	}
 
+	public void addProposalToRound(Boolean proposal, Integer round) {
+		// get rounds
+		List<String> rounds = Arrays.asList(this.proposals.split(";"));
+		// append vote to the first round
+		String newProposal = proposal.toString();
+		if(rounds.get(0).length() != 0) {
+			newProposal = "," + newProposal;
+		}
+		rounds.set(0, rounds.get(0).concat(newProposal));
+		this.proposals = String.join(";", rounds);
+	}
+	
 	@Override
 	public String toString() {
 		Gson gson = new Gson();

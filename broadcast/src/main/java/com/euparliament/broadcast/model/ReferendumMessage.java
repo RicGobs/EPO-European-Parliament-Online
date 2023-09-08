@@ -6,10 +6,8 @@ import com.google.gson.JsonSyntaxException;
 public class ReferendumMessage {
 
 	private String title;  //title
-	private Integer status; //1 -> request proposal: when a nation does the proposal
-	                       //2 -> answer proposal: when all nations have to answer to the proposal (1^ consensus)
-	                       //3 -> request consensus: when a citizen (after the positive proposal) can vote for the referendum
-						   //4 -> answer consensus: when all nations have to answer to the referendum (2^ consensus)
+	private Integer status;//2 -> proposal answer message (1^ consensus)
+						   //4 -> referendum answer message (2^ consensus)
 
 	private String nationSourceAnswer; //Nation which has sent the answer
 	private Boolean answer;

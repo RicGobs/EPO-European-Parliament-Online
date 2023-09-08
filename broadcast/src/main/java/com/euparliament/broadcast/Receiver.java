@@ -40,7 +40,6 @@ public class Receiver {
 
 		try {
 			Referendum referendum = Referendum.toReferendum(message);
-			
 			// store the referendum proposal
     		HttpEntity<Referendum> referendumEntity = new HttpEntity<Referendum>(referendum);
     		String response1 = restTemplate.postForObject(resourceMapping.getUrlReferendum(), referendumEntity, String.class);
@@ -48,8 +47,8 @@ public class Receiver {
     		
     		// post consensus data structures
     		ConsensusReferendum consensusReferendum = new ConsensusReferendum(
-    				referendum.getTitle(),
-    				referendum.getDateStartConsensusProposal(),
+    				referendum.getId().getTitle(),
+    				referendum.getId().getDateStartConsensusProposal(),
     				2 // first consensus
     		);
     		HttpEntity<ConsensusReferendum> consensusReferendumEntity = new HttpEntity<ConsensusReferendum>(consensusReferendum);
@@ -61,7 +60,10 @@ public class Receiver {
 			ReferendumMessage referendumMessage = ReferendumMessage.toReferendumMessage(message);
 			
 			switch(referendumMessage.getStatus()){
-				case 2:         
+				case 2: 
+
+					System.out.println("referendumMessage : " + referendumMessage.toString());
+					/*
 				    // Update the first consensus in the database
 
 					// get consensus data structure from the database
@@ -112,7 +114,7 @@ public class Receiver {
 					HttpEntity<ConsensusReferendum> consensusReferendumEntity = new HttpEntity<ConsensusReferendum>(consensusReferendum);
 		    		ResponseEntity<String> productCreateResponse2 = resourceMapping.getRestTemplate().exchange(resourceMapping.getUrlConsensusReferendum(), HttpMethod.PUT, consensusReferendumEntity, String.class); 
 				    System.out.println("consensusReferendum PUT : " + productCreateResponse2);
-		    		
+					*/
 		    		latch.countDown();
 					break;
 	
