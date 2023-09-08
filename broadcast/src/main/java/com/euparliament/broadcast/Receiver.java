@@ -19,6 +19,8 @@ import com.euparliament.broadcast.model.ConsensusReferendumId;
 import com.euparliament.broadcast.model.Referendum;
 import com.euparliament.broadcast.model.ReferendumMessage;
 import com.euparliament.broadcast.model.ResourceMapping;
+import com.euparliament.broadcast.utils.Parse;
+
 
 @Component
 public class Receiver {
@@ -83,11 +85,15 @@ public class Receiver {
 							ConsensusReferendum.class,
 							params
 					);
-					System.out.println("consensusReferendum GET : " + response.getBody());
+					ConsensusReferendum consensusReferendum = response.getBody();
+					System.out.println("consensusReferendum GET : " + consensusReferendum); 
 
                     //change value
-					ConsensusReferendum consensusReferendum = response.getBody(); 
-					consensusReferendum.setCorrect("RICCARDO HAS MODIFIED IT, YOU ARE REALLY COOL");
+					Boolean answer = referendumMessage.getAnswer();
+					String nation = referendumMessage.getNationSourceAnswer();
+
+					consensusReferendum.
+
 					HttpEntity<ConsensusReferendum> consensusReferendumEntity = new HttpEntity<ConsensusReferendum>(consensusReferendum);
 
 		    		// put new values in the database
@@ -114,28 +120,8 @@ public class Receiver {
 	
 				case 4:
 				    // Update the second consensus in the database
-
-					// get consensus data structure from the database
-					ConsensusReferendumId consensusReferendumId4 = new ConsensusReferendumId(referendumMessage.getTitle(), referendumMessage.getDateStartConsensusProposal());
-					ConsensusReferendum consensusReferendum4 = new ConsensusReferendum();
-					consensusReferendum4.setId(consensusReferendumId4);
-					HttpEntity<ConsensusReferendum> consensusReferendumEntity4 = new HttpEntity<ConsensusReferendum>(consensusReferendum4);
+                    
 					
-					ResponseEntity<String> response4 = resourceMapping.getRestTemplate().exchange(resourceMapping.getUrlConsensusReferendum(), HttpMethod.GET, consensusReferendumEntity4, String.class); 
-				    String body = response4.getBody(); 
-                    System.out.println("DONE THE GET");
-
-                    //change value
-					consensusReferendum = ConsensusReferendum.toConsensusReferendum(body);
-					consensusReferendum.setCorrect("RICCARDO HAS MODIFIED IT, YOU ARE REALLY COOL");
-					consensusReferendumEntity = new HttpEntity<ConsensusReferendum>(consensusReferendum);
-		    		
-		    		// put new values in the database
-		    		ResponseEntity<String> productCreateResponse4 = resourceMapping.getRestTemplate().exchange(resourceMapping.getUrlConsensusReferendum(), HttpMethod.PUT, consensusReferendumEntity4, String.class); 
-				    System.out.println("Changed in : " + productCreateResponse4);
-
-		    		latch.countDown();
-					break;
 	
 				default:
 					break;
