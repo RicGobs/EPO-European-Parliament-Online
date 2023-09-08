@@ -67,8 +67,12 @@ public class Sender {
 		);
 		System.out.println("consensusReferendum: " + response.getBody());
 		
+		ConsensusReferendum consensusReferendum = response.getBody();
+		
 		// append this nation to the proposals
 		
+		
+		// put the updates to the database
 		
 		referendumMessage.setStatus(2);
 		referendumMessage.setNationSourceAnswer(resourceMapping.getQueueName());

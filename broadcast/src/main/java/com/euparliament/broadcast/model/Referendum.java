@@ -2,14 +2,11 @@ package com.euparliament.broadcast.model;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 
 public class Referendum {
 
@@ -128,22 +125,20 @@ public class Referendum {
 		this.dateEndConsensusResult = dateEndConsensusResult;
 	}
 
-
 	@Override
 	public String toString() {
 		Gson gson = new Gson();
 		return gson.toJson(this);
 	}
   
-	public static Referendum toReferendum(String message) throws Exception {
+	public static Referendum toReferendum(String message) throws JsonSyntaxException {
 		Gson gson = new Gson();
-		Referendum referendum = null;
-		Type referendumType = new TypeToken<Map<String, Referendum>>() {}.getType();
-		try {
-			referendum = gson.fromJson(message, referendumType);
-		} catch (JsonSyntaxException e) {
-			throw new Exception();
+		Referendum referendum = gson.fromJson(message, Referendum.class);
+		if(
+			referendum.nationCreator == null
+		) {
+			throw new JsonSyntaxException("Message is not instanceof Referendum");
 		}
- 		return referendum;
+		return referendum;
 	}
 }
