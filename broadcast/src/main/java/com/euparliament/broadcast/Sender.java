@@ -70,7 +70,8 @@ public class Sender {
 				this.resourceMapping);
 		
 		// append this vote to the proposals
-		consensusReferendum.addProposalToRound(referendumMessage.getAnswer(), 1);
+		consensusReferendum.addProposalToRound(referendumMessage.getAnswer(), 1, this.resourceMapping.getQueueName());
+		referendumMessage.setProposals(consensusReferendum.getProposals());
 		HttpEntity<ConsensusReferendum> consensusReferendumEntity = new HttpEntity<ConsensusReferendum>(consensusReferendum);
 
 		// put the updates to the database
@@ -81,6 +82,7 @@ public class Sender {
 				String.class);
 		
 		// send the propose to broadcast
+		referendumMessage.setRound(1);
 		referendumMessage.setStatus(2);
 		referendumMessage.setNationSourceAnswer(resourceMapping.getQueueName());
 		rabbitTemplate.convertAndSend(BroadcastApplication.topicExchangeName, "foo.bar.baz", referendumMessage.toString());

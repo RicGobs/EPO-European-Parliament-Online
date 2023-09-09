@@ -44,10 +44,6 @@ class Referendum {
 		this.dateStartConsensusProposal = id.getDateStartConsensusProposal();
 	}
 
-	public String getTitle() {
-		return this.title;
-	}
-
 	public Integer getStatus() {
 		return this.status;
 	}
@@ -78,10 +74,6 @@ class Referendum {
 
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public void setArgument(String argument) {

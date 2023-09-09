@@ -1,8 +1,8 @@
 package com.euparliament.broadcast.model;
 
-import java.util.Arrays;
 import java.util.List;
 
+import com.euparliament.broadcast.utils.Parse;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -26,8 +26,15 @@ public class ConsensusReferendum {
 		this.correct = "ita,ger,fra"; // TODO: get from docker-compose-all.yaml
 		this.decision = null;
 		this.round = 1;
+		
+		List<String> nationsList = Parse.splitStringByComma(this.correct);
 		this.proposals = "";
 		this.receivedFrom = "";
+		for(int i=0; i<nationsList.size()-1; i++) {
+			this.proposals = this.proposals + ",";
+			this.receivedFrom = this.receivedFrom + ",";
+		}
+
 	}
 
 	public ConsensusReferendumId getId() {
@@ -86,16 +93,59 @@ public class ConsensusReferendum {
 		this.receivedFrom = receivedFrom;
 	}
 
-	public void addProposalToRound(Boolean proposal, Integer round) {
+	public void addProposalToRound(Boolean proposal, Integer round, String queueName) {
+		// get position
+		List<String> nationsList = Parse.splitStringByComma(this.correct);
+		Integer position = nationsList.indexOf(queueName);
 		// get rounds
-		List<String> rounds = Arrays.asList(this.proposals.split(";"));
-		// append vote to the first round
-		String newProposal = proposal.toString();
-		if(rounds.get(0).length() != 0) {
-			newProposal = "," + newProposal;
-		}
-		rounds.set(0, rounds.get(0).concat(newProposal));
+		List<String> rounds = Parse.splitStringBySemicolon(this.proposals);
+		// insert the new proposal
+		String firstRound = rounds.get(0);
+		List<String> nationsRoundList = Parse.splitStringByComma(firstRound);
+		nationsRoundList.set(position, proposal.toString());
+		String newProposalsFirstRound = Parse.joinListByComma(nationsRoundList);
+		// update the proposal
+		rounds.set(0, newProposalsFirstRound);
 		this.proposals = String.join(";", rounds);
+	}
+	
+
+	public void updateProposals(String proposals, Integer round) {
+		// get rounds
+		List<String> rounds = Parse.splitStringBySemicolon(this.proposals);
+		String proposalRound = rounds.get(round-1);
+		List<String> nationsRoundList = Parse.splitStringByComma(proposalRound);
+		
+		List<String> proposalsList = Parse.splitStringByComma(proposals);
+		
+		// compare and update this.proposals
+		for(int i=0; i<nationsRoundList.size(); i++) {
+			if(nationsRoundList.get(i).equals("") && !proposalsList.get(i).equals("")) {
+				nationsRoundList.set(i, proposalsList.get(i));
+			}
+		}
+		String newProposalsRound = Parse.joinListByComma(nationsRoundList);
+		
+		// update the proposals
+		rounds.set(round-1, newProposalsRound);
+		this.proposals = String.join(";", rounds);
+	}
+	
+
+	public void updateRecivedFrom(String nationSourceAnswer, Integer round) {
+		// get position
+		List<String> nationsList = Parse.splitStringByComma(this.correct);
+		Integer position = nationsList.indexOf(nationSourceAnswer);
+		// get rounds
+		List<String> rounds = Parse.splitStringBySemicolon(this.receivedFrom);
+		// update receivedFrom[round]
+		String receivedFromRound = rounds.get(round-1);
+		List<String> nationsRoundList = Parse.splitStringByComma(receivedFromRound);
+		nationsRoundList.set(position, nationSourceAnswer);
+		String newReceivedFromsRound = Parse.joinListByComma(nationsRoundList);
+		// update receviedFrom
+		rounds.set(round-1, newReceivedFromsRound);
+		this.receivedFrom = String.join(";", rounds);
 	}
 	
 	@Override

@@ -11,6 +11,8 @@ public class ReferendumMessage {
 
 	private String nationSourceAnswer; //Nation which has sent the answer
 	private Boolean answer;
+	private String proposals;
+	private Integer round;
 
 	private String dateStartConsensusProposal; //first date for vote the proposal
 	
@@ -35,6 +37,14 @@ public class ReferendumMessage {
 	public String getDateStartConsensusProposal() {
 		return this.dateStartConsensusProposal;
 	}
+	
+	public String getProposals() {
+		return this.proposals;
+	}
+	
+	public Integer getRound() {
+		return this.round;
+	}
      
     // ------------------------------------------------------
 
@@ -56,6 +66,14 @@ public class ReferendumMessage {
 
 	public void setDateStartConsensusProposal(String dateStartConsensusProposal) {
 		this.dateStartConsensusProposal = dateStartConsensusProposal;
+	}
+	
+	public void setProposals(String proposals) {
+		this.proposals = proposals;
+	}
+	
+	public void setRound(Integer round) {
+		this.round = round;
 	}
 
 

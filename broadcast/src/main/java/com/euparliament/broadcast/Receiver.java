@@ -1,25 +1,19 @@
 package com.euparliament.broadcast;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.euparliament.broadcast.model.ConsensusReferendum;
 import com.euparliament.broadcast.model.Referendum;
 import com.euparliament.broadcast.model.ReferendumMessage;
 import com.euparliament.broadcast.model.ResourceMapping;
-import com.euparliament.broadcast.utils.Parse;
+import com.euparliament.broadcast.utils.HttpRequest;
 
 
 @Component
@@ -58,61 +52,34 @@ public class Receiver {
 		} catch (Exception e) {
 			
 			ReferendumMessage referendumMessage = ReferendumMessage.toReferendumMessage(message);
+			System.out.println("referendumMessage : " + referendumMessage.toString());
 			
 			switch(referendumMessage.getStatus()){
-				case 2: 
-
-					System.out.println("referendumMessage : " + referendumMessage.toString());
-
-				    // Update the first consensus in the database
-
+				case 2:
 					// get consensus data structure from the database
-					HttpHeaders headers = new HttpHeaders();
-					headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-					HttpEntity<?> entity = new HttpEntity<>(headers);
-					
-					String urlTemplate = UriComponentsBuilder.fromHttpUrl(resourceMapping.getUrlConsensusReferendum())
-							.queryParam("title", "{title}")
-							.queryParam("dateStart", "{dateStart}")
-							.encode()
-							.toUriString();
-					Map<String, String> params = new HashMap<>();
-					params.put("title", referendumMessage.getTitle());
-					params.put("dateStart", referendumMessage.getDateStartConsensusProposal());
-					
-					HttpEntity<ConsensusReferendum> response = resourceMapping.getRestTemplate().exchange(
-							urlTemplate,
-							HttpMethod.GET,
-							entity,
-							ConsensusReferendum.class,
-							params
-					);
-					ConsensusReferendum consensusReferendum = response.getBody();
+					ConsensusReferendum consensusReferendum = HttpRequest.getConsensusReferendum(
+							referendumMessage.getTitle(),
+							referendumMessage.getDateStartConsensusProposal(),
+							this.resourceMapping);
 					System.out.println("consensusReferendum GET : " + consensusReferendum); 
 
                     //change value
-					Boolean answer = referendumMessage.getAnswer();
-					String nation = referendumMessage.getNationSourceAnswer();
-
-					List<String> receivedFrom = Parse.splitStringByComma(consensusReferendum.getReceivedFrom());
-					List<String> proposals = Parse.splitStringByComma(consensusReferendum.getProposals());
-				    if (receivedFrom.contains(nation)){
-						System.out.println("Already VOTED");
-					}
-					else{
-						System.out.println("ELSE");
-						receivedFrom.add(0, nation);
-						String newReceived = Parse.joinListByComma(receivedFrom);
-						consensusReferendum.setReceivedFrom(newReceived);
-
-						proposals.add(0, answer.toString());
-						String newProposals = Parse.joinListByComma(proposals);
-						consensusReferendum.setProposals(newProposals);
-					}
+					consensusReferendum.updateProposals(
+							referendumMessage.getProposals(), 
+							referendumMessage.getRound()
+					);
+					consensusReferendum.updateRecivedFrom(
+							referendumMessage.getNationSourceAnswer(), 
+							referendumMessage.getRound()
+					);
 
 		    		// put new values in the database
 					HttpEntity<ConsensusReferendum> consensusReferendumEntity = new HttpEntity<ConsensusReferendum>(consensusReferendum);
-		    		ResponseEntity<String> productCreateResponse2 = resourceMapping.getRestTemplate().exchange(resourceMapping.getUrlConsensusReferendum(), HttpMethod.PUT, consensusReferendumEntity, String.class); 
+		    		ResponseEntity<String> productCreateResponse2 = resourceMapping.getRestTemplate().exchange(
+		    				resourceMapping.getUrlConsensusReferendum(), 
+		    				HttpMethod.PUT, 
+		    				consensusReferendumEntity, 
+		    				String.class); 
 				    System.out.println("consensusReferendum PUT : " + productCreateResponse2);
 
 		    		latch.countDown();
