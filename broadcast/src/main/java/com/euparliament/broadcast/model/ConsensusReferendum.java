@@ -148,6 +148,73 @@ public class ConsensusReferendum {
 		this.receivedFrom = String.join(";", rounds);
 	}
 	
+	private List<String> getReceivedFromByRound(Integer round) {
+		List<String> rounds = Parse.splitStringBySemicolon(this.receivedFrom);
+		String receivedFromRound = rounds.get(round-1);
+		return Parse.splitStringByComma(receivedFromRound);
+	}
+	
+	private List<String> getProposalsByRound(Integer round) {
+		List<String> rounds = Parse.splitStringBySemicolon(this.proposals);
+		String proposalsRound = rounds.get(round-1);
+		return Parse.splitStringByComma(proposalsRound);
+	}
+	
+	public boolean checkCorrectSubsetOfReceiveFrom() {
+		List<String> correctNationsList = Parse.splitStringByComma(this.correct);
+		List<String> receivedFromNationsList = this.getReceivedFromByRound(this.round);
+		
+		for(String nation: correctNationsList) {
+			if(!receivedFromNationsList.contains(nation)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean checkReceivedFromNotChanged() {
+		if(this.round == 1) {
+			return true;
+		}
+		List<String> receivedFromNationsListRound = this.getReceivedFromByRound(this.round);
+		List<String> receivedFromNationsListRoundMinusOne = this.getReceivedFromByRound(this.round-1);
+		for(int i=0; i<receivedFromNationsListRound.size(); i++) {
+			if(!receivedFromNationsListRound.get(i)
+					.equals(receivedFromNationsListRoundMinusOne.get(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public Boolean decide() {
+		// decide true if the majority of proposals are true
+		List<String> proposals = this.getProposalsByRound(this.round);
+		List<String> correctNationsList = Parse.splitStringByComma(this.correct);
+		Integer countTrue = 0;
+		Integer countFalse = 0;
+		for(String proposal: proposals) {
+			if(proposal.equals("true")) {
+				countTrue++;
+			} else if(proposal.equals("false")) {
+				countFalse++;
+			}
+		}
+		Integer totalVotes = countTrue + countFalse;
+		
+		// check majority of voters
+		if(totalVotes > correctNationsList.size()/2) {
+			// check the decision result
+			 if(countTrue > countFalse) {
+				 return true;
+			 } else {
+				 return false;
+			 }
+		}
+		// referendum is revoked
+		return null;
+	}
+	
 	@Override
 	public String toString() {
 		Gson gson = new Gson();

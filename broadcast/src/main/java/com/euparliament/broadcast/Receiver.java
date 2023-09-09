@@ -81,7 +81,18 @@ public class Receiver {
 		    				consensusReferendumEntity, 
 		    				String.class); 
 				    System.out.println("consensusReferendum PUT : " + productCreateResponse2);
-
+				    
+				    // check decision conditions
+				    if(consensusReferendum.checkCorrectSubsetOfReceiveFrom() &&
+				       consensusReferendum.getDecision() == null) {
+				    	if(consensusReferendum.checkReceivedFromNotChanged()
+				    	) {
+				    		Boolean decision = consensusReferendum.decide();
+				    		consensusReferendum.setDecision(decision);
+				    		System.out.println("Decision: " + decision);
+				    	}
+				    }
+				    
 		    		latch.countDown();
 					break;
 	
