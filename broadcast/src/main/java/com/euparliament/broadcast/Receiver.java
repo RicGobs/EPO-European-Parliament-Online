@@ -63,7 +63,7 @@ public class Receiver {
 				case 2: 
 
 					System.out.println("referendumMessage : " + referendumMessage.toString());
-					/*
+
 				    // Update the first consensus in the database
 
 					// get consensus data structure from the database
@@ -94,19 +94,19 @@ public class Receiver {
 					Boolean answer = referendumMessage.getAnswer();
 					String nation = referendumMessage.getNationSourceAnswer();
 
-					List<String> receivedFrom = Parse.parsingMessage(consensusReferendum.getReceivedFrom());
-					List<String> proposals = Parse.parsingMessage(consensusReferendum.getProposals());
+					List<String> receivedFrom = Parse.splitStringByComma(consensusReferendum.getReceivedFrom());
+					List<String> proposals = Parse.splitStringByComma(consensusReferendum.getProposals());
 				    if (receivedFrom.contains(nation)){
 						System.out.println("Already VOTED");
 					}
 					else{
 						System.out.println("ELSE");
 						receivedFrom.add(0, nation);
-						String newReceived = Parse.toString(receivedFrom);
+						String newReceived = Parse.joinListByComma(receivedFrom);
 						consensusReferendum.setReceivedFrom(newReceived);
 
 						proposals.add(0, answer.toString());
-						String newProposals = Parse.toString(proposals);
+						String newProposals = Parse.joinListByComma(proposals);
 						consensusReferendum.setProposals(newProposals);
 					}
 
@@ -114,7 +114,7 @@ public class Receiver {
 					HttpEntity<ConsensusReferendum> consensusReferendumEntity = new HttpEntity<ConsensusReferendum>(consensusReferendum);
 		    		ResponseEntity<String> productCreateResponse2 = resourceMapping.getRestTemplate().exchange(resourceMapping.getUrlConsensusReferendum(), HttpMethod.PUT, consensusReferendumEntity, String.class); 
 				    System.out.println("consensusReferendum PUT : " + productCreateResponse2);
-					*/
+
 		    		latch.countDown();
 					break;
 	

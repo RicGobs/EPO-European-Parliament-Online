@@ -41,15 +41,15 @@ public class Sender {
 	//for status 2 - propose value for first consensus
 	@PostMapping("/europeanReferendumFirstConsensus")
 	public String referendum(@RequestBody ReferendumMessage referendumMessage) {
-		System.out.println("referendumMessage : " + referendumMessage.toString());
+		System.out.println("Sending referendum message : " + referendumMessage.toString());
 		// check if referendum.status = 1 (proposal answer not already sent)
 		Referendum referendum = HttpRequest.getReferendum(
 				referendumMessage.getTitle(),
 				referendumMessage.getDateStartConsensusProposal(),
 				this.resourceMapping);
-		System.out.println("referendum : " + referendum.toString());
 		
 		if(referendum.getStatus() > 1) {
+			System.out.println("Answer to proposal already sent, status = " + referendum.getStatus());
 			throw new ResponseStatusException(
 					  HttpStatus.BAD_REQUEST, "Referendum answer already sent"
 					);
@@ -68,7 +68,6 @@ public class Sender {
 				referendumMessage.getTitle(),
 				referendumMessage.getDateStartConsensusProposal(),
 				this.resourceMapping);
-		System.out.println("consensusReferendum : " + consensusReferendum.toString());
 		
 		// append this vote to the proposals
 		consensusReferendum.addProposalToRound(referendumMessage.getAnswer(), 1);

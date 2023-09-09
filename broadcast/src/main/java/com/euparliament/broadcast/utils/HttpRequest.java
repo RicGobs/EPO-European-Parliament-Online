@@ -43,7 +43,7 @@ public class HttpRequest {
 		headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		
-		String urlTemplate = UriComponentsBuilder.fromHttpUrl(resourceMapping.getUrlConsensusReferendum())
+		String urlTemplate = UriComponentsBuilder.fromHttpUrl(resourceMapping.getUrlReferendum())
 		        .queryParam("title", "{title}")
 		        .queryParam("dateStartConsensusProposal", "{dateStartConsensusProposal}")
 		        .encode()
