@@ -2,8 +2,6 @@ package com.euparliament.broadcast;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,12 +54,7 @@ public class Sender {
 		}
 		// update status = 2
 		referendum.setStatus(2);
-		HttpEntity<Referendum> referendumEntity = new HttpEntity<Referendum>(referendum);
-		resourceMapping.getRestTemplate().exchange(
-				resourceMapping.getUrlReferendum(), 
-				HttpMethod.PUT, 
-				referendumEntity, 
-				String.class);
+		HttpRequest.putReferendum(referendum, resourceMapping);
 		
 		// get consensus data structure from the database
 		ConsensusReferendum consensusReferendum = HttpRequest.getConsensusReferendum(
@@ -72,16 +65,12 @@ public class Sender {
 		// append this vote to the proposals
 		consensusReferendum.addProposalToRound(referendumMessage.getAnswer(), 1, this.resourceMapping.getQueueName());
 		referendumMessage.setProposals(consensusReferendum.getProposals());
-		HttpEntity<ConsensusReferendum> consensusReferendumEntity = new HttpEntity<ConsensusReferendum>(consensusReferendum);
 
 		// put the updates to the database
-		resourceMapping.getRestTemplate().exchange(
-				resourceMapping.getUrlConsensusReferendum(), 
-				HttpMethod.PUT, 
-				consensusReferendumEntity, 
-				String.class);
+		HttpRequest.putConsensusReferendum(consensusReferendum, resourceMapping);
 		
 		// send the propose to broadcast
+		referendumMessage.setIsDecision(false);
 		referendumMessage.setRound(1);
 		referendumMessage.setStatus(2);
 		referendumMessage.setNationSourceAnswer(resourceMapping.getQueueName());

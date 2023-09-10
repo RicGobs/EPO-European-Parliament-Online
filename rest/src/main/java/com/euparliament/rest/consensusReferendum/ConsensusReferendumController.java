@@ -32,7 +32,7 @@ class ConsensusReferendumController {
 	ConsensusReferendum newReferendumConsensus(@RequestBody ConsensusReferendum newReferendum) {
 		if(repository.existsByTitleAndDateStart(newReferendum.getId().getTitle(), newReferendum.getId().getDateStart())) {
 			throw new ResponseStatusException(
-					  HttpStatus.CONFLICT, "Referendum already exists"
+					  HttpStatus.CONFLICT, "ConsensusReferendum already exists"
 					);
 		}
 		return repository.save(newReferendum);
@@ -42,6 +42,11 @@ class ConsensusReferendumController {
 	@GetMapping("/consensusReferendum")
 	ConsensusReferendum oneConsensus(@RequestParam("title") String title, @RequestParam("dateStart") String dateStart) 
 			throws ConsensusReferendumNotFoundException {
+		if(!repository.existsByTitleAndDateStart(title, dateStart)) {
+			throw new ResponseStatusException(
+					  HttpStatus.NOT_FOUND, "ConsensusReferendum not found"
+					);
+		}
 		return repository.findByTitleAndDateStart(title, dateStart);
 	}
 

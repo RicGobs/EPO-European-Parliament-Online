@@ -215,6 +215,10 @@ public class ConsensusReferendum {
 		return null;
 	}
 	
+	public void incrementRound() {
+		this.round++;
+	}
+	
 	@Override
 	public String toString() {
 		Gson gson = new Gson();

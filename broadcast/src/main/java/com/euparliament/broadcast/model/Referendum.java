@@ -15,8 +15,10 @@ public class Referendum {
 	private ReferendumId id;
 	private Integer status;//1 -> request proposal: when a nation does the proposal
 	                       //2 -> answer proposal sent (1^ consensus)
-	                       //3 -> request consensus: when a citizen can vote for the referendum
+	                       //3 -> request consensus: when a citizen can vote for the referendum if the decided proposal is true
 						   //4 -> answer referendum sent (2^ consensus)
+						   //5 -> aborted by national representatives false > true
+						   //6 -> aborted by not sufficient number of votes
 	private String argument; //what is about the referendum
 	private String nationCreator; //Nation which has created the proposal
 	private Boolean result;
@@ -121,6 +123,19 @@ public class Referendum {
 		this.dateEndConsensusResult = dateEndConsensusResult;
 	}
 
+	public void setStatusByProposalConsensusDecision(Boolean decision) {
+		if(decision == null) {
+			// aborted
+			this.setStatus(6);
+		} else if (!decision) {
+			// aborted
+			this.setStatus(5);
+		} else {
+			// proposal accepted
+			this.setStatus(3);
+		}
+	}
+	
 	@Override
 	public String toString() {
 		Gson gson = new Gson();

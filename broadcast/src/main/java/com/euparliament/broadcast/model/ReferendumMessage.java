@@ -13,10 +13,32 @@ public class ReferendumMessage {
 	private Boolean answer;
 	private String proposals;
 	private Integer round;
+	private Boolean isDecision; // true: DECIDED message
+								// false: PROPOSE message
 
 	private String dateStartConsensusProposal; //first date for vote the proposal
 	
     public ReferendumMessage() {}
+    
+    public ReferendumMessage(
+    	String title,
+    	Integer status,
+    	String nationSourceAnswer,
+    	Boolean answer,
+    	String proposals,
+    	Integer round,
+    	Boolean isDecision,
+    	String dateStartConsensusProposal
+    ) {
+    	this.title = title;
+    	this.status = status;
+    	this.nationSourceAnswer = nationSourceAnswer;
+    	this.answer = answer;
+    	this.proposals = proposals;
+    	this.round = round;
+    	this.isDecision = isDecision;
+    	this.dateStartConsensusProposal = dateStartConsensusProposal;
+    }
    
 	public String getTitle() {
 		return this.title;
@@ -44,6 +66,10 @@ public class ReferendumMessage {
 	
 	public Integer getRound() {
 		return this.round;
+	}
+
+	public Boolean getIsDecision() {
+		return isDecision;
 	}
      
     // ------------------------------------------------------
@@ -75,8 +101,11 @@ public class ReferendumMessage {
 	public void setRound(Integer round) {
 		this.round = round;
 	}
-
-
+	
+	public void setIsDecision(Boolean isDecision) {
+		this.isDecision = isDecision;
+	}
+	
 	@Override
 	public String toString() {
 		Gson gson = new Gson();
@@ -88,4 +117,5 @@ public class ReferendumMessage {
 		ReferendumMessage referendumMessage = gson.fromJson(message, ReferendumMessage.class);
 		return referendumMessage;
 	}
+
 }
