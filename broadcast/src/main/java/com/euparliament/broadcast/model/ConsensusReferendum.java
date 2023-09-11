@@ -219,6 +219,10 @@ public class ConsensusReferendum {
 		this.round++;
 	}
 	
+	public boolean isCorrect(String nationSourceAnswer) {
+		return Parse.splitStringByComma(this.correct).contains(nationSourceAnswer);
+	}
+	
 	@Override
 	public String toString() {
 		Gson gson = new Gson();

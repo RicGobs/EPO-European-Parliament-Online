@@ -79,8 +79,7 @@ public class Receiver {
 			
 			// check the type of the message
 			if(referendumMessage.getIsDecision() &&
-			   consensusReferendum.isCorrect(referendumMessage.getNationSourceAnswer()) &&
-			   consensusReferendum.getDecision()
+			   consensusReferendum.isCorrect(referendumMessage.getNationSourceAnswer())
 			) {
 				this.computeDecision(referendumMessage.getAnswer(), referendumMessage);
 				return;
