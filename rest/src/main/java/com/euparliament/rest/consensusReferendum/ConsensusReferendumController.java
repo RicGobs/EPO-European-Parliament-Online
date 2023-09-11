@@ -51,8 +51,8 @@ class ConsensusReferendumController {
 	}
 
 	@DeleteMapping("/consensusReferendum")
-	void deleteReferendumConsensus(@RequestBody ConsensusReferendum referendum) {
-		repository.deleteByTitleAndDateStart(referendum.getId().getTitle(), referendum.getId().getDateStart());
+	void deleteReferendumConsensus(@RequestParam("title") String title, @RequestParam("dateStart") String dateStart) {
+		repository.deleteByTitleAndDateStart(title, dateStart);
 	}
 
 	@PutMapping("/consensusReferendum")

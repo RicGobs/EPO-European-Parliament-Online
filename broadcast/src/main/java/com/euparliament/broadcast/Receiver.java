@@ -58,13 +58,24 @@ public class Receiver {
 			
 			// get consensus data structure from the database
 			ConsensusReferendum consensusReferendum;
+			Referendum referendum;
+			try {
+				referendum = HttpRequest.getReferendum(
+						referendumMessage.getTitle(), 
+						referendumMessage.getDateStartConsensusProposal(), 
+						resourceMapping
+				);
+			} catch (NotFoundException nFE) {
+	    		System.out.println("Error: referendum not already received");
+	    		return;
+			}
 			try {
 				consensusReferendum = HttpRequest.getConsensusReferendum(
 						referendumMessage.getTitle(),
 						referendumMessage.getDateStartConsensusProposal(),
 						this.resourceMapping);
 			} catch (NotFoundException nFE) {
-	    		System.out.println("Error: referendum not already received");
+				System.out.println("Discarding message, decision is already taken");
 				return;
 			}
 			
@@ -81,7 +92,7 @@ public class Receiver {
 			if(referendumMessage.getIsDecision() &&
 			   consensusReferendum.isCorrect(referendumMessage.getNationSourceAnswer())
 			) {
-				this.computeDecision(referendumMessage.getAnswer(), referendumMessage);
+				this.computeDecision(referendumMessage.getAnswer(), referendumMessage, referendum);
 				return;
 			}
 			// compute the proposal
@@ -100,16 +111,15 @@ public class Receiver {
 			HttpRequest.putConsensusReferendum(consensusReferendum, resourceMapping);
 		    System.out.println("Updating consensus data structures: " + consensusReferendum);
 		    
-		    // check decision conditions
-		    if(consensusReferendum.checkCorrectSubsetOfReceiveFrom() &&
-		       consensusReferendum.getDecision() == null) {
+		    // check decision condition. We already know that the condition is not already taken
+		    if(consensusReferendum.checkCorrectSubsetOfReceiveFrom()) {
 		    	if(consensusReferendum.checkReceivedFromNotChanged()
 		    	) {
 		    		// take decision
 		    		Boolean decision = consensusReferendum.decide();
 		    		System.out.println("Decision taken: " + decision);
 		    		
-		    		this.computeDecision(decision, referendumMessage);				    		
+		    		this.computeDecision(decision, referendumMessage, referendum);				    		
 		    		
 		    	} else {
 		    		consensusReferendum.incrementRound();
@@ -122,7 +132,7 @@ public class Receiver {
 
 	}
 
-	private void computeDecision(Boolean decision, ReferendumMessage referendumMessage) {
+	private void computeDecision(Boolean decision, ReferendumMessage referendumMessage, Referendum referendum) {
 		// send decision message to broadcast
 		ReferendumMessage decisionReferendumMessage = new ReferendumMessage(
 			referendumMessage.getTitle(),
@@ -159,11 +169,6 @@ public class Receiver {
 		}
 		
 		// update Referendum
-		Referendum referendum = HttpRequest.getReferendum(
-				referendumMessage.getTitle(), 
-				referendumMessage.getDateStartConsensusProposal(), 
-				resourceMapping
-		);
 		referendum.setStatusByProposalConsensusDecision(decision);
 		HttpRequest.putReferendum(referendum, resourceMapping);
 	}

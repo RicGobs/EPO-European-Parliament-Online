@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.euparliament.broadcast.exception.NotFoundException;
@@ -31,22 +32,23 @@ public class HttpRequest {
 		params.put("title", title);
 		params.put("dateStart", dateStart);
 		
-		ResponseEntity<ConsensusReferendum> response = resourceMapping.getRestTemplate().exchange(
-		        urlTemplate,
-		        HttpMethod.GET,
-		        entity,
-		        ConsensusReferendum.class,
-		        params
-		);
-		// check if the ConsensusReferendum exists
-		if(response.getStatusCode().value() == 404) {
+		try {
+			ResponseEntity<ConsensusReferendum> response = resourceMapping.getRestTemplate().exchange(
+			        urlTemplate,
+			        HttpMethod.GET,
+			        entity,
+			        ConsensusReferendum.class,
+			        params
+			);
+			return response.getBody();
+		} catch (HttpClientErrorException e) {
+			// check if the ConsensusReferendum exists
 			throw new NotFoundException();
 		}
-		
-		return response.getBody();
 	}
 	
-	public static Referendum getReferendum(String title, String dateStartConsensusProposal, ResourceMapping resourceMapping) {
+	public static Referendum getReferendum(String title, String dateStartConsensusProposal, ResourceMapping resourceMapping) 
+			throws NotFoundException {
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
 		HttpEntity<?> entity = new HttpEntity<>(headers);
@@ -60,13 +62,17 @@ public class HttpRequest {
 		params.put("title", title);
 		params.put("dateStartConsensusProposal", dateStartConsensusProposal);
 		
-		HttpEntity<Referendum> response = resourceMapping.getRestTemplate().exchange(
+		ResponseEntity<Referendum> response = resourceMapping.getRestTemplate().exchange(
 		        urlTemplate,
 		        HttpMethod.GET,
 		        entity,
 		        Referendum.class,
 		        params
 		);
+		// check if the ConsensusReferendum exists
+		if(response.getStatusCode().value() == 404) {
+			throw new NotFoundException();
+		}
 		return response.getBody();
 	}
 	

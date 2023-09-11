@@ -56,6 +56,11 @@ class ReferendumController {
 	@GetMapping("/referendum")
 	Referendum one(@RequestParam("title") String title, @RequestParam("dateStartConsensusProposal") String dateStartConsensusProposal) 
 			throws ReferendumNotFoundException {
+		if(!repository.existsByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal)) {
+			throw new ResponseStatusException(
+					  HttpStatus.NOT_FOUND, "Referendum not found"
+					);
+		}
 		return repository.findByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal);
 	}
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.euparliament.broadcast.exception.NotFoundException;
 import com.euparliament.broadcast.model.ConsensusReferendum;
 import com.euparliament.broadcast.model.Referendum;
 import com.euparliament.broadcast.model.ReferendumMessage;
@@ -41,10 +42,15 @@ public class Sender {
 	public String referendum(@RequestBody ReferendumMessage referendumMessage) {
 		System.out.println("Sending referendum message : " + referendumMessage.toString());
 		// check if referendum.status = 1 (proposal answer not already sent)
-		Referendum referendum = HttpRequest.getReferendum(
-				referendumMessage.getTitle(),
-				referendumMessage.getDateStartConsensusProposal(),
-				this.resourceMapping);
+		Referendum referendum;
+		try {
+			referendum = HttpRequest.getReferendum(
+					referendumMessage.getTitle(),
+					referendumMessage.getDateStartConsensusProposal(),
+					this.resourceMapping);
+		} catch (NotFoundException e) {
+			return "Referendum not found";
+		}
 		
 		if(referendum.getStatus() > 1) {
 			System.out.println("Answer to proposal already sent, status = " + referendum.getStatus());
@@ -57,10 +63,15 @@ public class Sender {
 		HttpRequest.putReferendum(referendum, resourceMapping);
 		
 		// get consensus data structure from the database
-		ConsensusReferendum consensusReferendum = HttpRequest.getConsensusReferendum(
-				referendumMessage.getTitle(),
-				referendumMessage.getDateStartConsensusProposal(),
-				this.resourceMapping);
+		ConsensusReferendum consensusReferendum;
+		try {
+			consensusReferendum = HttpRequest.getConsensusReferendum(
+					referendumMessage.getTitle(),
+					referendumMessage.getDateStartConsensusProposal(),
+					this.resourceMapping);
+		} catch (NotFoundException e) {
+			return "Internal error: cannot find ConsensusReferendum for this Referendum";
+		}
 		
 		// append this vote to the proposals
 		consensusReferendum.addProposalToRound(referendumMessage.getAnswer(), 1, this.resourceMapping.getQueueName());

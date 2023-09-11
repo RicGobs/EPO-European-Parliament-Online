@@ -19,16 +19,15 @@ public class Referendum {
 						   //4 -> answer referendum sent (2^ consensus)
 						   //5 -> aborted by national representatives false > true
 						   //6 -> aborted by not sufficient number of votes
+						   //7 -> accepted
 	private String argument; //what is about the referendum
 	private String nationCreator; //Nation which has created the proposal
-	private Boolean result;
 	private String dateEndConsensusProposal; //last date for vote the consensus in the proposal
 	private String dateEndResult; //last date for vote the referendum (proposal has passed)
     private String dateEndConsensusResult; //last date for vote the consensus in the referendum (proposal has passed)
 	
     public Referendum() {
 		this.id = new ReferendumId();
-    	this.result = null; //initialize the answer with a null value
     	this.status = 1;
 
 		String pattern = "dd/MM/yyyy HH:mm:ss";
@@ -63,10 +62,6 @@ public class Referendum {
 
 	public String getNationCreator() {
 		return this.nationCreator;
-	}
-
-	public Boolean getResult() {
-		return this.result;
 	}
 
 	public String getDateEndConsensusProposal() {
@@ -106,10 +101,6 @@ public class Referendum {
 	public void setNationCreator(String nationCreator) {
 		this.nationCreator = nationCreator;
 	}
-
-	public void setResult(Boolean result) {
-		this.result = result;
-	}
 	
 	public void setDateEndConsensusProposal(String dateEndConsensusProposal) {
 		this.dateEndConsensusProposal = dateEndConsensusProposal;
@@ -126,13 +117,17 @@ public class Referendum {
 	public void setStatusByProposalConsensusDecision(Boolean decision) {
 		if(decision == null) {
 			// aborted
-			this.setStatus(6);
+			this.status = 6;
 		} else if (!decision) {
 			// aborted
-			this.setStatus(5);
+			this.status = 5;
 		} else {
 			// proposal accepted
-			this.setStatus(3);
+			if(this.status == 2) {
+				this.status = 3;
+			} else {
+				this.status = 7;
+			}
 		}
 	}
 	
