@@ -97,13 +97,4 @@ public class Sender {
 		rabbitTemplate.convertAndSend(BroadcastApplication.topicExchangeName, "foo.bar.baz", referendumMessage.toString());
 		return "Message sent: " + referendumMessage.toString();
 	}
-
-	//for status 4 - messages for second consensus
-	@PostMapping("/europeanReferendumSecondConsensus")
-	public String sendEuropeanReferendumResult(@RequestBody ReferendumMessage referendumMessage) {
-		referendumMessage.setStatus(4);
-		referendumMessage.setNationSourceAnswer(resourceMapping.getQueueName());
-		rabbitTemplate.convertAndSend(BroadcastApplication.topicExchangeName, "foo.bar.baz", referendumMessage.toString());
-		return "Message sent: " + referendumMessage.toString();
-	}
 }

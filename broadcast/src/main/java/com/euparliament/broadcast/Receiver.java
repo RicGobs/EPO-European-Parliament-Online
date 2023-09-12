@@ -41,10 +41,10 @@ public class Receiver {
 			CheckTime myThread = new CheckTime(referendum.getId().getTitle(), referendum.getId().getDateStartConsensusProposal(), referendum.getDateEndConsensusProposal(),1,this);
   			myThread.start();
 
-			myThread = new CheckTime(referendum.getId().getTitle(), referendum.getId().getDateStartConsensusProposal(), referendum.getDateEndConsensusProposal(),2,this);
+			myThread = new CheckTime(referendum.getId().getTitle(), referendum.getId().getDateStartConsensusProposal(), referendum.getDateEndResult(),2,this);
   			myThread.start();
 
-			myThread = new CheckTime(referendum.getId().getTitle(), referendum.getId().getDateStartConsensusProposal(), referendum.getDateEndConsensusProposal(),3,this);
+			myThread = new CheckTime(referendum.getId().getTitle(), referendum.getId().getDateStartConsensusProposal(), referendum.getDateEndConsensusResult(),3,this);
   			myThread.start();
 
 			// store the referendum proposal
@@ -162,7 +162,7 @@ public class Receiver {
 
 		
 		// delete ConsensusReferendum if the referendum is aborted, else clean it
-		if((decision != true && statusMessage == 2) ||
+		if(((decision == null || decision == false) && statusMessage == 2) ||
 			statusMessage == 4) {
 			// delete ConsensusReferendum
 			HttpRequest.deleteConsensusReferendum(
@@ -190,6 +190,10 @@ public class Receiver {
 
 	public RabbitTemplate getRabbitTemplate() {
 		return this.rabbitTemplate;
+	}
+
+	public ResourceMapping getResourceMapping() {
+		return this.resourceMapping;
 	}
 
 }

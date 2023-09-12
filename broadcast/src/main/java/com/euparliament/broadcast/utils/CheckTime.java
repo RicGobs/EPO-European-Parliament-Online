@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.euparliament.broadcast.BroadcastApplication;
 import com.euparliament.broadcast.Receiver;
@@ -25,11 +24,8 @@ public class CheckTime extends Thread {
     private String dateEnd;
     private Integer situation;
     private Receiver receiver;
-
+    private ResourceMapping resourceMapping;
     final RabbitTemplate rabbitTemplate;
-
-	@Autowired
-	ResourceMapping resourceMapping;
 
     public CheckTime(String title, String dateStart, String dateEnd, Integer situation, Receiver receiver){
         this.title = title;
@@ -38,6 +34,7 @@ public class CheckTime extends Thread {
         this.situation = situation;
         this.receiver = receiver;
 		this.rabbitTemplate = receiver.getRabbitTemplate();
+		this.resourceMapping = receiver.getResourceMapping();
     }
 
     public void run(){
@@ -55,10 +52,10 @@ public class CheckTime extends Thread {
         } 
 
         long duration = end.getTime() - current.getTime();
-        long diffInSeconds = TimeUnit.MILLISECONDS.toMillis(duration);
+        //long diffInSeconds = TimeUnit.MILLISECONDS.toMillis(duration);
 
         try {
-            TimeUnit.MILLISECONDS.sleep(diffInSeconds);
+            TimeUnit.MILLISECONDS.sleep(duration);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }  
@@ -68,7 +65,7 @@ public class CheckTime extends Thread {
 			referendum = HttpRequest.getReferendum(
 					title, 
 					dateStart, 
-					resourceMapping
+					this.resourceMapping
 			);
 		} catch (NotFoundException nFE) {
 	    	System.out.println("CheckTime Thread, situation : " + situation + "Error: referendum not already received");
@@ -87,36 +84,52 @@ public class CheckTime extends Thread {
             return;
         }
 
-        if (situation == 1 && status == 2){
-            receiver.computeDecision(consensusReferendum.decide(), 2, referendum);	
-        }
-
-        else if (situation == 2 && status == 3){
-            //calculate number of votes
-            Boolean decision = referendum.decide();
-
-            // send decision message to broadcast
-		    ReferendumMessage decisionReferendumMessage = new ReferendumMessage(
-			referendum.getId().getTitle(),
-			4,
-			resourceMapping.getQueueName(),
-			decision,
-			null,
-			null,
-			true,
-			referendum.getId().getDateStartConsensusProposal()
-		    );
-		    rabbitTemplate.convertAndSend(
-				BroadcastApplication.topicExchangeName, 
-				"foo.bar.baz", 
-				decisionReferendumMessage.toString());
-            
-            referendum.setStatus(4);
-		    HttpRequest.putReferendum(referendum, resourceMapping);
-        }
-
-        else if (situation == 3 && status == 4){
-            receiver.computeDecision(consensusReferendum.decide(), 4, referendum);
+        if (situation == 1){
+        	// we are assuming that no more proposal answers can be received
+        	if(status == 2 || status == 1) {
+	        	System.out.println("CheckTime Thread, situation : " + situation + ", compute decision");
+	            receiver.computeDecision(consensusReferendum.decide(), 2, referendum);
+        	} else {
+        		System.out.println("CheckTime Thread, situation : " + situation + ", status: " + status + ". Already decided");
+        	}
+        } else if (situation == 2){
+        	if(status == 3) {
+	        	System.out.println("CheckTime Thread, situation : " + situation + ", send local referendum result");
+	            //calculate number of votes
+	            Boolean decision = referendum.decide();
+	
+	    		// put the updates to the database
+	            consensusReferendum.addProposalToRound(decision, 1, this.resourceMapping.getQueueName());
+	    		HttpRequest.putConsensusReferendum(consensusReferendum, resourceMapping);
+	            
+	            referendum.setStatus(4);
+			    HttpRequest.putReferendum(referendum, this.resourceMapping);
+	    		
+	    		// send decision message to broadcast
+			    ReferendumMessage decisionReferendumMessage = new ReferendumMessage(
+				referendum.getId().getTitle(),
+				4,
+				this.resourceMapping.getQueueName(),
+				decision,
+				consensusReferendum.getProposals(),
+				1,
+				false,
+				referendum.getId().getDateStartConsensusProposal()
+			    );
+			    rabbitTemplate.convertAndSend(
+					BroadcastApplication.topicExchangeName, 
+					"foo.bar.baz", 
+					decisionReferendumMessage.toString());
+        	} else {
+        		System.out.println("Internal error: CheckTime Thread, situation : " + situation + ", status: " + status);
+        	}
+        } else if (situation == 3){
+        	if(status == 4) {
+	        	System.out.println("CheckTime Thread, situation : " + situation + ", compute decision");
+	            receiver.computeDecision(consensusReferendum.decide(), 4, referendum);
+        	} else {
+        		System.out.println("CheckTime Thread, situation : " + situation + ", status: " + status + ". Already decided");
+        	}
         }
     }
 

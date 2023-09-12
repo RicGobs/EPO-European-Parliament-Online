@@ -132,7 +132,7 @@ public class Referendum {
 			this.status = 5;
 		} else {
 			// proposal accepted
-			if(this.status == 2) {
+			if(this.status == 2 || this.status == 1) {
 				this.status = 3;
 			} else {
 				this.status = 7;
