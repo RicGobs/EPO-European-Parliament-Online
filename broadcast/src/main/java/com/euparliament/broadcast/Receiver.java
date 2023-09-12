@@ -13,6 +13,7 @@ import com.euparliament.broadcast.model.ConsensusReferendum;
 import com.euparliament.broadcast.model.Referendum;
 import com.euparliament.broadcast.model.ReferendumMessage;
 import com.euparliament.broadcast.model.ResourceMapping;
+import com.euparliament.broadcast.utils.CheckTime;
 import com.euparliament.broadcast.utils.HttpRequest;
 
 
@@ -36,6 +37,16 @@ public class Receiver {
 
 		try {
 			Referendum referendum = Referendum.toReferendum(message);
+
+			CheckTime myThread = new CheckTime(referendum.getId().getTitle(), referendum.getId().getDateStartConsensusProposal(), referendum.getDateEndConsensusProposal(),1,this);
+  			myThread.start();
+
+			myThread = new CheckTime(referendum.getId().getTitle(), referendum.getId().getDateStartConsensusProposal(), referendum.getDateEndConsensusProposal(),2,this);
+  			myThread.start();
+
+			myThread = new CheckTime(referendum.getId().getTitle(), referendum.getId().getDateStartConsensusProposal(), referendum.getDateEndConsensusProposal(),3,this);
+  			myThread.start();
+
 			// store the referendum proposal
     		HttpEntity<Referendum> referendumEntity = new HttpEntity<Referendum>(referendum);
     		String response1 = restTemplate.postForObject(resourceMapping.getUrlReferendum(), referendumEntity, String.class);
@@ -92,7 +103,7 @@ public class Receiver {
 			if(referendumMessage.getIsDecision() &&
 			   consensusReferendum.isCorrect(referendumMessage.getNationSourceAnswer())
 			) {
-				this.computeDecision(referendumMessage.getAnswer(), referendumMessage, referendum);
+				this.computeDecision(referendumMessage.getAnswer(), referendumMessage.getStatus(), referendum);
 				return;
 			}
 			// compute the proposal
@@ -119,7 +130,7 @@ public class Receiver {
 		    		Boolean decision = consensusReferendum.decide();
 		    		System.out.println("Decision taken: " + decision);
 		    		
-		    		this.computeDecision(decision, referendumMessage, referendum);				    		
+		    		this.computeDecision(decision, referendumMessage.getStatus(), referendum);				    		
 		    		
 		    	} else {
 		    		consensusReferendum.incrementRound();
@@ -132,17 +143,17 @@ public class Receiver {
 
 	}
 
-	private void computeDecision(Boolean decision, ReferendumMessage referendumMessage, Referendum referendum) {
+	public void computeDecision(Boolean decision, Integer statusMessage, Referendum referendum) {
 		// send decision message to broadcast
 		ReferendumMessage decisionReferendumMessage = new ReferendumMessage(
-			referendumMessage.getTitle(),
-			referendumMessage.getStatus(),
+			referendum.getId().getTitle(),
+			statusMessage,
 			resourceMapping.getQueueName(),
 			decision,
 			null,
 			null,
 			true,
-			referendumMessage.getDateStartConsensusProposal()
+			referendum.getId().getDateStartConsensusProposal()
 		);
 		rabbitTemplate.convertAndSend(
 				BroadcastApplication.topicExchangeName, 
@@ -151,18 +162,18 @@ public class Receiver {
 
 		
 		// delete ConsensusReferendum if the referendum is aborted, else clean it
-		if((decision != true && referendumMessage.getStatus() == 2) ||
-			referendumMessage.getStatus() == 4) {
+		if((decision != true && statusMessage == 2) ||
+			statusMessage == 4) {
 			// delete ConsensusReferendum
 			HttpRequest.deleteConsensusReferendum(
-					referendumMessage.getTitle(),
-					referendumMessage.getDateStartConsensusProposal(),
+					referendum.getId().getTitle(),
+					referendum.getId().getDateStartConsensusProposal(),
 					this.resourceMapping);
 		} else {
 			// clean
 			ConsensusReferendum newConsensusReferendum = new ConsensusReferendum(
-					referendumMessage.getTitle(),
-					referendumMessage.getDateStartConsensusProposal(),
+					referendum.getId().getTitle(),
+					referendum.getId().getDateStartConsensusProposal(),
 					4
 			);
 			HttpRequest.putConsensusReferendum(newConsensusReferendum, resourceMapping);
@@ -175,6 +186,10 @@ public class Receiver {
 
 	public CountDownLatch getLatch() {
 		return latch;
+	}
+
+	public RabbitTemplate getRabbitTemplate() {
+		return this.rabbitTemplate;
 	}
 
 }

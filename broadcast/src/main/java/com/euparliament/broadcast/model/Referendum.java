@@ -20,15 +20,24 @@ public class Referendum {
 						   //5 -> aborted by national representatives false > true
 						   //6 -> aborted by not sufficient number of votes
 						   //7 -> accepted
+
+	private Integer votesTrue;
+	private Integer votesFalse;
+	private Integer population;
+
 	private String argument; //what is about the referendum
 	private String nationCreator; //Nation which has created the proposal
-	private String dateEndConsensusProposal; //last date for vote the consensus in the proposal
-	private String dateEndResult; //last date for vote the referendum (proposal has passed)
-    private String dateEndConsensusResult; //last date for vote the consensus in the referendum (proposal has passed)
+	private String dateEndConsensusProposal; //last date for vote the consensus in the proposal //1-2
+	private String dateEndResult; //last date for vote the referendum (proposal has passed) //2-3
+    private String dateEndConsensusResult; //last date for vote the consensus in the referendum (proposal has passed) //3-4
 	
     public Referendum() {
 		this.id = new ReferendumId();
     	this.status = 1;
+
+		this.votesTrue = 6;
+		this.votesFalse = 3;
+		this.population = 10;
 
 		String pattern = "dd/MM/yyyy HH:mm:ss";
 		DateFormat df = new SimpleDateFormat(pattern);
@@ -129,6 +138,23 @@ public class Referendum {
 				this.status = 7;
 			}
 		}
+	}
+
+	public Boolean decide() {
+		// decide true if the majority of proposals are true		
+		Integer totalVotes = votesTrue + votesFalse;
+		
+		// check majority of voters
+		if(totalVotes > population/2) {
+			// check the decision result
+			 if(votesTrue > votesFalse) {
+				 return true;
+			 } else {
+				 return false;
+			 }
+		}
+		// referendum is revoked
+		return null;
 	}
 	
 	@Override
