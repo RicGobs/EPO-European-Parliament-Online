@@ -58,6 +58,7 @@ public class CheckTime extends Thread {
             TimeUnit.MILLISECONDS.sleep(duration);
         } catch (InterruptedException e) {
             e.printStackTrace();
+            return;
         }  
 
         Referendum referendum;
@@ -68,7 +69,7 @@ public class CheckTime extends Thread {
 					this.resourceMapping
 			);
 		} catch (NotFoundException nFE) {
-	    	System.out.println("CheckTime Thread, situation : " + situation + "Error: referendum not already received");
+	    	System.out.println("\nCheckTime timeout, situation : " + situation + "Error: referendum not already received");
 	    	return;
 		}
         Integer status = referendum.getStatus();
@@ -80,21 +81,22 @@ public class CheckTime extends Thread {
 					dateStart, 
                     this.resourceMapping);
         } catch (NotFoundException nFE) {
-            System.out.println("CheckTime Thread, situation : " + situation + ", decision is already taken");
+            System.out.println("\nCheckTime timeout, situation : " + situation + ", decision is already taken");
             return;
         }
 
         if (situation == 1){
         	// we are assuming that no more proposal answers can be received
         	if(status == 2 || status == 1) {
-	        	System.out.println("CheckTime Thread, situation : " + situation + ", compute decision");
+	        	System.out.println("\nCheckTime timeout, situation : " + this.printSituation() + ".");
+	        	System.out.println("Compute decision:");
 	            receiver.computeDecision(consensusReferendum.decide(), 2, referendum);
         	} else {
-        		System.out.println("CheckTime Thread, situation : " + situation + ", status: " + status + ". Already decided");
+        		System.out.println("\nCheckTime timeout, situation : " + this.printSituation() + ", status: " + status + ". Already decided");
         	}
         } else if (situation == 2){
         	if(status == 3) {
-	        	System.out.println("CheckTime Thread, situation : " + situation + ", send local referendum result");
+	        	System.out.println("\nCheckTime timeout, situation : " + this.printSituation() + ", send local referendum result\n");
 	            //calculate number of votes
 	            Boolean decision = referendum.decide();
 	
@@ -106,6 +108,9 @@ public class CheckTime extends Thread {
 			    HttpRequest.putReferendum(referendum, this.resourceMapping);
 	    		
 	    		// send decision message to broadcast
+				System.out.println("Sending the voting answer: " + decision + " to all, for the following Referendum:");
+				System.out.println("Title: " + this.title + ", Creation date: " + this.dateStart + "\n");
+			    
 			    ReferendumMessage decisionReferendumMessage = new ReferendumMessage(
 				referendum.getId().getTitle(),
 				4,
@@ -121,14 +126,15 @@ public class CheckTime extends Thread {
 					"foo.bar.baz", 
 					decisionReferendumMessage.toString());
         	} else {
-        		System.out.println("Internal error: CheckTime Thread, situation : " + situation + ", status: " + status);
+        		System.out.println("\nInternal error: CheckTime timeout, situation : " + this.printSituation() + ", status: " + status);
         	}
         } else if (situation == 3){
         	if(status == 4) {
-	        	System.out.println("CheckTime Thread, situation : " + situation + ", compute decision");
+	        	System.out.println("\nCheckTime timeout, situation : " + this.printSituation() + ".");
+	        	System.out.println("Compute decision:");
 	            receiver.computeDecision(consensusReferendum.decide(), 4, referendum);
         	} else {
-        		System.out.println("CheckTime Thread, situation : " + situation + ", status: " + status + ". Already decided");
+        		System.out.println("\nCheckTime timeout, situation : " + this.printSituation() + ", status: " + status + ". Already decided");
         	}
         }
     }
@@ -156,4 +162,17 @@ public class CheckTime extends Thread {
     public void setTitle(String title) {
 		this.title = title;
 	}
+    
+    private String printSituation() {
+    	if(this.situation == 1) {
+    		return "1 (end consensus proposals)";
+    	}
+    	if(this.situation == 2) {
+    		return "2 (end citizen votes)";
+    	}
+    	if(this.situation == 3) {
+    		return "3 (end consensus votes)";
+    	}
+    	return "";
+    }
 }

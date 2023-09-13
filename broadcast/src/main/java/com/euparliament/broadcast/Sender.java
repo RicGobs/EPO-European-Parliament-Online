@@ -32,6 +32,7 @@ public class Sender {
 	//for status 1 - messages for knowing the proposals
 	@PostMapping("/europeanReferendumProposal")
 	public String sendEuropeanReferendumProposal(@RequestBody Referendum referendum) {
+		System.out.println("\nSending an European Referendum to all. Title: " + referendum.getId().getTitle() + ", Argument: " + referendum.getArgument() + "\n");
 		referendum.setNationCreator(resourceMapping.getQueueName());
 		rabbitTemplate.convertAndSend(BroadcastApplication.topicExchangeName, "foo.bar.baz", referendum.toString());
 		return "Message sent: " + referendum.toString();
@@ -40,7 +41,8 @@ public class Sender {
 	//for status 2 - propose value for first consensus
 	@PostMapping("/europeanReferendumFirstConsensus")
 	public String referendum(@RequestBody ReferendumMessage referendumMessage) {
-		System.out.println("Sending referendum message : " + referendumMessage.toString());
+		System.out.println("\nSending the proposal answer: " + referendumMessage.getAnswer() + " to all, for the following Referendum:");
+		System.out.println("Title: " + referendumMessage.getTitle() + ", Creation date: " + referendumMessage.getDateStartConsensusProposal() + "\n");
 		// check if referendum.status = 1 (proposal answer not already sent)
 		Referendum referendum;
 		try {

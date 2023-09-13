@@ -106,6 +106,13 @@ public class ReferendumMessage {
 		this.isDecision = isDecision;
 	}
 	
+	public String printIsDecision() {
+		if(this.isDecision) {
+			return "DECIDED";
+		}
+		return "PROPOSAL";
+	}
+	
 	@Override
 	public String toString() {
 		Gson gson = new Gson();
@@ -116,6 +123,13 @@ public class ReferendumMessage {
 		Gson gson = new Gson();
 		ReferendumMessage referendumMessage = gson.fromJson(message, ReferendumMessage.class);
 		return referendumMessage;
+	}
+
+	public String printMessage() {
+		if(this.isDecision) {
+			return "Type : " + this.printIsDecision() + ", Decision: " + this.getAnswer() + "\n";
+		}
+		return "Type : " + this.printIsDecision() + ", Round :" + this.getRound() + ", Proposals: " + this.getProposals() + "\n";
 	}
 
 }

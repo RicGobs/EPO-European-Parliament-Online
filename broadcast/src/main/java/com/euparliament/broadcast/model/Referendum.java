@@ -47,7 +47,7 @@ public class Referendum {
 
 		this.id.setDateStartConsensusProposal(todayAsString); 
 
-        c.add(Calendar.MINUTE, 2);
+        c.add(Calendar.MINUTE, 3);
         String todayAsString1 = df.format(c.getTime());
         
 		c.add(Calendar.MINUTE, 1);
