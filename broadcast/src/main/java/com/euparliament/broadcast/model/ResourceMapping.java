@@ -12,13 +12,22 @@ public class ResourceMapping {
     String urlReferendum;
     String urlConsensusReferendum;
     String queueName;
-	
-    public ResourceMapping(@Value("${rest.url}") String restUrl, @Value("${queue.name}") String queueName) {
+	Integer population;
+	String listNations;
+    
+    public ResourceMapping(
+    		@Value("${rest.url}") String restUrl, 
+    		@Value("${queue.name}") String queueName,
+    		@Value("${population}") String population,
+    		@Value("${list.nations}") String listNations
+    ){
     	this.restTemplate = new RestTemplate();
     	this.restUrl = restUrl;
     	this.urlReferendum = restUrl + "/referendum";
     	this.urlConsensusReferendum = restUrl + "/consensusReferendum";
     	this.queueName = queueName;
+    	this.population = Integer.valueOf(population);
+    	this.listNations = listNations;
     }
     
     public String getUrlReferendum() {
@@ -35,6 +44,14 @@ public class ResourceMapping {
     
     public RestTemplate getRestTemplate() {
     	return this.restTemplate;
+    }
+    
+    public Integer getPopulation() {
+    	return this.population;
+    }
+    
+    public String getListNations() {
+    	return this.listNations;
     }
     
 } 

@@ -35,9 +35,9 @@ public class Referendum {
 		this.id = new ReferendumId();
     	this.status = 1;
 
-		this.votesTrue = 6;
-		this.votesFalse = 3;
-		this.population = 10;
+		this.votesTrue = 0;
+		this.votesFalse = 0;
+		this.population = 0;
 
 		String pattern = "dd/MM/yyyy HH:mm:ss";
 		DateFormat df = new SimpleDateFormat(pattern);
@@ -89,6 +89,10 @@ public class Referendum {
 		return this.id;
 	}
 	
+	public Integer getPopulation() {
+		return this.population;
+	}
+
     // ------------------------------------------------------
 
 	public void setId(ReferendumId id) {
@@ -121,6 +125,10 @@ public class Referendum {
     
 	public void setDateEndConsensusResult(String dateEndConsensusResult) {
 		this.dateEndConsensusResult = dateEndConsensusResult;
+	}
+	
+	public void setPopulation(Integer population) {
+		this.population = population;
 	}
 
 	public void setStatusByProposalConsensusDecision(Boolean decision) {

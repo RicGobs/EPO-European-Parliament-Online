@@ -10,6 +10,9 @@ class Referendum {
 
   	private @Id String title;
   	private @Id String dateStartConsensusProposal; //first date for vote the proposal
+	private Integer votesTrue;
+	private Integer votesFalse;
+	private Integer population;
   	private Integer status;
     private String argument; //what is about the referendum
 	private String nationCreator; //Nation which has done the proposal
@@ -98,6 +101,30 @@ class Referendum {
 
 	public void setDateEndConsensusResult(String dateEndConsensusResult) {
 		this.dateEndConsensusResult = dateEndConsensusResult;
+	}
+
+	public Integer getVotesTrue() {
+		return votesTrue;
+	}
+
+	public void setVotesTrue(Integer votesTrue) {
+		this.votesTrue = votesTrue;
+	}
+
+	public Integer getVotesFalse() {
+		return votesFalse;
+	}
+
+	public void setVotesFalse(Integer votesFalse) {
+		this.votesFalse = votesFalse;
+	}
+
+	public Integer getPopulation() {
+		return population;
+	}
+
+	public void setPopulation(Integer population) {
+		this.population = population;
 	}
 
 }

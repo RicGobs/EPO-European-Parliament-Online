@@ -37,17 +37,28 @@ public class Receiver {
 
 		try {
 			Referendum referendum = Referendum.toReferendum(message);
+  			referendum.setPopulation(this.resourceMapping.getPopulation());
+  			
 			System.out.println("\nRecived a new European Referendum by the Nation " + referendum.getNationCreator());
 			System.out.println("Title: " + referendum.getId().getTitle() + ", Argument: " + referendum.getArgument());
 			System.out.println("Please answer to this referendum by: " + referendum.getDateEndConsensusProposal() + "\n");
 
-			CheckTime myThread = new CheckTime(referendum.getId().getTitle(), referendum.getId().getDateStartConsensusProposal(), referendum.getDateEndConsensusProposal(),1,this);
+			CheckTime myThread = new CheckTime(
+					referendum.getId().getTitle(), 
+					referendum.getId().getDateStartConsensusProposal(), 
+					referendum.getDateEndConsensusProposal(),1,this);
   			myThread.start();
 
-			myThread = new CheckTime(referendum.getId().getTitle(), referendum.getId().getDateStartConsensusProposal(), referendum.getDateEndResult(),2,this);
+			myThread = new CheckTime(
+					referendum.getId().getTitle(), 
+					referendum.getId().getDateStartConsensusProposal(), 
+					referendum.getDateEndResult(),2,this);
   			myThread.start();
 
-			myThread = new CheckTime(referendum.getId().getTitle(), referendum.getId().getDateStartConsensusProposal(), referendum.getDateEndConsensusResult(),3,this);
+			myThread = new CheckTime(
+					referendum.getId().getTitle(), 
+					referendum.getId().getDateStartConsensusProposal(), 
+					referendum.getDateEndConsensusResult(),3,this);
   			myThread.start();
 
 			// store the referendum proposal
@@ -58,7 +69,8 @@ public class Receiver {
     		ConsensusReferendum consensusReferendum = new ConsensusReferendum(
     				referendum.getId().getTitle(),
     				referendum.getId().getDateStartConsensusProposal(),
-    				2 // first consensus
+    				2, // first consensus
+    				this.resourceMapping.getListNations()
     		);
     		HttpEntity<ConsensusReferendum> consensusReferendumEntity = new HttpEntity<ConsensusReferendum>(consensusReferendum);
     		restTemplate.postForObject(resourceMapping.getUrlConsensusReferendum(), consensusReferendumEntity, String.class);
@@ -179,7 +191,8 @@ public class Receiver {
 			ConsensusReferendum newConsensusReferendum = new ConsensusReferendum(
 					referendum.getId().getTitle(),
 					referendum.getId().getDateStartConsensusProposal(),
-					4
+					4,
+					resourceMapping.getListNations()
 			);
 			HttpRequest.putConsensusReferendum(newConsensusReferendum, resourceMapping);
 		}

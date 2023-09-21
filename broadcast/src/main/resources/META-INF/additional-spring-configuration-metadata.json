@@ -8,5 +8,15 @@
     "name": "rest.url",
     "type": "java.lang.String",
     "description": "A description for 'rest.url'"
+  },
+  {
+    "name": "list.nations",
+    "type": "java.lang.String",
+    "description": "A description for 'list.nations'"
+  },
+  {
+    "name": "population",
+    "type": "java.lang.String",
+    "description": "A description for 'population'"
   }
 ]}

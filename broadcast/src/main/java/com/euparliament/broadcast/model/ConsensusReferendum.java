@@ -19,11 +19,11 @@ public class ConsensusReferendum {
 
 	public ConsensusReferendum() {}
 	
-	public ConsensusReferendum(String title, String dateStart, Integer status) {
+	public ConsensusReferendum(String title, String dateStart, Integer status, String listNations) {
 		this.id = new ConsensusReferendumId(title, dateStart);
 		this.status = status;
 		
-		this.correct = "ita,ger,fra"; // TODO: get from docker-compose-all.yaml
+		this.correct = listNations;
 		this.decision = null;
 		this.round = 1;
 		
@@ -102,13 +102,20 @@ public class ConsensusReferendum {
 		// insert the new proposal
 		String firstRound = rounds.get(0);
 		List<String> nationsRoundList = Parse.splitStringByComma(firstRound);
-		nationsRoundList.set(position, proposal.toString());
+		nationsRoundList.set(position, this.proposalToString(proposal));
 		String newProposalsFirstRound = Parse.joinListByComma(nationsRoundList);
 		// update the proposal
 		rounds.set(0, newProposalsFirstRound);
 		this.proposals = String.join(";", rounds);
 	}
 	
+
+	private String proposalToString(Boolean proposal) {
+		if(proposal == null) {
+			return "";
+		}
+		return proposal.toString();
+	}
 
 	public void updateProposals(String proposals, Integer round) {
 		// get rounds

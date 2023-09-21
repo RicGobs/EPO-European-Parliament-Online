@@ -7,25 +7,26 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import com.euparliament.broadcast.model.ResourceMapping;
 
 @SpringBootApplication
 public class BroadcastApplication {
 
 	public static final String topicExchangeName = "referendum-exchange";
 
-	private String queueName;
+	@Autowired
+	ResourceMapping resourceMapping;
   
-	public BroadcastApplication(@Value("${queue.name}") String queueName) {
-		this.queueName = queueName;
-	}
+	public BroadcastApplication() {}
 
 	@Bean
 	Queue queue() {
-		return new Queue(queueName, false);
+		return new Queue(this.resourceMapping.getQueueName(), false);
 	}
 
 	@Bean
@@ -43,7 +44,7 @@ public class BroadcastApplication {
 			MessageListenerAdapter listenerAdapter) {
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
 		container.setConnectionFactory(connectionFactory);
-		container.setQueueNames(queueName);
+		container.setQueueNames(this.resourceMapping.getQueueName());
 		container.setMessageListener(listenerAdapter);
 		return container;
 	}
