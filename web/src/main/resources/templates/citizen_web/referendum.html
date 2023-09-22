@@ -1,0 +1,63 @@
+<html>
+<head>
+
+	<link rel="stylesheet" href="citizen_style.css">
+	<link rel="stylesheet" th:href="@{/css/citizen_style.css}">
+
+</head>
+<body>
+	
+	<!--Navbar-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<div class="navbar">
+	<a class="active" href="nav-link"><i class="fa fa-fw fa-home"></i> Home</a>
+	<div class="dropdown2">
+		<button class="btn"><i class="fa fa-fw fa-user"></i>User</button>
+		<div class="dropdown-menu">
+			<a href="nav-link"></i>Logout</a>
+		</div>
+		</div>
+	<div class="dropdown">
+		<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
+		<div class="dropdown-menu">
+			<a href="referendum-idea"></i>Referendum Idea</a>
+			<a href="propose-idea">Propose Idea</a>
+		</div>
+		</div>
+		<a href="nav-link"><i class="fa fa-fw fa-gear"></i> Settings</a>
+	</div>
+
+	<!-- Referendum Boxes -->
+
+	<h3 style="text-align: center" class="text">Referendum</h3>
+
+	<div class="box"> 
+		<div>
+			<img src="italy.png" style="float: right;">
+			<h2>Referendum 1</h2>
+			<p class="text">This referendum is about ... </p>
+			<p style="float: right;">Valid until 30/09/2023, 23:59</p>
+		</div>
+		<div style="text-align: left;">
+			<button class="button">Vote</button>
+		</div>
+	</div>
+
+
+	<!-- altre boxes d'esempio -->
+	<br>
+	<div class="box"> 
+		<div>
+			<img src="italy.png" style="float: right">
+			<h2 id="boxTitle">Referendum 2</h2>
+			<p class="text">This referendum is about ... </p>
+			<p style="float: right;">Expired</p>
+		</div>
+		<div style="text-align: left;">
+			<button class="button">Results</button>
+		</div>
+	</div>
+	
+</body>
+</html>
