@@ -1,0 +1,64 @@
+<html>
+<head>
+
+	<link rel="stylesheet" href="citizen_style.css">
+	<link rel="stylesheet" th:href="@{/css/citizen_style.css}">
+	<script type="text/javascript" th:src="@{/js/file.js}"></script>
+
+</head>
+<body>
+	<!--Navbar-->
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<div class="navbar">
+	<a class="active" href="home.html"><i class="fa fa-fw fa-home"></i> Home</a>
+	<div class="dropdown2">
+		<button class="btn"><i class="fa fa-fw fa-user"></i>User</button>
+		<div class="dropdown-menu">
+			<a href=""></i>Logout</a>
+		</div>
+		</div>
+	<div class="dropdown">
+		<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
+		<div class="dropdown-menu">
+			<a href="referendum_ideas.html"></i>Referendum Ideas</a>
+			<a href="propose_idea.html">Propose Idea</a>
+		</div>
+		</div>
+		<a href=""><i class="fa fa-fw fa-gear"></i> Settings</a>
+	</div>
+
+	<!-- Box -->	
+	<br><br>	
+	<div class="box"> 
+		<div class="img">
+			<img style="float: right;" src="european-union.png">
+		<h3>Referendum 2</h3>
+		<p class="text">This referendum propose to ... </p>
+		<p style="float: right;">Valid until 31/12/2023, 23:59</p>
+		</div>
+		<br>
+	</div>
+
+	<!-- Poll -->
+	<section>
+		<div>
+			<div>
+			<br><br><br><br>
+			<h1>Voting results</h1>
+			<div>
+				<h3>Positive votes</h3>
+				<p id="votes">numero dei voti positivi</p>
+			</div>
+			
+			<div>
+				<div>
+					<h3>Total voters</h3>
+					<p id="voters">numero totale dei votanti</p>
+				</div>
+		</div>
+	</section>
+	
+</body>
+</html>

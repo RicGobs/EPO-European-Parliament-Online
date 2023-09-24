@@ -1,0 +1,64 @@
+<html>
+<head>
+
+	<link rel="stylesheet" href="citizen_style.css">
+	<link rel="stylesheet" th:href="@{/css/citizen_style.css}">
+
+</head>
+<body>
+
+
+	<!--Navbar-->
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<div class="navbar">
+	<a class="active" href="home.html"><i class="fa fa-fw fa-home"></i> Home</a>
+	<div class="dropdown2">
+		<button class="btn"><i class="fa fa-fw fa-user"></i>User</button>
+		<div class="dropdown-menu">
+		  <a href=""></i>Logout</a>
+		</div>
+	  </div>
+	<div class="dropdown">
+		<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
+		<div class="dropdown-menu">
+		  <a href="referendum_ideas.html"></i>Referendum Ideas</a>
+		  <a href="propose_idea.html">Propose Idea</a>
+		</div>
+	  </div>
+	  <a href=""><i class="fa fa-fw fa-gear"></i> Settings</a>
+	</div>
+
+	
+	<!--Text Box for Ideas Proposals-->
+	<div class="center">
+		<br><br>
+		<h3 id="notifications" style="text-align: center;">Fill and submit the form to propose your idea</h3>
+		<br><br>
+		<form action="" onsubmit="confirmAction()">
+			<label class="text" for="title">Title</label><br>
+			<textarea class="textarea" name="title" rows="1" cols="60" required></textarea><br><br>
+			<label class="text" for="text">Text</label><br>
+			<textarea class="textarea" name="message" rows="10" cols="60" required></textarea><br><br>
+		</form>
+		<div style="text-align: center;">
+			<button class="button" type="submit" onclick="location.href='home';">Submit</button>
+		</div>
+	</div>
+
+	<script>
+		function confirmAction() {
+	        let confirmAction = confirm("Are you sure to propose this referendum idea?");
+	        if (confirmAction) {
+	          alert("Referendum idea proposed.");
+	        } else {
+	          alert("Proposal canceled.");
+	        }
+      	}
+	</script>
+	<!-- Redirect to referendum onclick="location.href='referendum';" in case of success -->
+
+
+</body>
+</html>
