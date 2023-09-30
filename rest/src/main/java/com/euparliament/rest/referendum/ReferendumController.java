@@ -64,6 +64,38 @@ class ReferendumController {
 		return repository.findByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal);
 	}
 
+	@GetMapping("/voteTrue")
+	void voteTrueReferendum(@RequestParam("title") String title, @RequestParam("dateStartConsensusProposal") String dateStartConsensusProposal) 
+			throws ReferendumNotFoundException {
+		if(!repository.existsByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal)) {
+			throw new ResponseStatusException(
+					  HttpStatus.NOT_FOUND, "Referendum not found"
+					);
+		}
+		else {
+			Referendum referendum = repository.findByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal);
+			int numVotesTrue = referendum.getVotesTrue();
+			referendum.setVotesTrue(numVotesTrue + 1);
+			repository.save(referendum);
+		}
+	}
+	
+	@GetMapping("/voteFalse")
+	void voteTrueReferendum(@RequestParam("title") String title, @RequestParam("dateStartConsensusProposal") String dateStartConsensusProposal) 
+			throws ReferendumNotFoundException {
+		if(!repository.existsByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal)) {
+			throw new ResponseStatusException(
+					  HttpStatus.NOT_FOUND, "Referendum not found"
+					);
+		}
+		else {
+			Referendum referendum = repository.findByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal);
+			int numVotesFalse = referendum.getVotesFalse();
+			referendum.setVotesFalse(numVotesFalse + 1);
+			repository.save(referendum);
+		}
+	}
+
 	@PutMapping("/referendum")
 	Referendum modifyReferendum(@RequestBody Referendum referendum) {
 		return repository.save(referendum);
