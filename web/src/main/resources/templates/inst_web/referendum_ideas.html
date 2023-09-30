@@ -1,0 +1,97 @@
+<html>
+<head>
+
+	<link rel="stylesheet" href="inst_style.css">
+	<link rel="stylesheet" th:href="@{/css/inst_style.css}">
+	<script type="text/javascript" th:src="@{/js/file.js}"></script>
+
+</head>
+<body>
+	<!--Navbar-->
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<div class="navbar">
+	<a class="active" href="home.html"><i class="fa fa-fw fa-home"></i> Home</a>
+	<div class="dropdown2">
+		<button class="btn"><i class="fa fa-fw fa-institution"></i>ISTUser</button>
+		<div class="dropdown-menu">
+			<a href=""></i>Logout</a>
+		</div>
+		</div>
+	<div class="dropdown">
+		<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
+		<div class="dropdown-menu">
+			<a onclick="location.href='/citizen/referendum';"></i>All Referenda</a>
+			<a onclick="location.href='/citizen/ideas';"></i>Referendum Ideas</a>
+			<a onclick="location.href='/citizen/propose';">Propose Referendum</a>
+		</div>
+		</div>
+		<a href=""><i class="fa fa-fw fa-gear"></i> Settings</a>
+	</div>
+
+	<!-- BOX VALID + THRESHOLD REACHED -->		
+	<br>
+	<div class="box"> 
+		<div>
+			<h2 style="color: white; background-color: green; -webkit-text-stroke: 0.2px black;">&nbsp&nbspThreshold reached!&nbsp&nbsp</h2>
+			<img style="float: right;" src="italy.png">
+			<h3>Referendum Idea 1</h3> 
+			<p class="text">This referendum idea is about ... </p>
+			<p style="float: right;">Valid until 31/12/2023, 23:59</p>
+		</div>
+		<div style="text-align: left;">
+			<button class="button" onclick="alert('Thank you!Your vote has been correctly registered!');">Support</button>
+			<button class="button" onclick="location.href='/citizen/idea_results';">Results</button>	
+			<button class="button" onclick="confirmAction()">Publish</button>
+		</div>
+	</div>
+
+	<br>
+	<div class="box"> 
+		<div>
+			<img style="float: right;" src="italy.png">
+			<h3>Referendum Idea 1</h3> 
+			<p class="text">This referendum idea is about ... </p>
+			<p style="float: right;">Valid until 31/12/2023, 23:59</p>
+		</div>
+		<div style="text-align: left;">
+			<button class="button" onclick="alert('Thank you!Your vote has been correctly registered!');">Support</button>
+			<button class="button" onclick="location.href='/citizen/idea_results';">Results</button>	
+		</div>
+	</div>
+
+	<!-- BOX EXPIRED (NO THRESHOLD)-->
+	<br>
+	<div class="box"> <!-- forse da togliere l'id? -->
+		<div>
+			<img style="float: right;" src="european-union.png">
+			<h3>Referendum Idea 2</h3> 
+			<p class="text">This referendum idea is about ... </p>
+			<p style="float: right;">Expired</p>
+		</div>
+		<div style="text-align: left;">
+			<button class="button" onclick="location.href='/citizen/idea_results';">Results</button>	
+		</div>
+	</div>
+
+	<script>
+		function confirmAction() {
+	        let confirmAction = confirm("Are you sure to publish this referendum?");
+	        if (confirmAction) {
+	          alert("Referendum published.");
+	        } else {
+	          alert("Publication cancelled.");
+	        }
+      	}
+	</script>
+
+
+
+		
+	
+	
+	
+	
+</body>
+</html>

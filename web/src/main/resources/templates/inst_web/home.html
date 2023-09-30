@@ -1,0 +1,62 @@
+<html>
+<head>
+
+	<link rel="stylesheet" href="inst_style.css">
+	<link rel="stylesheet" th:href="@{/css/inst_style.css}">
+	<script type="text/javascript" th:src="@{/js/file.js}"></script>
+
+</head>
+<body>
+
+	<!--Navbar-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<div class="navbar">
+	<a class="active" href="home.html"><i class="fa fa-fw fa-home"></i> Home</a>
+	<div class="dropdown2">
+		<button class="btn"><i class="fa fa-fw fa-institution"></i>ISTUser</button>
+		<div class="dropdown-menu">
+		  <a href="">Logout</a>
+		</div>
+	  </div>
+	<div class="dropdown">
+		<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
+		<div class="dropdown-menu">
+			<a onclick="location.href='/citizen/referendum';"></i>All Referenda</a>
+			<a onclick="location.href='/citizen/ideas';"></i>Referendum Ideas</a>
+			<a onclick="location.href='/citizen/propose';">Propose Referendum</a>
+		</div>
+	  </div>
+	  <a href=""><i class="fa fa-fw fa-gear"></i>Settings</a>
+	</div>
+
+<!-- Boxes-->
+	<h3 class="text" style="text-align: center;">Latest notifications</h3>
+
+	<br>
+	<div class="box"> 
+		<h2>New Referendum</h2>
+		<h3>Referendum</h3>
+		<p style="float: right;">21/08/2023, 17:43</p>
+		<br>
+	</div>
+
+	<br>
+	<div class="box"> 
+		<h2>New Referendum Idea</h2>
+		<h3>Referendum Idea</h3>
+		<p style="float: right;">21/08/2023, 16:24</p>
+		<br>
+	</div>
+
+	<br>
+	<div class="box"> 
+		<h2>Threshold Reached</h2>
+		<h3>Referendum Idea</h3>
+		<p style="float: right;">21/08/2023, 15:13</p>
+		<br>
+	</div>
+
+
+</body>
+</html>
