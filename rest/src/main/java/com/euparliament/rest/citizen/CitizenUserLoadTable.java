@@ -7,14 +7,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class LoadDatabase {
+class CitizenUserLoadTable {
 
-  private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
+  private static final Logger log = LoggerFactory.getLogger(CitizenUserLoadTable.class);
 
   @Bean
-  CommandLineRunner initDatabase(CitizenUserRepository repository) {
+  CommandLineRunner initDatabaseCitizenUser(CitizenUserRepository repository) {
 
-    return args -> {
-    };
+    return args -> {};
   }
 }
