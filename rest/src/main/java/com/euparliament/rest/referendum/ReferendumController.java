@@ -81,7 +81,7 @@ class ReferendumController {
 	}
 	
 	@GetMapping("/voteFalse")
-	void voteTrueReferendum(@RequestParam("title") String title, @RequestParam("dateStartConsensusProposal") String dateStartConsensusProposal) 
+	void voteFalseReferendum(@RequestParam("title") String title, @RequestParam("dateStartConsensusProposal") String dateStartConsensusProposal) 
 			throws ReferendumNotFoundException {
 		if(!repository.existsByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal)) {
 			throw new ResponseStatusException(
