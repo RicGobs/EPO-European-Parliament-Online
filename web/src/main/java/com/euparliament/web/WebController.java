@@ -63,33 +63,6 @@ public class WebController {
 		return "citizen_web/referendum";
 	}
 	
-	@GetMapping("/citizen/ideas")
-	public String citizen_referendum_ideas(
-			@RequestParam(name="name", required=false, defaultValue="") String name,
-			Model model
-	){
-		model.addAttribute("name", name);
-		return "citizen_web/referendum_ideas";
-	}
-	
-	@GetMapping("/citizen/propose")
-	public String citizen_propose(
-			@RequestParam(name="name", required=false, defaultValue="") String name,
-			Model model
-	){
-		model.addAttribute("name", name);
-		return "citizen_web/propose_idea";
-	}
-	
-	@GetMapping("/citizen/idea_results")
-	public String citizen_idea_results(
-			@RequestParam(name="name", required=false, defaultValue="") String name,
-			Model model
-	){
-		model.addAttribute("name", name);
-		return "citizen_web/referendum_idea_results";
-	}
-	
 	@GetMapping("/citizen/results")
 	public String citizen_referendum_results(
 			@RequestParam(name="name", required=false, defaultValue="") String name,
@@ -135,15 +108,6 @@ public class WebController {
 		return "inst_web/referendum";
 	}
 	
-	@GetMapping("/inst/ideas")
-	public String inst_referendum_ideas(
-			@RequestParam(name="name", required=false, defaultValue="") String name,
-			Model model
-	){
-		model.addAttribute("name", name);
-		return "inst_web/referendum_ideas";
-	}
-	
 	@GetMapping("/inst/propose")
 	public String inst_propose(
 			@RequestParam(name="name", required=false, defaultValue="") String name,
@@ -151,15 +115,6 @@ public class WebController {
 	){
 		model.addAttribute("name", name);
 		return "inst_web/propose_referendum";
-	}
-	
-	@GetMapping("/inst/idea_results")
-	public String inst_idea_results(
-			@RequestParam(name="name", required=false, defaultValue="") String name,
-			Model model
-	){
-		model.addAttribute("name", name);
-		return "inst_web/referendum_idea_results";
 	}
 	
 	@GetMapping("/inst/results")
