@@ -1,7 +1,6 @@
 <html>
 <head>
 
-	<link rel="stylesheet" href="inst_style.css">
 	<link rel="stylesheet" th:href="@{/css/inst_style.css}">
 	<script type="text/javascript" th:src="@{/js/file.js}"></script>
 
@@ -33,32 +32,22 @@
 	</div>
 
 	
-	<!--Text Box for Ideas Proposals-->
+	<!--Text Box for Referendum-->
 	<div class="center">
 		<br><br>
 		<h3 id="notifications">Fill and submit the form to propose your referendum</h3>
 		<br><br>
-		<form onsubmit="confirmAction()">
+		<form onsubmit="submit_referendum();">
 			<label class="text" for="title">Title</label><br>
-			<textarea class="textarea" name="title" rows="1" cols="60" required></textarea><br><br>
-			<label class="text" for="text">Text</label><br>
-			<textarea class="textarea" name="message" rows="10" cols="60" required></textarea><br><br>
+			<textarea id="title" class="textarea" name="title" rows="1" cols="60" required></textarea><br><br>
+			<label class="text" for="argument">Text</label><br>
+			<textarea id="argument" class="textarea" name="message" rows="10" cols="60" required></textarea><br><br>
 		<div style="text-align: center;">
 			<button class="button" type="submit">Submit</button>
 		</div>
 	</form>
 	</div>
 
-	<script>
-		function confirmAction() {
-	        let confirmAction = confirm("Are you sure to propose this referendum?");
-	        if (confirmAction) {
-	          alert("Referendum proposed.");
-	        } else {
-	          alert("Proposal canceled.");
-	        }
-      	}
-	</script>
 	<!-- Redirect to referendum onclick="location.href='referendum';" in case of success -->
 
 
