@@ -14,7 +14,10 @@ class InstUserLoadTable {
   @Bean
   CommandLineRunner initDatabaseInstUser(InstUserRepository repository) {
 
-    return args -> {};
+    return args -> {
+        repository.save(new InstUser("1", "1"));
+        repository.save(new InstUser("2", "2"));
+    };
   }
 }
 

@@ -27,7 +27,7 @@ class InstUser {
   InstUser() {}
 
   InstUser(String name, String surname, String gender, Date birthdate, String nationOfBirth, String regionOfBirth, 
-		  String cityOfBirth, String region, String city, String reprsentativeID, String email, int cellular, String password) {
+		  String cityOfBirth, String region, String city, String representativeID, String email, int cellular, String password) {
 
 	  this.name = name;
 	  this.surname = surname;
@@ -60,6 +60,11 @@ class InstUser {
 		  this.representativeID = representativeID;
 		  this.email = email;
 		  this.password = password;
+  }
+
+  public InstUser(String representativeID, String password) {
+	this.representativeID = representativeID;
+	this.password = password;
   }
 
   public String getName() {

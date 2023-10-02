@@ -36,7 +36,7 @@ class InstUserController {
   
   // Single item
   
-  @GetMapping("/reprsentatives/{id}")
+  @GetMapping("/representatives/{id}")
   InstUser one(@PathVariable String id) throws InstUserNotFoundException {
     
     return repository.findById(id)

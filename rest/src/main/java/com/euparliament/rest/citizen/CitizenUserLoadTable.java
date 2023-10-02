@@ -14,6 +14,9 @@ class CitizenUserLoadTable {
   @Bean
   CommandLineRunner initDatabaseCitizenUser(CitizenUserRepository repository) {
 
-    return args -> {};
+    return args -> {
+        repository.save(new CitizenUser("1", "1"));
+        repository.save(new CitizenUser("2", "2"));
+    };
   }
 }

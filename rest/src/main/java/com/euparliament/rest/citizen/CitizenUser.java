@@ -62,6 +62,11 @@ class CitizenUser {
 		  this.password = password;
   }
 
+  public CitizenUser(String nationalID, String password) {
+	this.nationalID = nationalID;
+	this.password = password;
+  }
+
   public String getName() {
     return this.name;
   }
