@@ -67,35 +67,53 @@ class ReferendumController {
 	}
 
 	@GetMapping("/voteTrue")
-	void voteTrueReferendum(@RequestParam("title") String title, @RequestParam("dateStartConsensusProposal") String dateStartConsensusProposal) 
-			throws ReferendumNotFoundException {
+	Referendum voteTrueReferendum(
+			@RequestParam("title") String title, 
+			@RequestParam("dateStartConsensusProposal") String dateStartConsensusProposal,
+			@RequestParam("nationalID") String nationalID)
+	throws ReferendumNotFoundException {
 		if(!repository.existsByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal)) {
 			throw new ResponseStatusException(
 					  HttpStatus.NOT_FOUND, "Referendum not found"
 					);
 		}
-		else {
-			Referendum referendum = repository.findByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal);
-			int numVotesTrue = referendum.getVotesTrue();
-			referendum.setVotesTrue(numVotesTrue + 1);
-			repository.save(referendum);
+		Referendum referendum = repository.findByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal);
+		
+		if(referendum.getVoteCitizens().contains(nationalID)) {
+			throw new ResponseStatusException(
+					  HttpStatus.BAD_REQUEST, "Citizen has already voted"
+					);
 		}
+		System.out.println("\nCitizen " + nationalID + " has voted true");
+		referendum.getVoteCitizens().add(nationalID);
+		referendum.setVotesTrue(referendum.getVotesTrue() + 1);
+		repository.save(referendum);
+		return referendum;
 	}
 	
 	@GetMapping("/voteFalse")
-	void voteFalseReferendum(@RequestParam("title") String title, @RequestParam("dateStartConsensusProposal") String dateStartConsensusProposal) 
-			throws ReferendumNotFoundException {
+	Referendum voteFalseReferendum(
+			@RequestParam("title") String title, 
+			@RequestParam("dateStartConsensusProposal") String dateStartConsensusProposal,
+			@RequestParam("nationalID") String nationalID)
+	throws ReferendumNotFoundException {
 		if(!repository.existsByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal)) {
 			throw new ResponseStatusException(
 					  HttpStatus.NOT_FOUND, "Referendum not found"
 					);
 		}
-		else {
-			Referendum referendum = repository.findByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal);
-			int numVotesFalse = referendum.getVotesFalse();
-			referendum.setVotesFalse(numVotesFalse + 1);
-			repository.save(referendum);
+		Referendum referendum = repository.findByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal);
+		
+		if(referendum.getVoteCitizens().contains(nationalID)) {
+			throw new ResponseStatusException(
+					  HttpStatus.BAD_REQUEST, "Citizen has already voted"
+					);
 		}
+		System.out.println("\nCitizen " + nationalID + " has voted false");
+		referendum.getVoteCitizens().add(nationalID);
+		referendum.setVotesFalse(referendum.getVotesFalse() + 1);
+		repository.save(referendum);
+		return referendum;
 	}
 
 	@PutMapping("/referendum")

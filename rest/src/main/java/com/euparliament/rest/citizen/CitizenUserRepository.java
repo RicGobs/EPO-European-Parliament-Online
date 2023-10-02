@@ -1,11 +1,7 @@
-package com.euparliament.rest.referendum;
+package com.euparliament.rest.citizen;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-interface ReferendumRepository extends JpaRepository<Referendum, Long> {
-
-	Referendum findByTitleAndDateStartConsensusProposal(String title, String dateStartConsensusProposal);
-
-	boolean existsByTitleAndDateStartConsensusProposal(String title, String dateStartConsensusProposal);
-
+interface CitizenUserRepository extends JpaRepository<CitizenUser, String> {
+	
 }

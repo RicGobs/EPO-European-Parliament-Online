@@ -1,5 +1,7 @@
 package com.euparliament.rest.referendum;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -12,6 +14,7 @@ class Referendum {
   	private @Id String dateStartConsensusProposal; //first date for vote the proposal
 	private Integer votesTrue;
 	private Integer votesFalse;
+	private List<String> voteCitizens;
 	private Integer population;
   	private Integer status;
     private String argument; //what is about the referendum
@@ -23,7 +26,17 @@ class Referendum {
 
 	public Referendum() {}
 
-	public Referendum(String title, Integer status, String argument, String firstNation, String dateStartConsensusProposal, String dateEndConsensusProposal, String dateEndResult, String dateEndConsensusResult) {
+	public Referendum(
+			String title, 
+			Integer status, 
+			String argument, 
+			String firstNation, 
+			String dateStartConsensusProposal, 
+			String dateEndConsensusProposal, 
+			String dateEndResult, 
+			String dateEndConsensusResult,
+			List<String> voteCitizens
+	) {
 
 		this.title = title;
 		this.status = status;
@@ -33,6 +46,7 @@ class Referendum {
 		this.dateEndConsensusProposal = dateEndConsensusProposal; 
 		this.dateEndResult = dateEndResult; 
     	this.dateEndConsensusResult = dateEndConsensusResult;
+    	this.voteCitizens = voteCitizens;
 	}
 	
 	public ReferendumId getId() {
@@ -73,6 +87,9 @@ class Referendum {
 
 	public String getDateEndConsensusResult() {
 		return this.dateEndConsensusResult;
+	}
+	public List<String> getVoteCitizens() {
+		return this.voteCitizens;
 	}
 
 	public void setStatus(Integer status) {
@@ -127,4 +144,7 @@ class Referendum {
 		this.population = population;
 	}
 
+	public void setVoteCitizens(List<String> voteCitizens) {
+		this.voteCitizens = voteCitizens;
+	}
 }

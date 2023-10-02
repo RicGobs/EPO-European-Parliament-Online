@@ -5,8 +5,10 @@ import com.google.gson.JsonSyntaxException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 
@@ -23,6 +25,7 @@ public class Referendum {
 
 	private Integer votesTrue;
 	private Integer votesFalse;
+	private List<String> voteCitizens;
 	private Integer population;
 
 	private String argument; //what is about the referendum
@@ -37,6 +40,7 @@ public class Referendum {
 
 		this.votesTrue = 0;
 		this.votesFalse = 0;
+		this.voteCitizens = new ArrayList<String>();
 		this.population = 0;
 
 		String pattern = "dd/MM/yyyy HH:mm:ss";
@@ -197,5 +201,13 @@ public class Referendum {
 			throw new JsonSyntaxException("Message is not instanceof Referendum");
 		}
 		return referendum;
+	}
+
+	public List<String> getVoteCitizens() {
+		return voteCitizens;
+	}
+
+	public void setVoteCitizens(List<String> voteCitizens) {
+		this.voteCitizens = voteCitizens;
 	}
 }
