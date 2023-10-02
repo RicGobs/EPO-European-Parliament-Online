@@ -88,6 +88,14 @@ public class Referendum {
 	public ReferendumId getId() {
 		return this.id;
 	}
+
+	public Integer getVotesTrue() {
+		return votesTrue;
+	}
+
+	public Integer getVotesFalse() {
+		return votesFalse;
+	}
 	
 	public Integer getPopulation() {
 		return this.population;
@@ -125,6 +133,14 @@ public class Referendum {
     
 	public void setDateEndConsensusResult(String dateEndConsensusResult) {
 		this.dateEndConsensusResult = dateEndConsensusResult;
+	}
+
+	public void setVotesTrue(Integer votesTrue) {
+		this.votesTrue = votesTrue;
+	}
+
+	public void setVotesFalse(Integer votesFalse) {
+		this.votesFalse = votesFalse;
 	}
 	
 	public void setPopulation(Integer population) {
