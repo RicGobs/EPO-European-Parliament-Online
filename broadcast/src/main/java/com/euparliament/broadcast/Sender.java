@@ -4,6 +4,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,7 @@ public class Sender {
 	}
 
 	//for status 1 - messages for knowing the proposals
+	@CrossOrigin()
 	@PostMapping("/europeanReferendumProposal")
 	public String sendEuropeanReferendumProposal(@RequestBody Referendum referendum) {
 		System.out.println("\nSending an European Referendum to all. Title: " + referendum.getId().getTitle() + ", Argument: " + referendum.getArgument() + "\n");

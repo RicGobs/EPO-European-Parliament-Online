@@ -41,7 +41,7 @@ function submit_referendum() {
 		if (country == "FR") URL = BROADCAST_FRA_URL.concat('europeanReferendumProposal');
 		if (country == "DE") URL = BROADCAST_GER_URL.concat('europeanReferendumProposal');
 
-		fetch(URL), {
+		fetch(URL, {
 			method: 'POST',
 			headers: {
 			  'Content-type': 'application/json',
@@ -51,7 +51,7 @@ function submit_referendum() {
 			  'title': title,
 			  'argument': argument
 			})
-		};
+		});
 		  
 		alert("Referendum proposed.");
 		location.href = 'inst/home';
