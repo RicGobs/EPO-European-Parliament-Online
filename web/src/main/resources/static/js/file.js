@@ -1,3 +1,13 @@
+var country = "IT" //default
+
+var REST_ITA_URL = 'http://localhost:8081/';
+var REST_FRA_URL = 'http://localhost:8085/';
+var REST_GER_URL = 'http://localhost:8089/';
+
+var BROADCAST_ITA_URL = 'http://localhost:8082/';
+var BROADCAST_FRA_URL = 'http://localhost:8086/';
+var BROADCAST_GER_URL = 'http://localhost:8090/';
+
 // index.html
 function selection() {
 	var selectedCountry = document.getElementById('country').value;
@@ -17,25 +27,25 @@ function selection() {
 	 location.href = redirect_path;
 }
 
-function get_referendum_ideas() {
-	fetch("http://localhost:8081/referendumideaproposal", {
-	  method: 'GET'})
-    .then((response) => {
-      if (!response.ok) {
-      	throw new Error(`HTTP error: ${response.status}`);
-    }
-    	return response.text();
-    })
-    .then((text) => {	
-    	var array = JSON.parse(text);
-    	for (let i = 0; i < array.length; i++) {
-		  console.log(array[i].title);
-		}
-  	});
+
+/*
+function flagPrint() {
+	var flagDiv = document.getElementById('flagDiv');
+	if (country == "IT") flagDiv.innerHTML = `<img th:src="@{/images/italy.png}" id="flagReg">`
+	if (country == "FR") flagDiv.innerHTML = `<img th:src="@{/images/italy.png}" id="flagReg">`
+	if (country == "IT") flagDiv.innerHTML = `<img th:src="@{/images/italy.png}" id="flagReg">`
 }
+*/
 
 function get_referendum() {
-	fetch("http://localhost:8081/referendums", {
+
+	var URL = "";
+	if (country == "IT") URL = REST_ITA_URL.concat('referendums');
+	if (country == "FR") URL = REST_FRA_URL.concat('referendums');
+	if (country == "DE") URL = REST_GER_URL.concat('referendums');
+
+
+	fetch(URL, {
 	  method: 'GET'})
     .then((response) => {
       if (!response.ok) {
@@ -43,12 +53,8 @@ function get_referendum() {
     }
     	return response.text();
     })
-    .then((text) => {	
-    	console.log(JSON.parse(text));
+    .then((text) => {
     	var array = JSON.parse(text);
-    	for (let i = 0; i < array.length; i++) {
-			console.log(array[i]);
-		}
 
 		var referendum_container = document.getElementById('referendum_container');
 		for (let i = 0; i < array.length; i++) {
@@ -56,7 +62,7 @@ function get_referendum() {
 
 			referendum.innerHTML = `<div class="box">
 			<div>
-				<img src="/css/european-union.png" style="float: right;">
+				<img th:src="@{/css/european-union.png} style="float: right;">
 				<h2 id="refTitle">${array[i].id.title}</h2>
 				<p class="text" id="refText">${array[i].argument}</p>
 	
@@ -75,9 +81,15 @@ function get_referendum() {
     });
 };
 
-//questa funzione serve per non mettere i bottoni nelle box perché instit. non vota
+// No vote button for institutional user
 function get_referendum_inst() {
-	fetch("http://localhost:8081/referendums", {
+
+	var URL = "";
+	if (country == "IT") URL = REST_ITA_URL.concat('referendums');
+	if (country == "FR") URL = REST_FRA_URL.concat('referendums');
+	if (country == "DE") URL = REST_GER_URL.concat('referendums');
+
+	fetch(URL, {
 	  method: 'GET'})
     .then((response) => {
       if (!response.ok) {
@@ -98,7 +110,7 @@ function get_referendum_inst() {
 
 			referendum.innerHTML = `<div class="box">
 			<div>
-				<img src="/css/european-union.png" style="float: right;">
+				<img th:src="@{/css/european-union.png} style="float: right;">
 				<h2 id="refTitle">${array[i].id.title}</h2>
 				<p class="text" id="refText">${array[i].argument}</p>
 				</div>
@@ -113,54 +125,6 @@ function get_referendum_inst() {
     });
 };
 
-/*function get_referendum_to_vote() {
-	var url = new URL(window.location.href);
-	var title = url.searchParams.get("title");
-	var start_date = url.searchParams.get("start-date");
-
-	fetch("http://localhost:8081/referendums", {
-	  method: 'GET'})
-    .then((response) => {
-      if (!response.ok) {
-      	throw new Error(`HTTP error: ${response.status}`);
-    }
-    	return response.text();
-    })
-    .then((text) => {	
-    	console.log(JSON.parse(text));
-    	var array = JSON.parse(text);
-		
-		var ref = array.find(function(item) {
-			return item.id.title === title && item.id.dateStartConsensusProposal === start_date;
-		});
-	
-		var referendum_container = document.getElementById('referendum_container');
-		if (ref) {
-			var referendum = document.createElement('div');
-			referendum.innerHTML=ref.id.title;
-			referendum.innerHTML=ref.argument;
-			referendum.innerHTML=ref.id.dateStartConsensusProposal;
-			referendum.innerHTML=ref.dateEndResult;
-
-			/*referendum.innerHTML = `<div class="box">
-			<div>
-				<img src="/css/european-union.png" style="float: right;">
-				<h2 id="refTitle">${ref.id.title}</h2>
-				<p class="text" id="refText">${ref.argument}</p>
-				<p style="float: right;" id="start-date">Inserted: ${ref.id.dateStartConsensusProposal}  </p>
-				<br>
-				<p style="float: right;" id="refStatus">Valid until: ${ref.dateEndResult}</p>
-			</div>
-			</div>`;
-
-			referendum_container.appendChild(referendum);
-		}
-});
-};
-*/
-
-		
-
 function submit_referendum() {
 	let confirmAction = confirm("Are you sure to propose this referendum?");
 	if (confirmAction) {
@@ -168,7 +132,12 @@ function submit_referendum() {
 		var title = document.getElementById('title').value;
 		var argument = document.getElementById('argument').value;
 
-		fetch('http://localhost:8082/europeanReferendumProposal', {
+		var URL = "";
+		if (country == "IT") URL = BROADCAST_ITA_URL.concat('europeanReferendumProposal');
+		if (country == "FR") URL = BROADCAST_FRA_URL.concat('europeanReferendumProposal');
+		if (country == "DE") URL = BROADCAST_GER_URL.concat('europeanReferendumProposal');
+
+		fetch(URL, {
 			method: 'POST',
 			headers: {
 			  'Content-type': 'application/json'
@@ -179,38 +148,48 @@ function submit_referendum() {
 			})
 		  });
 		  alert("Referendum proposed.");
+		  location.href = 'inst/home';
 	 } else {
 		alert("Proposal canceled.");
 	}	 
   }
 
-  /*function vote_referendum() {
+  function vote_referendum() {
 
 	URL = "";
 	var title = document.getElementById('title');
 	var dateStartConsensusProposal = document.getElementById('start-date');
+	var nationalID = null;
 
 	var elems = document.getElementsByTagName('input');
 	for (i = 0; i < elems.length; i++) {
         if (elems[i].type = "radio" && elems[i].checked) {
+
+			console.log(elems[i].value);
 			if (elems[i].value == "Yes") {
-				URL = 'http://localhost:8081/voteTrue';
+				if (country == "IT") URL = REST_ITA_URL.concat('voteTrue');
+				if (country == "FR") URL = REST_FRA_URL.concat('voteTrue');
+				if (country == "DE") URL = REST_GER_URL.concat('voteTrue');
 			}
 			else {
-				URL = 'http://localhost:8081/voteFalse'
+				if (country == "IT") URL = REST_ITA_URL.concat('voteFalse');
+				if (country == "FR") URL = REST_FRA_URL.concat('voteFalse');
+				if (country == "DE") URL = REST_GER_URL.concat('voteFalse');
 			}
 		}
 	}
-	
-	fetch(URL.concat('?title=').concat(title).concat('&dateStartConsensusProposal=').concat(dateStartConsensusProposal));
+
+	fetch(URL.concat('?title=').concat(title).concat('&dateStartConsensusProposal=').concat(dateStartConsensusProposal).concat('&nationalID=').concat(nationalID));
 	alert('Thank you! Your vote has been correctly registered!');
 
-
-  }*/
+  }
 
 function citizen_registration() {
 
-	var ITA_DB_URL = 'http://localhost:8081/';
+	var URL = "";
+	if (country == "IT") URL = REST_ITA_URL.concat('citizens');
+	if (country == "FR") URL = REST_FRA_URL.concat('citizens');
+	if (country == "DE") URL = REST_GER_URL.concat('citizens');
 
 	var national_id = document.getElementById('national_id').value;
 	
@@ -229,7 +208,7 @@ function citizen_registration() {
 	var password = document.getElementById('password').value;
 	
 	
-	fetch(ITA_DB_URL.concat('citizens'), {
+	fetch(URL, {
 	  method: 'POST',
 	  headers: {
 	    'Content-type': 'application/json'
@@ -254,37 +233,3 @@ function citizen_registration() {
 	 location.href = 'citizen/home';
 
 }	
-
-function citizen_login() {
-	
-	var username = document.getElementById('username').value;
-	var password = document.getElementById('password').value;
-	
-	fetch("http://localhost:8081/citizens", {
-	  method: 'GET'})
-    .then((response) => {
-      if (!response.ok) {
-      	throw new Error(`HTTP error: ${response.status}`);
-    }
-    	return response.text();
-    })
-    .then((text) => {	
-    	var citizens = JSON.parse(text);
-    	for (let i = 0; i < citizens.length; i++) {
-		  if (username == citizens[i].email && password == citizens[i].password) {
-		  	 location.href = 'home';
-		  }
-	}
-  	});
-  	
-	// TO-DO: ASSIGN SESSION COOKIE 
-}
-
-/*
-function inst_login() {
-	
-	var username = document.getElementById('email').value;
-	var password = document.getElementById('password').value;
-	
-}
-*/
