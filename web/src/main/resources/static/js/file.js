@@ -62,7 +62,7 @@ function get_referendum() {
 	
 			</div>
 			<div style="text-align: left;">
-			<button id="butt" class="button" onclick="location.href='/citizen/vote?title=${array[i].id.title}&start-date=${array[i].id.dateStartConsensusProposal}';">Vote</button>
+			<button id="butt" class="button" onclick="location.href='/citizen/vote?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}';">Vote</button>
 			</div>
 			<p style="float: left;" id="start-date">Inserted: ${array[i].id.dateStartConsensusProposal}</p>
 			<p style="float: right;" id="refStatus">Valid until: ${array[i].dateEndResult}</p>

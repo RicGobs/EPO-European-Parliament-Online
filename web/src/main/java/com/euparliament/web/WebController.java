@@ -130,7 +130,7 @@ public class WebController {
 			Model model
 	){
 		if (representativeID.equals("") && password.equals("")) {
-			return "citizen_web/login";
+			return "inst_web/login";
 		}
 		try {
 			// get representative data structure from the database
