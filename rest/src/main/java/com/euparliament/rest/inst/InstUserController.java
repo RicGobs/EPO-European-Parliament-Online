@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -41,6 +42,17 @@ class InstUserController {
     
     return repository.findById(id)
       .orElseThrow(() -> new InstUserNotFoundException(id));
+  }
+
+  @GetMapping("/representativeLogin")
+  InstUser login_validation(@RequestParam("uname") String representativeID, @RequestParam("psw") String password) {
+    if (repository.existsByRepresentativeID(representativeID)) {
+       InstUser representative = repository.findByRepresentativeID(representativeID);
+       String representativePassword = representative.getPassword();
+       if (password.equals(representativePassword)) return representative;
+       else return null;
+    }
+    else return null;
   }
 
   @DeleteMapping("/representatives/{id}")
