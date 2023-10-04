@@ -11,6 +11,8 @@ services:
     - 8084:8080
     networks:
       - network-fra
+    environment:
+      - REST_URL=http://rest:8080
 
   rest:
     image: epo/rest
