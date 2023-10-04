@@ -1,7 +1,6 @@
 <html>
 <head>
 
-	<!--link rel="stylesheet" href="citizen_style.css"-->
 	<link rel="stylesheet" th:href="@{/css/citizen_style.css}">
 	<script type="text/javascript" th:src="@{/js/file.js}"></script>
 
@@ -12,8 +11,17 @@
 	<!--Navbar-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+	<!--script>
+		const queryString = window.location.search;
+		const urlParams = new URLSearchParams(queryString);
+		console.log(urlParams);
+		var id = urlParams.get('uname');
+		console.log(id);
+		if (id == "") id = urlParams.get('nationalID');
+	</script-->
+
 	<div class="navbar">
-	<a class="active" location.href='/citizen/referendum';><i class="fa fa-fw fa-home"></i> Home</a>
+	<a class="active" href="/citizen/home"><i class="fa fa-fw fa-home"></i> Home</a>
 	<div class="dropdown2">
 		<button class="btn"><i class="fa fa-fw fa-user"></i>User</button>
 		<div class="dropdown-menu">
@@ -23,7 +31,7 @@
 	<div class="dropdown">
 		<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
 		<div class="dropdown-menu">
-			<a onclick="location.href='/citizen/referendum';"></i>All Referendum</a>
+			<a href="/citizen/referendum"></i>Referendum List</a>
 		</div>
 	  </div>
 	  <a href=""><i class="fa fa-fw fa-gear"></i> Settings</a>
@@ -31,15 +39,10 @@
 
 	<div>
 		<div>
-			<img th:src="@{/css/european-union.png}" style="display: block; margin: 0 auto; margin-top: 2%;">
+			<img th:src="@{/images/european-union.png}" style="display: block; margin: 0 auto; margin-top: 2%;">
 		</div>
 		<h1 style="text-align: center">Welcome to the</h1>
 		<h1 style="text-align: center">EUROPEAN PARLIAMENT ONLINE PLATFORM</h1>
-		<div style="text-align: center;">
-			<button class=button style="margin-top: 1%;" onclick="location.href='citizen/all referenda';">All referenda</button>
-			<br><button class=button style="margin-top: 1%;" onclick="location.href=''">Settings</button>
-			<br><button class=button style="margin-top: 1%;" onclick="location.href='/';">Logout</button>
-		</div>
 	</div>
 
 
