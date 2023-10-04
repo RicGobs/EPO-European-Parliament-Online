@@ -1,9 +1,6 @@
 <html>
 <head>
 
-	<!--<link rel="stylesheet" href="citizen_style.css">
-	<script type="text/javascript" src="file.js"></script>-->
-
 	<link rel="stylesheet" th:href="@{/css/citizen_style.css}">
 	<script type="text/javascript" th:src="@{/js/file.js}"></script>
 
@@ -14,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<div class="navbar">
-	<a class="active" onclick="location.href='/citizen/home';"><i class="fa fa-fw fa-home"></i> Home</a>
+	<a class="active" href="/citizen/home"><i class="fa fa-fw fa-home"></i> Home</a>
 	<div class="dropdown2">
 		<button class="btn"><i class="fa fa-fw fa-user"></i>User</button>
 		<div class="dropdown-menu">
@@ -24,7 +21,7 @@
 	<div class="dropdown">
 		<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
 		<div class="dropdown-menu">
-			<a onclick="location.href='/citizen/referendum';"></i>All Referendum</a>
+			<a href="/citizen/referendum"></i>Referendum List</a>
 		</div>
 		</div>
 		<a href=""><i class="fa fa-fw fa-gear"></i> Settings</a>
@@ -32,23 +29,9 @@
 
 	<!-- Referendum Boxes -->
 
-	<h3 style="text-align: center" class="text">Referendum</h3>
+	<h3 style="text-align: center" class="text">Referendum List</h3>
 
-	<div id="referendum_container">
-		<!--div class="box"> 
-			<div>
-				<img th:src="@{/css/european-union.png}" style="float: right;">
-				<h2 id="refTitle">Referendum 1</h2>
-				<p class="text" id="refText">This referendum is about ... </p>
-				<p style="float: right;" id="start-date">Insert: </p>
-				<p style="float: right;" id="refStatus">Valid until: </p>
-			</div>
-			<div style="text-align: left;">
-				<button class="button" onclick="location.href='/citizen/vote/${array[i].id.title}&${array[i].dateEndResult}';">Vote</button>
-				<button class="button" onclick="location.href='/citizen/vote';">Vote</button>
-			</div>
-		</div-->
-	</div>
+	<div id="referendum_container"></div>
 
 	
 </body>
