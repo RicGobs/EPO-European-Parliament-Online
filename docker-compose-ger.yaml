@@ -11,6 +11,8 @@ services:
     - 8088:8080
     networks:
       - network-ger
+    environment:
+      - REST_URL=http://rest:8080
 
   rest:
     image: epo/rest
