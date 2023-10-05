@@ -78,7 +78,13 @@ class ReferendumController {
 					);
 		}
 		Referendum referendum = repository.findByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal);
-		
+		// check if the vote be done
+		if(!referendum.isVotingOpen()) {
+			throw new ResponseStatusException(
+					  HttpStatus.BAD_REQUEST, "Voting is not open"
+					);
+		}
+		// check if the citizen has already vote
 		if(referendum.getVoteCitizens().contains(nationalID)) {
 			throw new ResponseStatusException(
 					  HttpStatus.BAD_REQUEST, "Citizen has already voted"
@@ -103,7 +109,13 @@ class ReferendumController {
 					);
 		}
 		Referendum referendum = repository.findByTitleAndDateStartConsensusProposal(title, dateStartConsensusProposal);
-		
+		// check if the vote be done
+		if(!referendum.isVotingOpen()) {
+			throw new ResponseStatusException(
+					  HttpStatus.BAD_REQUEST, "Voting is not open"
+					);
+		}
+		// check if the citizen has already vote
 		if(referendum.getVoteCitizens().contains(nationalID)) {
 			throw new ResponseStatusException(
 					  HttpStatus.BAD_REQUEST, "Citizen has already voted"

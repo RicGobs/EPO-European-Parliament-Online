@@ -147,4 +147,8 @@ class Referendum {
 	public void setVoteCitizens(List<String> voteCitizens) {
 		this.voteCitizens = voteCitizens;
 	}
+	
+	public boolean isVotingOpen() {
+		return this.status == 3;
+	}
 }
