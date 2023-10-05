@@ -116,6 +116,12 @@ public class WebController {
 					resourceMapping
 			);
 			model.addAttribute("title", title);
+			model.addAttribute("startDate", referendum.getDateEndConsensusProposal());
+			model.addAttribute("status", referendum.getStatus());
+			model.addAttribute("endDate", referendum.getDateEndConsensusResult());
+			model.addAttribute("votesTrue", referendum.getVotesTrue());
+			model.addAttribute("votesFalse", referendum.getVotesFalse());
+			model.addAttribute("population", referendum.getPopulation());
 			return "citizen_web/referendum_vote";
 		} catch (NotFoundException e) {
 			// representative not found
