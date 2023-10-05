@@ -1,5 +1,6 @@
 package com.euparliament.rest.referendum;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,9 @@ class ReferendumController {
 	// tag::get-aggregate-root[]
 	@GetMapping("/referendums")
 	List<Referendum> all() {
-		return repository.findAll();
+		List<Referendum> referendumList = repository.findAll(); 
+		Collections.sort(referendumList, new ReferendumDateStartComparator());
+		return referendumList;
 	}
 	// end::get-aggregate-root[]
 

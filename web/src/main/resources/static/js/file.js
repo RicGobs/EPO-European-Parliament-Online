@@ -67,18 +67,52 @@ function get_referendum() {
     	var array = JSON.parse(text);
 
 		var referendum_container = document.getElementById('referendum_container');
-		for (let i = 0; i < array.length; i++) {
+		for (let i = array.length-1; i >= 0 ; i--) {
 			var referendum = document.createElement('div');
+
+			var status = '';
+			switch(array[i].status) {
+			  case 1:
+			  	status = 'Waiting National Representatives response'; 
+			    break;
+			  case 2:
+			  	status = 'Waiting National Representatives response'; 
+			    break;
+			  case 3:
+			    status = 'Citizen voting'; 
+			    break;
+			  case 4:
+			    status = 'Sending national results'; 
+			    break;
+			  case 5:
+			    status = 'Not accepted'; 
+			    break;
+			  case 6:
+			    status = 'Not sufficient nation partecipants'; 
+			    break;
+			  case 7:
+			  	status = 'Accepted';
+			    break;
+			  default:
+			}
+			
+			var disabled = '';
+			var button = 'button';
+			if(array[i].status != 3 || array[i].voteCitizens.includes(ID)) {
+				disabled = 'disabled';
+				button += '_' + disabled;
+			}		
 
 			referendum.innerHTML = `<div class="box">
 			<div>
+				<p style="float: right" id="status">Status: ${status}</p>
 				<img th:src="@{/css/european-union.png} style="float: right;">
 				<h2 id="refTitle">${array[i].id.title}</h2>
 				<p class="text" id="refText">${array[i].argument}</p>
 	
 			</div>
 			<div style="text-align: left;">
-			<button id="butt" class="button" onclick="location.href='/citizen/vote?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&nationalID=${ID}';">Vote</button>
+			<button id="butt" class="${button}" onclick="location.href='/citizen/vote?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&nationalID=${ID}';" ${disabled}>Vote</button>
 			</div>
 			<p style="float: left;" id="start-date">Inserted: ${array[i].id.dateStartConsensusProposal}</p>
 			<p style="float: right;" id="refStatus">Valid until: ${array[i].dateEndResult}</p>

@@ -48,18 +48,18 @@ public class Referendum {
 		Calendar c = Calendar.getInstance();
         Date today = c.getTime();  
 		String todayAsString = df.format(today);
-
+		
 		this.id.setDateStartConsensusProposal(todayAsString); 
-
+		
         c.add(Calendar.MINUTE, 3);
         String todayAsString1 = df.format(c.getTime());
         
 		c.add(Calendar.MINUTE, 1);
         String todayAsString2 = df.format(c.getTime());
-
+        
 		c.add(Calendar.MINUTE, 1);
         String todayAsString3 = df.format(c.getTime());
-
+        
 		this.dateEndConsensusProposal = todayAsString1; 
 		this.dateEndResult = todayAsString2; 
     	this.dateEndConsensusResult = todayAsString3;

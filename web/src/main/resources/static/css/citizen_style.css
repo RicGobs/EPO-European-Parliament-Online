@@ -158,6 +158,20 @@ body {
     font-size: 16px;
     margin: auto;
     }
+    
+.button_disabled {
+    background-color: #37859b;
+    border: none;
+    border-radius: 12px;
+    color: FFCC00;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+    margin: auto;	
+	}
 
    /* to center the something in the window */
    .center {
