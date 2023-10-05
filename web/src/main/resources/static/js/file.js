@@ -1,4 +1,5 @@
 var country = "IT" //default
+var ID = "" // default
 
 var REST_ITA_URL = 'http://localhost:8081/';
 var REST_FRA_URL = 'http://localhost:8085/';
@@ -25,6 +26,15 @@ function selection() {
 	}
 
 	 location.href = redirect_path;
+}
+
+//home.html
+function set_nationalID() {
+
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	ID = urlParams.get('uname');
+
 }
 
 
@@ -68,7 +78,7 @@ function get_referendum() {
 	
 			</div>
 			<div style="text-align: left;">
-			<button id="butt" class="button" onclick="location.href='/citizen/vote?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}';">Vote</button>
+			<button id="butt" class="button" onclick="location.href='/citizen/vote?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&nationalID=${ID}';">Vote</button>
 			</div>
 			<p style="float: left;" id="start-date">Inserted: ${array[i].id.dateStartConsensusProposal}</p>
 			<p style="float: right;" id="refStatus">Valid until: ${array[i].dateEndResult}</p>
@@ -157,9 +167,10 @@ function submit_referendum() {
   function vote_referendum() {
 
 	URL = "";
-	var title = document.getElementById('title');
-	var dateStartConsensusProposal = document.getElementById('start-date');
-	var nationalID = null;
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	const title = urlParams.get('title');
+	const dateStartConsensusProposal = urlParams.get('date');
 
 	var elems = document.getElementsByTagName('input');
 	for (i = 0; i < elems.length; i++) {
@@ -179,7 +190,7 @@ function submit_referendum() {
 		}
 	}
 
-	fetch(URL.concat('?title=').concat(title).concat('&dateStartConsensusProposal=').concat(dateStartConsensusProposal).concat('&nationalID=').concat(nationalID));
+	fetch(URL.concat('?title=').concat(title).concat('&dateStartConsensusProposal=').concat(dateStartConsensusProposal).concat('&nationalID=').concat(ID));
 	alert('Thank you! Your vote has been correctly registered!');
 
   }
