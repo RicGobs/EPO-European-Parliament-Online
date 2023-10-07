@@ -22,31 +22,25 @@ public class WebController {
 	
 	@GetMapping("/")
 	public String index(
-			@RequestParam(name="name", required=false, defaultValue="") String name,
 			Model model
-	){
-		model.addAttribute("name", name);
+	){ 
 		return "index";
 	}
 	
 	@GetMapping("/citizen")
 	public String citizen_index(
-			@RequestParam(name="name", required=false, defaultValue="") String name,
 			Model model
 	){
-		model.addAttribute("name", name);
 		return "citizen_web/index";
 	}
 	
 	@GetMapping("/citizen/login")
-	public String citizen_login(
-			@RequestParam(name="uname", required=false, defaultValue="") String nationalID, 
+	public String citizen_login( 
+			@RequestParam(name="nationalID", required=false, defaultValue="") String nationalID, 
 			@RequestParam(name="psw", required=false, defaultValue="") String password,
 			Model model
 	){
-		if (nationalID.equals("") && password.equals("")) {
-			return "citizen_web/login";
-		}
+		if (nationalID.equals("") && password.equals("")) return "citizen_web/login";
 		try {
 			// get citizen data structure from the database
 			CitizenUser citizen;
@@ -67,31 +61,49 @@ public class WebController {
 
 	@GetMapping("/citizen/registration")
 	public String citizen_registration(
-			@RequestParam(name="name", required=false, defaultValue="") String name,
+			@RequestParam(name="nationalID", required=false, defaultValue="") String nationalID,
 			Model model
 	){
-		model.addAttribute("name", name);
+		if (!nationalID.equals("")) return "citizen_web/index";
 		return "citizen_web/registration";
 	}
 	
 	@GetMapping("/citizen/home")
 	public String citizen_home(
-			@RequestParam(name="name", required=false, defaultValue="") String name,
+			@RequestParam(name="nationalID", required=true, defaultValue="") String nationalID,
 			Model model
 	){
-		model.addAttribute("name", name);
-		return "citizen_web/home";
+		try {
+			// check if citizen is in the database
+			HttpRequest.checkCitizenUser(
+					nationalID,
+					resourceMapping
+			);
+			return "citizen_web/home";
+		} catch (NotFoundException e) {
+			// citizen not found
+			return "index";
+		}
 	}
 	
 	@GetMapping("/citizen/referendum")
 	public String citizen_referendum(
-			@RequestParam(name="name", required=false, defaultValue="") String name,
+			@RequestParam(name="nationalID", required=true, defaultValue="") String nationalID,
 			Model model
 	){
-		model.addAttribute("name", name);
-		return "citizen_web/referendum";
+		try {
+			// check if citizen is in the database
+			HttpRequest.checkCitizenUser(
+					nationalID,
+					resourceMapping
+			);
+			return "citizen_web/referendum";
+		} catch (NotFoundException e) {
+			// citizen not found
+			return "index";
+		}
 	}
-	
+
 	@GetMapping("/citizen/results")
 	public String citizen_referendum_results(
 			@RequestParam(name="title", required=false, defaultValue="") String title,
@@ -122,12 +134,18 @@ public class WebController {
 	}
 	
 	@GetMapping("/citizen/vote")
-	public String citizen_referendum_vote(
-			@RequestParam(name="title", required=false, defaultValue="") String title,
-			@RequestParam(name="date", required=false, defaultValue="") String date,
+	public String citizen_referendum_vote( 
+			@RequestParam(name="title", required=true, defaultValue="") String title,
+			@RequestParam(name="date", required=true, defaultValue="") String date,
+			@RequestParam(name="nationalID", required=true, defaultValue="") String nationalID,
 			Model model
 	){
 		try {
+			// check if citizen is in the database
+			HttpRequest.checkCitizenUser(
+					nationalID,
+					resourceMapping
+			);
 			// get referendum data structure from the database
 			Referendum referendum;
 			referendum = HttpRequest.getReferendum(
@@ -145,20 +163,19 @@ public class WebController {
 			model.addAttribute("abstentions", referendum.getPopulation() - (referendum.getVotesFalse() + referendum.getVotesTrue()));
 			return "citizen_web/referendum_vote";
 		} catch (NotFoundException e) {
-			// referendum not found
+			// representative not found
 			return "citizen_web/referendum";
 		}
 	}
 
+
 	@GetMapping("/inst/login")
 	public String inst_login(
-			@RequestParam(name="uname", required=false, defaultValue="") String representativeID, 
+			@RequestParam(name="representativeID", required=false, defaultValue="") String representativeID, 
 			@RequestParam(name="psw", required=false, defaultValue="") String password,
 			Model model
 	){
-		if (representativeID.equals("") && password.equals("")) {
-			return "inst_web/login";
-		}
+		if (representativeID.equals("") && password.equals("")) return "inst_web/login";
 		try {
 			// get representative data structure from the database
 			InstUser representative;
@@ -179,31 +196,64 @@ public class WebController {
 	
 	@GetMapping("/inst/home")
 	public String inst_home(
-			@RequestParam(name="name", required=false, defaultValue="") String name,
+			@RequestParam(name="representativeID", required=true, defaultValue="") String representativeID,
 			Model model
 	){
-		model.addAttribute("name", name);
-		return "inst_web/home";
+		try {
+			// check if national representative is in the database
+			HttpRequest.checkCitizenUser(
+					representativeID,
+					resourceMapping
+			);
+			return "inst_web/home";
+		} catch (NotFoundException e) {
+			// national representative not found
+			return "index";
+		}
 	}
 	
 	@GetMapping("/inst/referendum")
 	public String inst_referendum(
-			@RequestParam(name="name", required=false, defaultValue="") String name,
+			@RequestParam(name="representativeID", required=true, defaultValue="") String representativeID,
 			Model model
 	){
-		model.addAttribute("name", name);
-		return "inst_web/referendum";
+		try {
+			// check if national representative is in the database
+			HttpRequest.checkCitizenUser(
+					representativeID,
+					resourceMapping
+			);
+			return "inst_web/referendum";
+		} catch (NotFoundException e) {
+			// national representative not found
+			return "index";
+		}
 	}
 	
 	@GetMapping("/inst/propose")
 	public String inst_propose(
-			@RequestParam(name="name", required=false, defaultValue="") String name,
+			@RequestParam(name="representativeID", required=true, defaultValue="") String representativeID,
+			@RequestParam(name="title", required=false, defaultValue="") String title,
+			@RequestParam(name="message", required=false, defaultValue="") String message,
 			Model model
 	){
-		model.addAttribute("name", name);
+		try {
+			// check if national representative is in the database
+			HttpRequest.checkCitizenUser(
+					representativeID,
+					resourceMapping
+			);
+		if (!title.equals("") && !message.equals("")) {
+			model.addAttribute("representativeID", representativeID);
+			return "inst_web/home";
+		}
 		return "inst_web/propose_referendum";
+		} catch (NotFoundException e) {
+			// national representative not found
+			return  "index";
+		}
 	}
-	
+
 	@GetMapping("/inst/vote")
 	public String inst_vote(
 			@RequestParam(name="title", required=false, defaultValue="") String title,
@@ -232,14 +282,20 @@ public class WebController {
 			return "inst_web/referendum";
 		}
 	}
-	
+
 	@GetMapping("/inst/results")
 	public String inst_referendum_results(
+			@RequestParam(name="representativeID", required=true, defaultValue="") String representativeID,
 			@RequestParam(name="title", required=false, defaultValue="") String title,
 			@RequestParam(name="date", required=false, defaultValue="") String date,
 			Model model
 	){
 		try {
+			// check if national representative is in the database
+			HttpRequest.checkCitizenUser(
+					representativeID,
+					resourceMapping
+			);
 			// get referendum data structure from the database
 			Referendum referendum;
 			referendum = HttpRequest.getReferendum(
