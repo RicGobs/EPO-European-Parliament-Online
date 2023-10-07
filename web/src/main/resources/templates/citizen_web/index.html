@@ -7,6 +7,12 @@
 </head>
 <body>
 
+	<script>
+		const queryString = window.location.search;
+		const urlParams = new URLSearchParams(queryString);
+		if (!urlParams.equals(null)) window.location.replace('http://localhost:8080/citizen');
+	</script>
+
 
 	<div class="center">
 		<div class="img">
@@ -14,10 +20,11 @@
 		</div>
 		<h1>European Parliament</h1>
 		<h3>Citizen Access</h3>
-		
-		<button class=button onclick="location.href='citizen/registration';">Registration</button>
+
+		<button class=button onclick="location.href = '/citizen/registration';">Registration</button>
 		<br><br>
-		<button class=button onclick="location.href='citizen/login';">Login</button>
+		<button class=button onclick="location.href = '/citizen/login';">Login</button>
+
 	</div>
 
 
