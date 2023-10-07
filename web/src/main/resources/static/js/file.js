@@ -1,6 +1,3 @@
-var country = "IT" //default
-var ID = "" // default
-
 var REST_ITA_URL = 'http://localhost:8081/';
 var REST_FRA_URL = 'http://localhost:8085/';
 var REST_GER_URL = 'http://localhost:8089/';
@@ -17,37 +14,28 @@ function selection() {
 	var redirect_path = '/'
 
 	if (selectedCountry == "IT" || selectedCountry == "FR" || selectedCountry == "DE") {
-		if (selectedRole == 'citizen') {
-			redirect_path = 'citizen';
-		}
-		else {
-			redirect_path = 'inst/login';
-		}	
+
+		// set nation cookie
+		document.cookie = 'nation='+ selectedCountry +'; Path=/;';
+
+		if (selectedRole == "citizen") redirect_path = 'citizen';
+		else redirect_path = 'inst/login';
 	}
 
-	 location.href = redirect_path;
+	location.href = redirect_path;
 }
 
-//home.html
-function set_nationalID() {
-
-	const queryString = window.location.search;
-	const urlParams = new URLSearchParams(queryString);
-	ID = urlParams.get('uname');
-
+function getCookie(name) {
+	const value = `; ${document.cookie}`;
+	const parts = value.split(`; ${name}=`);
+	if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
-
-/*
-function flagPrint() {
-	var flagDiv = document.getElementById('flagDiv');
-	if (country == "IT") flagDiv.innerHTML = `<img th:src="@{/images/italy.png}" id="flagReg">`
-	if (country == "FR") flagDiv.innerHTML = `<img th:src="@{/images/italy.png}" id="flagReg">`
-	if (country == "IT") flagDiv.innerHTML = `<img th:src="@{/images/italy.png}" id="flagReg">`
+function deleteCookie(cname) {
+	document.cookie = cname +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
-*/
 
-function get_referendum() {
+function getReferendum(id, country) {
 
 	var URL = "";
 	if (country == "IT") URL = REST_ITA_URL.concat('referendums');
@@ -100,7 +88,7 @@ function get_referendum() {
 			var disabled = '';
 			var button = 'button';
 			var button_label = 'Vote';
-			var href = `/citizen/vote?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&nationalID=${ID}`;
+			var href = `/citizen/vote?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&nationalID=${id}`;
 			
 			if(array[i].status < 3 || (array[i].status == 3 && array[i].voteCitizens.includes(ID))) {
 				// button vote disabled
@@ -110,7 +98,7 @@ function get_referendum() {
 			} else if (array[i].status > 3) {
 				// button results
 				button_label = 'Results';
-				href = `/citizen/results?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&nationalID=${ID}`;		
+				href = `/citizen/results?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&nationalID=${id}`;		
 			}
 
 			referendum.innerHTML = `<div class="box">
@@ -133,10 +121,10 @@ function get_referendum() {
 		}
 
     });
-};
+}
 
 // No vote button for institutional user
-function get_referendum_inst() {
+function getReferendumInst(id, country) {
 
 	var URL = "";
 	if (country == "IT") URL = REST_ITA_URL.concat('referendums');
@@ -189,7 +177,7 @@ function get_referendum_inst() {
 			var disabled = '';
 			var button = 'button';
 			var button_label = 'Vote';
-			var href = `/inst/vote?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&nationalID=${ID}`;
+			var href = `/inst/vote?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&representativeID=${id}`;
 			
 			if((array[i].status == 2)) {
 				// button vote disabled
@@ -199,7 +187,7 @@ function get_referendum_inst() {
 			} else if (array[i].status >= 3) {
 				// button results
 				button_label = 'Results';
-				href = `/inst/results?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&nationalID=${ID}`;		
+				href = `/inst/results?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&representativeID=${id}`;		
 			}
 
 			referendum.innerHTML = `<div class="box">
@@ -222,9 +210,9 @@ function get_referendum_inst() {
 		}
 
     });
-};
+}
 
-function submit_referendum() {
+function submitReferendum(id, country) {
 	let confirmAction = confirm("Are you sure to propose this referendum?");
 	if (confirmAction) {
 
@@ -247,13 +235,40 @@ function submit_referendum() {
 			})
 		  });
 		  alert("Referendum proposed.");
-		  location.href = 'inst/home';
+		  location.href = 'inst/home?nationalID=' + id;
 	 } else {
 		alert("Proposal canceled.");
 	}	 
   }
 
-function inst_vote_referendum() {
+function voteReferendum(title, dateStartConsensusProposal, id, country) {
+
+	URL = "";
+
+	var elems = document.getElementsByTagName('input');
+	for (i = 0; i < elems.length; i++) {
+        if (elems[i].type = "radio" && elems[i].checked) {
+
+			if (elems[i].value == "Yes") {
+				if (country == "IT") URL = REST_ITA_URL.concat('voteTrue');
+				if (country == "FR") URL = REST_FRA_URL.concat('voteTrue');
+				if (country == "DE") URL = REST_GER_URL.concat('voteTrue');
+			}
+			else {
+				if (country == "IT") URL = REST_ITA_URL.concat('voteFalse');
+				if (country == "FR") URL = REST_FRA_URL.concat('voteFalse');
+				if (country == "DE") URL = REST_GER_URL.concat('voteFalse');
+			}
+		}
+	}
+
+	fetch(URL.concat('?title=').concat(title).concat('&dateStartConsensusProposal=').concat(dateStartConsensusProposal).concat('&nationalID=').concat(id));
+	alert('Thank you! Your vote has been correctly registered!');
+
+}
+  
+
+function instVoteReferendum() {
 
 	let confirmAction = confirm("Are you sure to vote this referendum?");
 	if (confirmAction) {
@@ -300,40 +315,10 @@ function inst_vote_referendum() {
 	}	 
 }
 
-  function vote_referendum() {
-
-	URL = "";
-	const queryString = window.location.search;
-	const urlParams = new URLSearchParams(queryString);
-	const title = urlParams.get('title');
-	const dateStartConsensusProposal = urlParams.get('date');
-
-	var elems = document.getElementsByTagName('input');
-	for (i = 0; i < elems.length; i++) {
-        if (elems[i].type = "radio" && elems[i].checked) {
-
-			console.log(elems[i].value);
-			if (elems[i].value == "Yes") {
-				if (country == "IT") URL = REST_ITA_URL.concat('voteTrue');
-				if (country == "FR") URL = REST_FRA_URL.concat('voteTrue');
-				if (country == "DE") URL = REST_GER_URL.concat('voteTrue');
-			}
-			else {
-				if (country == "IT") URL = REST_ITA_URL.concat('voteFalse');
-				if (country == "FR") URL = REST_FRA_URL.concat('voteFalse');
-				if (country == "DE") URL = REST_GER_URL.concat('voteFalse');
-			}
-		}
-	}
-
-	fetch(URL.concat('?title=').concat(title).concat('&dateStartConsensusProposal=').concat(dateStartConsensusProposal).concat('&nationalID=').concat(ID));
-	alert('Thank you! Your vote has been correctly registered!');
-
-  }
-
-function citizen_registration() {
+function citizenRegistration() {
 
 	var URL = "";
+	var country = getCookie('nation');
 	if (country == "IT") URL = REST_ITA_URL.concat('citizens');
 	if (country == "FR") URL = REST_FRA_URL.concat('citizens');
 	if (country == "DE") URL = REST_GER_URL.concat('citizens');
@@ -376,7 +361,5 @@ function citizen_registration() {
 	    'password': password
 	  })
 	});
-	
-	 location.href = 'citizen/home';
 
 }	
