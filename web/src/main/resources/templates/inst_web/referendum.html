@@ -5,13 +5,18 @@
 	<script type="text/javascript" th:src="@{/js/file.js}"></script>
 
 </head>
-<body onload="get_referendum_inst()">
+<body onload="getReferendumInst()">
 	
 	<!--Navbar-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<div class="navbar">
-		<a class="active" href="/inst/home"><i class="fa fa-fw fa-home"></i> Home</a>
+		<script>
+			const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+			const id = urlParams.get('representativeID');
+			document.write('<a class="active" href="/inst/home?representativeID=' + id + '"><i class="fa fa-fw fa-home"></i> Home</a>');
+		</script>
 		<div class="dropdown2">
 			<button class="btn"><i class="fa fa-fw fa-user"></i>ISTUser</button>
 			<div class="dropdown-menu">
@@ -21,8 +26,10 @@
 		<div class="dropdown">
 			<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
 			<div class="dropdown-menu">
-				<a href="/inst/propose"></i>Propose Referendum</a>
-				<a href="/inst/referendum"></i>Referendum List</a>
+				<script>
+					document.write('<a href="/inst/propose?representativeID=' + id + '"></i>Propose Referendum</a>');
+					document.write('<a href="/inst/referendum?representativeID=' + id + '"></i>Referendum List</a>');
+				</script>
 			</div>
 		</div>
 			<a href=""><i class="fa fa-fw fa-gear"></i> Settings</a>
