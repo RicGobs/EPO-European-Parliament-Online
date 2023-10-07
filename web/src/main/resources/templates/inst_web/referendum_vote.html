@@ -15,6 +15,8 @@
 			const queryString = window.location.search;
 			const urlParams = new URLSearchParams(queryString);
 			const id = urlParams.get('representativeID');
+			const title = urlParams.get('title');
+			const dateStartConsensusProposal = urlParams.get('date');
 			const nation = getCookie('nation');
 			document.write('<a class="active" href="/inst/home?representativeID=' + id + '"><i class="fa fa-fw fa-home"></i> Home</a>');
 		</script>
@@ -50,7 +52,7 @@
 
 	<!-- radio button -->
 	<div class="radio-button">
-		<form onsubmit="instVoteReferendum(id,nation);">
+		<form onsubmit="instVoteReferendum(title,dateStartConsensusProposal,id,nation);">
 			<h3 class="text" style="text-align: center;">Vote</h3>
 			<input class="text" type="radio" id="op1" name="response" value="Yes">
 			<label class="text" for="op1">Yes</label><br>
