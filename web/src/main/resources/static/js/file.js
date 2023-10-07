@@ -268,16 +268,12 @@ function voteReferendum(title, dateStartConsensusProposal, id, country) {
 }
   
 
-function instVoteReferendum() {
+function instVoteReferendum(title, dateStartConsensusProposal, id, country) {
 
 	let confirmAction = confirm("Are you sure to vote this referendum?");
 	if (confirmAction) {
 
 		URL = "";
-		const queryString = window.location.search;
-		const urlParams = new URLSearchParams(queryString);
-		const title = urlParams.get('title');
-		const dateStartConsensusProposal = urlParams.get('date');
 		var answer = '';
 		var elems = document.getElementsByTagName('input');
 		for (i = 0; i < elems.length; i++) {
