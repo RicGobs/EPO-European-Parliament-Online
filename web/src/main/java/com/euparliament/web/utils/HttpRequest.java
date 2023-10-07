@@ -49,6 +49,31 @@ public class HttpRequest {
 		}
 	}
 
+	public static boolean checkCitizenUser(String nationalID, ResourceMapping resourceMapping) 
+			throws NotFoundException {
+		HttpHeaders headers = new HttpHeaders();
+		headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+		
+		String urlTemplate = UriComponentsBuilder.fromHttpUrl(resourceMapping.getCitizensUrl() + '/' + nationalID)
+		        .encode()
+		        .toUriString();
+		Map<String, String> params = new HashMap<>();
+
+		try {
+			resourceMapping.getRestTemplate().exchange(
+			        urlTemplate,
+			        HttpMethod.GET,
+			        entity,
+			        CitizenUser.class,
+			        params
+			);
+			return true;
+		} catch (HttpClientErrorException e) {
+			throw new NotFoundException();
+		}
+	}
+
 	public static InstUser getInstUser(String representativeID, String password, ResourceMapping resourceMapping) 
 			throws NotFoundException {
 		HttpHeaders headers = new HttpHeaders();
@@ -76,6 +101,31 @@ public class HttpRequest {
 		} catch (HttpClientErrorException e) {
 			// check if the InstUser exists
 			//return null;
+			throw new NotFoundException();
+		}
+	}
+
+	public static boolean checkInstUser(String representativeID, ResourceMapping resourceMapping) 
+			throws NotFoundException {
+		HttpHeaders headers = new HttpHeaders();
+		headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+		
+		String urlTemplate = UriComponentsBuilder.fromHttpUrl(resourceMapping.getRepresentativesUrl() + '/' + representativeID)
+		        .encode()
+		        .toUriString();
+		Map<String, String> params = new HashMap<>();
+
+		try {
+			resourceMapping.getRestTemplate().exchange(
+			        urlTemplate,
+			        HttpMethod.GET,
+			        entity,
+			        CitizenUser.class,
+			        params
+			);
+			return true;
+		} catch (HttpClientErrorException e) {
 			throw new NotFoundException();
 		}
 	}
