@@ -41,7 +41,7 @@ class CitizenUserController {
   CitizenUser one(@PathVariable String id) throws CitizenUserNotFoundException {
     
     return repository.findById(id)
-      .orElseThrow(() -> new CitizenNotFoundException(id));
+      .orElseThrow(() -> new CitizenUserNotFoundException(id));
     
   }
 
