@@ -183,7 +183,13 @@ function getReferendumInst(id, country) {
 				// button vote disabled
 				disabled = 'disabled';
 				button += '_' + disabled;
-				href = '';		
+				href = ''; 
+			} else if (array[i].status == 3) {
+				// button results
+				button_label = 'Results';
+				disabled = 'disabled';
+				button += '_' + disabled;
+				href = ''; 
 			} else if (array[i].status >= 3) {
 				// button results
 				button_label = 'Results';
@@ -293,6 +299,10 @@ function instVoteReferendum(title, dateStartConsensusProposal, id, country) {
 		if (country == "FR") URL = BROADCAST_FRA_URL.concat('europeanReferendumFirstConsensus');
 		if (country == "DE") URL = BROADCAST_GER_URL.concat('europeanReferendumFirstConsensus');
 
+		console.log("title: " + title);
+		console.log("dateStartConsensusProposal: " + dateStartConsensusProposal);
+		console.log("answer: " + answer);
+
 		fetch(URL, {
 			method: 'POST',
 			headers: {
@@ -305,7 +315,7 @@ function instVoteReferendum(title, dateStartConsensusProposal, id, country) {
 			})
 		  });
 		  alert("Referendum voted.");
-		  location.href = 'inst/home';
+		  location.href = 'inst/referendum?nationalID=' + id;
 	 } else {
 		alert("Vote canceled.");
 	}	 
