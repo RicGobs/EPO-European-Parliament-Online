@@ -96,12 +96,22 @@ function get_referendum() {
 			  default:
 			}
 			
+			// default button
 			var disabled = '';
 			var button = 'button';
-			if(array[i].status != 3 || array[i].voteCitizens.includes(ID)) {
+			var button_label = 'Vote';
+			var href = `/citizen/vote?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&nationalID=${ID}`;
+			
+			if(array[i].status < 3 || (array[i].status == 3 && array[i].voteCitizens.includes(ID))) {
+				// button vote disabled
 				disabled = 'disabled';
 				button += '_' + disabled;
-			}		
+				href = '';		
+			} else if (array[i].status > 3) {
+				// button results
+				button_label = 'Results';
+				href = `/citizen/results?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&nationalID=${ID}`;		
+			}
 
 			referendum.innerHTML = `<div class="box">
 			<div>
@@ -112,7 +122,7 @@ function get_referendum() {
 	
 			</div>
 			<div style="text-align: left;">
-			<button id="butt" class="${button}" onclick="location.href='/citizen/vote?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&nationalID=${ID}';" ${disabled}>Vote</button>
+			<button id="butt" class="${button}" onclick="location.href='${href}';" ${disabled}>${button_label}</button>
 			</div>
 			<p style="float: left;" id="start-date">Inserted: ${array[i].id.dateStartConsensusProposal}</p>
 			<p style="float: right;" id="refStatus">Valid until: ${array[i].dateEndResult}</p>
@@ -133,6 +143,7 @@ function get_referendum_inst() {
 	if (country == "FR") URL = REST_FRA_URL.concat('referendums');
 	if (country == "DE") URL = REST_GER_URL.concat('referendums');
 
+
 	fetch(URL, {
 	  method: 'GET'})
     .then((response) => {
@@ -141,27 +152,71 @@ function get_referendum_inst() {
     }
     	return response.text();
     })
-    .then((text) => {	
-    	console.log(JSON.parse(text));
+    .then((text) => {
     	var array = JSON.parse(text);
-    	for (let i = 0; i < array.length; i++) {
-			console.log(array[i]);
-		}
 
 		var referendum_container = document.getElementById('referendum_container');
-		for (let i = 0; i < array.length; i++) {
+		for (let i = array.length-1; i >= 0 ; i--) {
 			var referendum = document.createElement('div');
+
+			var status = '';
+			switch(array[i].status) {
+			  case 1:
+			  	status = 'Waiting National Representatives response'; 
+			    break;
+			  case 2:
+			  	status = 'Waiting National Representatives response'; 
+			    break;
+			  case 3:
+			    status = 'Citizen voting'; 
+			    break;
+			  case 4:
+			    status = 'Sending national results'; 
+			    break;
+			  case 5:
+			    status = 'Not accepted'; 
+			    break;
+			  case 6:
+			    status = 'Not sufficient nation partecipants'; 
+			    break;
+			  case 7:
+			  	status = 'Accepted';
+			    break;
+			  default:
+			}
+			
+			// default button: status 1
+			var disabled = '';
+			var button = 'button';
+			var button_label = 'Vote';
+			var href = `/inst/vote?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&nationalID=${ID}`;
+			
+			if((array[i].status == 2)) {
+				// button vote disabled
+				disabled = 'disabled';
+				button += '_' + disabled;
+				href = '';		
+			} else if (array[i].status >= 3) {
+				// button results
+				button_label = 'Results';
+				href = `/inst/results?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&nationalID=${ID}`;		
+			}
 
 			referendum.innerHTML = `<div class="box">
 			<div>
+				<p style="float: right" id="status">Status: ${status}</p>
 				<img th:src="@{/css/european-union.png} style="float: right;">
 				<h2 id="refTitle">${array[i].id.title}</h2>
 				<p class="text" id="refText">${array[i].argument}</p>
-				</div>
-				<p style="float: left;" id="start-date">Inserted: ${array[i].id.dateStartConsensusProposal}</p>
-				<p style="float: right;" id="refStatus">Valid until: ${array[i].dateEndResult}</p>
-				<br>
-			</div>`;
+	
+			</div>
+			<div style="text-align: left;">
+			<button id="butt" class="${button}" onclick="location.href='${href}';" ${disabled}>${button_label}</button>
+			</div>
+			<p style="float: left;" id="start-date">Inserted: ${array[i].id.dateStartConsensusProposal}</p>
+			<p style="float: right;" id="refStatus">Valid until: ${array[i].dateEndResult}</p>
+			<br>
+		</div>`;
 			
 			referendum_container.appendChild(referendum);
 		}
@@ -197,6 +252,53 @@ function submit_referendum() {
 		alert("Proposal canceled.");
 	}	 
   }
+
+function inst_vote_referendum() {
+
+	let confirmAction = confirm("Are you sure to vote this referendum?");
+	if (confirmAction) {
+
+		URL = "";
+		const queryString = window.location.search;
+		const urlParams = new URLSearchParams(queryString);
+		const title = urlParams.get('title');
+		const dateStartConsensusProposal = urlParams.get('date');
+		var answer = '';
+		var elems = document.getElementsByTagName('input');
+		for (i = 0; i < elems.length; i++) {
+	        if (elems[i].type = "radio" && elems[i].checked) {
+	
+				console.log(elems[i].value);
+				if (elems[i].value == "Yes") {
+					answer = 'true';
+				}
+				else {
+					answer = 'false';
+				}
+			}
+		}
+	
+		if (country == "IT") URL = BROADCAST_ITA_URL.concat('europeanReferendumFirstConsensus');
+		if (country == "FR") URL = BROADCAST_FRA_URL.concat('europeanReferendumFirstConsensus');
+		if (country == "DE") URL = BROADCAST_GER_URL.concat('europeanReferendumFirstConsensus');
+
+		fetch(URL, {
+			method: 'POST',
+			headers: {
+			  'Content-type': 'application/json'
+			},
+			body: JSON.stringify({
+			  'title': title,
+			  'dateStartConsensusProposal': dateStartConsensusProposal,
+			  'answer': answer
+			})
+		  });
+		  alert("Referendum voted.");
+		  location.href = 'inst/home';
+	 } else {
+		alert("Vote canceled.");
+	}	 
+}
 
   function vote_referendum() {
 

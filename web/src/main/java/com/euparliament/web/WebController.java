@@ -94,11 +94,31 @@ public class WebController {
 	
 	@GetMapping("/citizen/results")
 	public String citizen_referendum_results(
-			@RequestParam(name="name", required=false, defaultValue="") String name,
+			@RequestParam(name="title", required=false, defaultValue="") String title,
+			@RequestParam(name="date", required=false, defaultValue="") String date,
 			Model model
 	){
-		model.addAttribute("name", name);
-		return "citizen_web/referendum_results";
+		try {
+			// get referendum data structure from the database
+			Referendum referendum;
+			referendum = HttpRequest.getReferendum(
+					title,
+					date,
+					resourceMapping
+			);
+			model.addAttribute("title", title);
+			model.addAttribute("argument", referendum.getArgument());
+			model.addAttribute("startDate", referendum.getDateEndConsensusProposal());
+			model.addAttribute("status", referendum.getStatus());
+			model.addAttribute("endDate", referendum.getDateEndConsensusResult());
+			model.addAttribute("votesTrue", referendum.getVotesTrue());
+			model.addAttribute("votesFalse", referendum.getVotesFalse());
+			model.addAttribute("abstentions", referendum.getPopulation() - (referendum.getVotesFalse() + referendum.getVotesTrue()));
+			return "citizen_web/referendum_results";
+		} catch (NotFoundException e) {
+			// referendum not found
+			return "citizen_web/referendum";
+		}
 	}
 	
 	@GetMapping("/citizen/vote")
@@ -116,15 +136,16 @@ public class WebController {
 					resourceMapping
 			);
 			model.addAttribute("title", title);
+			model.addAttribute("argument", referendum.getArgument());
 			model.addAttribute("startDate", referendum.getDateEndConsensusProposal());
 			model.addAttribute("status", referendum.getStatus());
 			model.addAttribute("endDate", referendum.getDateEndConsensusResult());
 			model.addAttribute("votesTrue", referendum.getVotesTrue());
 			model.addAttribute("votesFalse", referendum.getVotesFalse());
-			model.addAttribute("population", referendum.getPopulation());
+			model.addAttribute("abstentions", referendum.getPopulation() - (referendum.getVotesFalse() + referendum.getVotesTrue()));
 			return "citizen_web/referendum_vote";
 		} catch (NotFoundException e) {
-			// representative not found
+			// referendum not found
 			return "citizen_web/referendum";
 		}
 	}
@@ -183,13 +204,62 @@ public class WebController {
 		return "inst_web/propose_referendum";
 	}
 	
-	@GetMapping("/inst/results")
-	public String inst_referendum_results(
-			@RequestParam(name="name", required=false, defaultValue="") String name,
+	@GetMapping("/inst/vote")
+	public String inst_vote(
+			@RequestParam(name="title", required=false, defaultValue="") String title,
+			@RequestParam(name="date", required=false, defaultValue="") String date,
 			Model model
 	){
-		model.addAttribute("name", name);
-		return "inst_web/referendum_results";
+		try {
+			// get referendum data structure from the database
+			Referendum referendum;
+			referendum = HttpRequest.getReferendum(
+					title,
+					date,
+					resourceMapping
+			);
+			model.addAttribute("title", title);
+			model.addAttribute("argument", referendum.getArgument());
+			model.addAttribute("startDate", referendum.getDateEndConsensusProposal());
+			model.addAttribute("status", referendum.getStatus());
+			model.addAttribute("endDate", referendum.getDateEndConsensusResult());
+			model.addAttribute("votesTrue", referendum.getVotesTrue());
+			model.addAttribute("votesFalse", referendum.getVotesFalse());
+			model.addAttribute("abstentions", referendum.getPopulation() - (referendum.getVotesFalse() + referendum.getVotesTrue()));
+			return "inst_web/referendum_vote";
+		} catch (NotFoundException e) {
+			// referendum not found
+			return "inst_web/referendum";
+		}
+	}
+	
+	@GetMapping("/inst/results")
+	public String inst_referendum_results(
+			@RequestParam(name="title", required=false, defaultValue="") String title,
+			@RequestParam(name="date", required=false, defaultValue="") String date,
+			Model model
+	){
+		try {
+			// get referendum data structure from the database
+			Referendum referendum;
+			referendum = HttpRequest.getReferendum(
+					title,
+					date,
+					resourceMapping
+			);
+			model.addAttribute("title", title);
+			model.addAttribute("argument", referendum.getArgument());
+			model.addAttribute("startDate", referendum.getDateEndConsensusProposal());
+			model.addAttribute("status", referendum.getStatus());
+			model.addAttribute("endDate", referendum.getDateEndConsensusResult());
+			model.addAttribute("votesTrue", referendum.getVotesTrue());
+			model.addAttribute("votesFalse", referendum.getVotesFalse());
+			model.addAttribute("abstentions", referendum.getPopulation() - (referendum.getVotesFalse() + referendum.getVotesTrue()));
+			return "inst_web/referendum_results";
+		} catch (NotFoundException e) {
+			// referendum not found
+			return "inst_web/referendum";
+		}
 	}
 	
 }

@@ -1,19 +1,18 @@
 <html>
 <head>
 
-	<link rel="stylesheet" th:href="@{/css/inst_style.css}">
-	<script type="text/javascript" th:src="@{/js/file.js}"></script>	
+	<link rel="stylesheet" th:href="@{/css/citizen_style.css}">
+	<script type="text/javascript" th:src="@{/js/file.js}"></script>
 
 </head>
 <body>
 	<!--Navbar-->
-
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<div class="navbar">
-		<a class="active" location.href="/inst/home.html"><i class="fa fa-fw fa-home"></i> Home</a>
+		<a class="active" href="/citizen/home"><i class="fa fa-fw fa-home"></i> Home</a>
 		<div class="dropdown2">
-			<button class="btn"><i class="fa fa-fw fa-institution"></i>ISTUser</button>
+			<button class="btn"><i class="fa fa-fw fa-user"></i>User</button>
 			<div class="dropdown-menu">
 				<a href="/"></i>Logout</a>
 			</div>
@@ -21,14 +20,13 @@
 		<div class="dropdown">
 			<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
 			<div class="dropdown-menu">
-				<a onclick="location.href='/inst/referendum';"></i>All Referenda</a>
-				<a onclick="location.href='/inst/propose';">Propose Referendum</a>
+				<a href="/citizen/referendum"></i>Referendum List</a>
 			</div>
 		</div>
 		<a href=""><i class="fa fa-fw fa-gear"></i> Settings</a>
 	</div>
 
-	<!-- Box -->
+	<!-- Box -->	
 	<div class="box"> 
 		<div class="img">
 			<img style="float: right;" th:src="@{/images/european-union.png}">

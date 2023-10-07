@@ -41,6 +41,7 @@ public class Sender {
 	}
 
 	//for status 2 - propose value for first consensus
+	@CrossOrigin()
 	@PostMapping("/europeanReferendumFirstConsensus")
 	public String referendum(@RequestBody ReferendumMessage referendumMessage) {
 		System.out.println("\nSending the proposal answer: " + referendumMessage.getAnswer() + " to all, for the following Referendum:");
@@ -88,15 +89,6 @@ public class Sender {
 		referendumMessage.setIsDecision(false);
 		referendumMessage.setRound(1);
 		referendumMessage.setStatus(2);
-		referendumMessage.setNationSourceAnswer(resourceMapping.getQueueName());
-		rabbitTemplate.convertAndSend(BroadcastApplication.topicExchangeName, "foo.bar.baz", referendumMessage.toString());
-		return "Message sent: " + referendumMessage.toString();
-	}
-
-	//for status 3 - messages for knowing that a Nation is doing the Referendum (debug purpose)
-	@PostMapping("/europeanReferendumDoing")
-	public String sendEuropeanReferendumDoing(@RequestBody ReferendumMessage referendumMessage) {
-		referendumMessage.setStatus(3);
 		referendumMessage.setNationSourceAnswer(resourceMapping.getQueueName());
 		rabbitTemplate.convertAndSend(BroadcastApplication.topicExchangeName, "foo.bar.baz", referendumMessage.toString());
 		return "Message sent: " + referendumMessage.toString();
