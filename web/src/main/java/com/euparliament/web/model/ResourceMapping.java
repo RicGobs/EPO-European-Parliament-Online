@@ -12,6 +12,8 @@ public class ResourceMapping {
 	String citizenUrlLogin;
 	String representativeUrlLogin;
 	String referendumUrl;
+	String citizensUrl;
+	String representativesUrl;
 
     public ResourceMapping(
     		@Value("${rest.url}") String restUrl
@@ -21,6 +23,8 @@ public class ResourceMapping {
 		this.citizenUrlLogin = restUrl + "/citizenLogin";
 		this.representativeUrlLogin = restUrl + "/representativeLogin";
 		this.referendumUrl = restUrl + "/referendum";
+		this.citizensUrl = restUrl + "/citizens";
+		this.representativesUrl = restUrl + "/representatives";
 
     }
     
@@ -34,6 +38,14 @@ public class ResourceMapping {
 
 	public String getReferendumUrl() {
 		return this.referendumUrl;
+	}
+
+	public String getCitizensUrl() {
+		return this.citizensUrl;
+	}
+
+	public String getRepresentativesUrl() {
+		return this.representativesUrl;
 	}
 	
     public RestTemplate getRestTemplate() {
