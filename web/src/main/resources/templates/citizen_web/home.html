@@ -11,27 +11,25 @@
 	<!--Navbar-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<!--script>
+	<div class="navbar">
+	<script>
 		const queryString = window.location.search;
 		const urlParams = new URLSearchParams(queryString);
-		console.log(urlParams);
-		var id = urlParams.get('uname');
-		console.log(id);
-		if (id == "") id = urlParams.get('nationalID');
-	</script-->
-
-	<div class="navbar">
-	<a class="active" href="/citizen/home"><i class="fa fa-fw fa-home"></i> Home</a>
+		const id = urlParams.get('nationalID');
+		document.write('<a class="active" href="/citizen/home?nationalID=' + id + '"><i class="fa fa-fw fa-home"></i> Home</a>');
+	</script>
 	<div class="dropdown2">
 		<button class="btn"><i class="fa fa-fw fa-user"></i>User</button>
 		<div class="dropdown-menu">
-		  <a href="/"></i>Logout</a>
+		  <a href="/" onclick="deleteCookie('nation')"></i>Logout</a>
 		</div>
 	  </div>
 	<div class="dropdown">
 		<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
 		<div class="dropdown-menu">
-			<a href="/citizen/referendum"></i>Referendum List</a>
+			<script>
+				document.write('<a href="/citizen/referendum?nationalID=' + id + '"></i>Referendum List</a>');
+			</script>
 		</div>
 	  </div>
 	  <a href=""><i class="fa fa-fw fa-gear"></i> Settings</a>
