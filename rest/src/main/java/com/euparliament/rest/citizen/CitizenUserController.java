@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin
 class CitizenUserController {
 
   private final CitizenUserRepository repository;
@@ -40,8 +40,8 @@ class CitizenUserController {
   @GetMapping("/citizens/{id}")
   CitizenUser one(@PathVariable String id) throws CitizenUserNotFoundException {
     
-    if (repository.existsByNationalID(id)) return repository.findByNationalID(id);
-    else throw new CitizenUserNotFoundException(id);
+    return repository.findById(id)
+      .orElseThrow(() -> new CitizenNotFoundException(id));
     
   }
 
