@@ -1,0 +1,90 @@
+FUNCTION POINTS
+For the estimation of Function Points, it is needed to analyse the interaction with both the user and other applications. The system component interacting with the user is the web interface, while the broadcast API service interacts with other applications, mainly RabbitMQ broker for the distributed logic of the consensus. For the REST API service, instead, since it interacts with web interface and broadcast API service inside the boundaries of the application, we do not consider these contributions in the computation of Function Points.
+
+The REST API manages the PostgreSQL DB by using Spring Boot Java framework, used to store data about citizens, national representatives and referenda. We will consider the data structures stored in the PostgreSQL database as ILF. In fact they are included within the boundaries of a specific application instance. There are substantially 4 data tables, of which one is only used for the consensus exchange. One contains citizens information, one contains national representatives information and one contains data related to the referenda, specified in the last data table in another form useful for message exchange in the broadcast service. 
+
+CitizenUser table has 13 mandatory fields and 1 optional field, InstUser table has 13 mandatory fields (representative ID instead of national ID) and 1 optional field (cellular), Referendum table has 13 fields and ReferendumConsensus table has 8 fields. So, we can consider the DB as a single ILF with 4 RET of 1-19 DET each one, since it can be accessed through the REST API internal component. For this ILF, we have 7 FP. This is the contribution related to the ILF of our application.
+
+Cost(DB) = 7 FP
+
+===========================================================================================
+INTERACTION WITH THE USER
+The web interface is the service effectively used by the final users, which are national representatives and citizens. We want to evaluate the cost of the interaction with the user by considering the possible operations on the web interface. 
+
+1. Citizen web interface:
+
+A citizen can login on the inteface by submitting username and password, so we have an EI with 1 FTR and 2 DET. 
+0-1 FTR and 1-4 DET EI => 3 FP
+
+A citizen can register by submitting all citizen fields, so we have an EI with 1 FTR and 14 DET. 
+0-1 FTR and 5-15 DET EI => 3 FP
+
+A citizen can get the referendum list, with all fields for each referendum, so we have an EQ with 1 FTR and 13*(n_referendum) DET EQ. 
+0-1 FTR and 20+ DET EQ => 4 FP
+
+A citizen can access to the voting page of a single referendum, getting the details of a single referendum and submitting the vote to that specific referendum. 
+
+So we have an EQ with 1 FTR and 13 DET. 
+0-1 FTR and 6-19 DET EQ => 3 FP 
+
+And an EI with 1 FTR and 1 DET. 
+0-1 FTR and 1-4 DET EI => 3 FP
+
+
+2. Representative web interface:
+
+A national representative can login on the inteface by submitting username and password, so we have an EI with 1 FTR and 2 DET. 
+0-1 FTR and 1-4 DET EI => 3 FP
+
+A national representative can publish a referendum by submitting title and text, so we have an EI with 1 FTR and 2 DET. 
+0-1 FTR and 1-4 DET EI => 3 FP
+
+Finally, a national representative get the referendum list, with all fields for each referendum, so we have an EQ with 1 FTR and 13*(n_referendum) DET EQ. 
+0-1 FTR and 20+ DET EQ => 4 FP 
+
+
+Hence, the cost of the interaction with the user is the following one:
+
+Cost(User) = 
+Cost(Citizen web interface) + Cost(Representative web interface) = 
+(16 FP) + (10 FP) = 26 FP
+
+=============================================================================================
+INTERACTION WITH OTHER APPLICATIONS (BROKER RABBITMQ) 
+
+The broadcast API is needed to support the distributed logic of the consensus, so we will evaluate the Function Points related to that exchange.
+
+The application receives a referendum proposal from RabbitMQ Broker, so we have an EI with 1 FTR and 13 DET.
+0-1 FTR and 5-15 DET EI => 3 FP
+
+When proposing a referendum, the application sends a referendum proposal to other nations, so we have an EQ with 1 FTR and 13 DET.
+0-1 FTR and 6-19 DET EQ => 3 FP
+
+When receiving a referendum proposal, the application sends a response for the first consensus, so we have an EO with 1 FTR and 8 DET.
+0-1 FTR and 6-19 DET EO => 4 FP
+
+The application receives a response during first consensus execution, so we have an EI with 1 FTR and 8 DET.
+0-1 FTR and 5-15 DET EI => 3 FP
+
+After receiving a referendum result from the voting process of citizens, the application sends this result to other nations, so we have an EO with 1 FTR and 8 DET.
+0-1 FTR and 6-19 DET EO => 4 FP
+
+The application receives a referendum result from another nation, so we have an EI with 1 FTR and 8 DET.
+0-1 FTR and 5-15 DET EI => 3 FP
+
+
+Cost(Other applications) = 20 FP
+
+
+So the total cost is computed as: 
+
+Total cost = 
+Cost(DB) + Cost(User) + Cost(Other applications) = (7 FP) + (26 FP) + (20 FP) = 53 FP
+
+We compute the FPs as separated on the basis of the specific language used for that component. This is useful in order to properly convert the FPs into the corresponding LOCs. 
+
+HTML/JS: Cost(User) = 26 FP
+JAVA: Cost(DB) + Cost(Other applications) = 27 FP
+
+We do not consider the writing of Dockerfiles, because it simply involves the composition of relevant application components, with more lines of code. Hence its contribution is negligible.
+
