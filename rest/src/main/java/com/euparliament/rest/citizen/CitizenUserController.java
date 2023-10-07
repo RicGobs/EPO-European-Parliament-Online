@@ -40,8 +40,9 @@ class CitizenUserController {
   @GetMapping("/citizens/{id}")
   CitizenUser one(@PathVariable String id) throws CitizenUserNotFoundException {
     
-    return repository.findById(id)
-      .orElseThrow(() -> new CitizenUserNotFoundException(id));
+    if (repository.existsByNationalID(id)) return repository.findByNationalID(id);
+    else throw new CitizenUserNotFoundException(id);
+    
   }
 
   @GetMapping("/citizenLogin")
