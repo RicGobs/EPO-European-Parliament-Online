@@ -13,7 +13,13 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<div class="navbar">
-		<a class="active" href="/inst/home"><i class="fa fa-fw fa-home"></i> Home</a>
+		<script>
+			const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+			const id = urlParams.get('representativeID');
+			const nation = getCookie('nation');
+			document.write('<a class="active" href="/inst/home?representativeID=' + id + '"><i class="fa fa-fw fa-home"></i> Home</a>');
+		</script>
 		<div class="dropdown2">
 			<button class="btn"><i class="fa fa-fw fa-user"></i>ISTUser</button>
 			<div class="dropdown-menu">
@@ -23,8 +29,10 @@
 		<div class="dropdown">
 			<button class="btn"><i class="fa fa-fw fa-pencil"></i>Referendum</button>
 			<div class="dropdown-menu">
-				<a href="/inst/propose"></i>Propose Referendum</a>
-				<a href="/inst/referendum"></i>Referendum List</a>
+				<script>
+					document.write('<a href="/inst/propose?representativeID=' + id + '"></i>Propose Referendum</a>');
+					document.write('<a href="/inst/referendum?representativeID=' + id + '"></i>Referendum List</a>');
+				</script>
 			</div>
 		</div>
 			<a href=""><i class="fa fa-fw fa-gear"></i> Settings</a>
@@ -36,11 +44,14 @@
 		<br><br>
 		<h3 id="notifications" style="text-align: center">Fill and submit the form to propose your referendum</h3>
 		<br><br>
-		<form onsubmit="submit_referendum();">
+		<form onsubmit="submitReferendum(id, nation);">
 			<label class="text" for="title">Title</label><br>
 			<textarea id="title" class="textarea" name="title" rows="1" cols="60" required></textarea><br><br>
 			<label class="text" for="text">Text</label><br>
 			<textarea id="argument" class="textarea" name="message" rows="10" cols="60" required></textarea><br><br>
+			<script>
+				document.write('<input type="hidden" name="representativeID" id="representativeID" value="' + id + '"> ');
+			</script>
 		<div style="text-align: center;">
 			<button class="button" type="submit">Submit</button>
 		</div>
