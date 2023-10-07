@@ -5,7 +5,7 @@
 	<script type="text/javascript" th:src="@{/js/file.js}"></script>
 
 </head>
-<body onload="getReferendumInst()">
+<body>
 	
 	<!--Navbar-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,6 +15,8 @@
 			const queryString = window.location.search;
 			const urlParams = new URLSearchParams(queryString);
 			const id = urlParams.get('representativeID');
+			const nation = getCookie('nation');
+			getReferendumInst(id, nation);
 			document.write('<a class="active" href="/inst/home?representativeID=' + id + '"><i class="fa fa-fw fa-home"></i> Home</a>');
 		</script>
 		<div class="dropdown2">
