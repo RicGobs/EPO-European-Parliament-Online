@@ -9,6 +9,7 @@ public class ResourceMapping {
 	
 	RestTemplate restTemplate;
 	String restUrl;
+	String nation;
 	String citizenUrlLogin;
 	String representativeUrlLogin;
 	String referendumUrl;
