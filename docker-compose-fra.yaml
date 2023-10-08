@@ -13,6 +13,7 @@ services:
       - network-fra
     environment:
       - REST_URL=http://rest:8080
+      - NATION=FR
 
   rest:
     image: epo/rest
