@@ -11,10 +11,7 @@
 	<div>
 		<h1 style="text-align: center;">European Parliament</h1>
 			<div>
-				<script>
-					const nation = getCookie('nation');
-					document.write('<img th:src="@{/images/' + nation + '.png}" id="flagLogin">');
-				</script>
+				<img th:src="@{${'/images/' + nation + '.png'}}" id="flagLogin">
 			</div>
 		<h2 style="text-align: center;">Citizen Login</h2>
 	</div>
