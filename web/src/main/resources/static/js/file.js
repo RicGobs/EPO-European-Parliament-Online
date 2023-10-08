@@ -85,7 +85,7 @@ function getReferendum(id, country) {
 			var button_label = 'Vote';
 			var href = `/citizen/vote?title=${array[i].id.title}&date=${array[i].id.dateStartConsensusProposal}&nationalID=${id}`;
 			
-			if(array[i].status < 3 || (array[i].status == 3 && array[i].voteCitizens.includes(ID))) {
+			if(array[i].status < 3 || (array[i].status == 3 && array[i].voteCitizens.includes(id))) {
 				// button vote disabled
 				disabled = 'disabled';
 				button += '_' + disabled;
