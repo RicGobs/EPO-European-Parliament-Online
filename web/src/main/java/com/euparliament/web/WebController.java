@@ -24,13 +24,17 @@ public class WebController {
 	public String index(
 			Model model
 	){ 
+		String nation = resourceMapping.getNation();
+		model.addAttribute("nation", nation);
 		return "index";
 	}
 	
 	@GetMapping("/citizen")
 	public String citizen_index(
+			@RequestParam(name="nation", required=false, defaultValue="") String nation,
 			Model model
 	){
+		model.addAttribute("nation", nation);
 		return "citizen_web/index";
 	}
 	
@@ -38,20 +42,20 @@ public class WebController {
 	public String citizen_login( 
 			@RequestParam(name="nationalID", required=false, defaultValue="") String nationalID, 
 			@RequestParam(name="psw", required=false, defaultValue="") String password,
+			@RequestParam(name="nation", required=false, defaultValue="") String nation,
 			Model model
 	){
-		if (nationalID.equals("") && password.equals("")) return "citizen_web/login";
+		if (nationalID.equals("") && password.equals("")) {
+			model.addAttribute("nation", nation);
+			return "citizen_web/login";
+		}
 		try {
 			// get citizen data structure from the database
-			CitizenUser citizen;
-			citizen = HttpRequest.getCitizenUser(
+			HttpRequest.getCitizenUser(
 					nationalID,
 					password,
 					resourceMapping
 			);
-			if (citizen == null) {
-				return "citizen_web/login";
-			}
 			return "citizen_web/home";
 		} catch (NotFoundException e) {
 			// citizen not found
@@ -62,9 +66,11 @@ public class WebController {
 	@GetMapping("/citizen/registration")
 	public String citizen_registration(
 			@RequestParam(name="nationalID", required=false, defaultValue="") String nationalID,
+			@RequestParam(name="nation", required=false, defaultValue="") String nation,
 			Model model
 	){
 		if (!nationalID.equals("")) return "citizen_web/index";
+		model.addAttribute("nation", nation);
 		return "citizen_web/registration";
 	}
 	
@@ -173,20 +179,20 @@ public class WebController {
 	public String inst_login(
 			@RequestParam(name="representativeID", required=false, defaultValue="") String representativeID, 
 			@RequestParam(name="psw", required=false, defaultValue="") String password,
+			@RequestParam(name="nation", required=false, defaultValue="") String nation,
 			Model model
 	){
-		if (representativeID.equals("") && password.equals("")) return "inst_web/login";
+		if (representativeID.equals("") && password.equals("")) {
+			model.addAttribute("nation", nation);
+			return "inst_web/login";
+		}
 		try {
 			// get representative data structure from the database
-			InstUser representative;
-			representative = HttpRequest.getInstUser(
+			HttpRequest.getInstUser(
 					representativeID,
 					password,
 					resourceMapping
 			);
-			if (representative == null) {
-				return "inst_web/login";
-			}
 			return "inst_web/home";
 		} catch (NotFoundException e) {
 			// representative not found
