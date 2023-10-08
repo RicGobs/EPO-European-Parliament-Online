@@ -236,7 +236,7 @@ function submitReferendum(id, country) {
 			})
 		  });
 		  alert("Referendum proposed.");
-		  location.href = 'inst/home?nationalID=' + id;
+		  window.location = 'inst/referendum?representativeID='+id;
 	 } else {
 		alert("Proposal canceled.");
 	}	 
