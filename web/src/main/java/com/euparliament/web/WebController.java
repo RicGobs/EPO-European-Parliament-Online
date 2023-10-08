@@ -34,6 +34,7 @@ public class WebController {
 			@RequestParam(name="nation", required=false, defaultValue="") String nation,
 			Model model
 	){
+		if (nation.equals("")) nation = resourceMapping.getNation();
 		model.addAttribute("nation", nation);
 		return "citizen_web/index";
 	}
