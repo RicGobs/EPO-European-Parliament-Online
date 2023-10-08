@@ -324,7 +324,7 @@ function citizenRegistration() {
 	if (country == "FR") URL = REST_FRA_URL.concat('citizens');
 	if (country == "DE") URL = REST_GER_URL.concat('citizens');
 
-	var national_id = document.getElementById('national_id').value;
+	var national_id = document.getElementById('nationalID').value;
 	
 	var name = document.getElementById('name').value;
 	var surname = document.getElementById('surname').value;
