@@ -13,6 +13,7 @@ services:
       - network-ger
     environment:
       - REST_URL=http://rest:8080
+      - NATION=DE
 
   rest:
     image: epo/rest
