@@ -18,7 +18,7 @@ body {
 
   .centerPage{
     position: absolute;
-    top: 75%;
+    top: 65%;
     transform: translate(0, -50%);
     left: 50%;
     transform: translate(-50%, -50%);
