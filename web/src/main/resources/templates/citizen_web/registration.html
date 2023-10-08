@@ -10,16 +10,19 @@
 <div>
 	<h1 style="text-align: center;">European Parliament</h1>
 	<div class="img">
-		<img th:src="@{${'/images/' + nation + '.png'}}" id="flagReg">
+		<script>
+			const nation = getCookie('nation');
+		</script>
+		<img th:src="@{/images/DE.png'}" id="flagReg">
 	</div>
 
 	<h2 style="text-align: center;">Registration</h2>
 	<p style="text-align: center;"><i>* fields are mandatory</i></p>
 	<form class="centerPage" onsubmit="citizenRegistration()">
 	<label for="name">Name*</label>
-	<input style="float: right;" id="name" name="name" required><br><br>
+	<input style="float: right;" id="name" name="name" required pattern="[A-Za-z]+"><br><br>
 	<label for="surname">Surname*</label>
-	<input style="float: right;" id="surname" name="surname" required><br><br>
+	<input style="float: right;" id="surname" name="surname" required pattern="[A-Za-z]+"><br><br>
 	<label for="gender">Gender*</label>
 	<select style="float: right;" name="gender" id="gender" required>
 		<option value=""></option>
@@ -30,28 +33,28 @@
 	<label for="birthdate">Birthdate*</label>
 	<input style="float: right;" type="date" id="birthdate" name="birthdate" required><br><br>
 	<label for="nation_of_birth">Nation of birth*</label>
-	<input style="float: right;" type="text" id="nation_of_birth" name="nation_of_birth" required><br><br>
+	<input style="float: right;" type="text" id="nation_of_birth" name="nation_of_birth" required pattern="[A-Za-z]+"><br><br>
 	<label for="region_of_birth">Region of birth*</label>
-	<input style="float: right;" type="text" id="region_of_birth" name="region_of_birth" required><br><br>
+	<input style="float: right;" type="text" id="region_of_birth" name="region_of_birth" required pattern="[A-Za-z]+"><br><br>
 	<label for="city_of_birth">City of birth*</label>
-	<input style="float: right;" type="text" id="city_of_birth" name="city_of_birth" required><br><br>
+	<input style="float: right;" type="text" id="city_of_birth" name="city_of_birth" required pattern="[A-Za-z]+"><br><br>
 	<label for="region">Region*</label>
-	<input style="float: right;" type="text" id="region" name="region" required><br><br>
+	<input style="float: right;" type="text" id="region" name="region" required pattern="[A-Za-z]+"><br><br>
 	<label for="city">City*</label>
-	<input style="float: right;" type="text" id="city" name="city" required><br><br>
+	<input style="float: right;" type="text" id="city" name="city" required pattern="[A-Za-z]+"><br><br>
 	<p><i>Note: the national ID will be your username</i></p>
 	<label for="nationalID">National ID*</label>
-	<input style="float: right;" type="text" id="nationalID" name="nationalID" required><br><br>
+	<input style="float: right;" type="text" id="nationalID" name="nationalID" required pattern="[A-Za-z0-9]+"><br><br>
 	<label for="email">Email*</label>
-	<input style="float: right;" type="email" id="email" name="email" required><br><br>
+	<input style="float: right;" type="email" id="email" name="email" required pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"><br><br>
 	<label for="confirm_email">Confirm Email*</label>
-	<input style="float: right;" type="email" id="confirm_email" name="confirm_email" required><br><br>
+	<input style="float: right;" type="email" id="confirm_email" name="confirm_email" required pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"><br><br>
 	<label for="cellular">Cellular</label>
-	<input style="float: right;" type="tel" id="cellular" name="cellular"><br><br>
+	<input style="float: right;" type="tel" id="cellular" name="cellular" pattern="[0-9]+"><br><br>
 	<label for="password">Choose a password*</label>
-	<input style="float: right;" type="password" id="password" name="password" required><br><br>
+	<input style="float: right;" type="password" id="password" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br><br>
 	<label for="confirm_password">Confirm password*</label>
-	<input style="float: right;" type="password" id="confirm_password" name="confirm_password" required><br><br>
+	<input style="float: right;" type="password" id="confirm_password" name="confirm_password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br><br>
 	<br>
 	<div style="text-align: center; margin-bottom: 40px;">
 		<button class="button">Sign up</button>
