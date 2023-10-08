@@ -51,11 +51,15 @@ public class WebController {
 		}
 		try {
 			// get citizen data structure from the database
-			HttpRequest.getCitizenUser(
+			CitizenUser citizen = HttpRequest.getCitizenUser(
 					nationalID,
 					password,
 					resourceMapping
 			);
+			if (citizen == null) {
+				model.addAttribute("nation", nation);
+				return "citizen_web/login";
+			}
 			return "citizen_web/home";
 		} catch (NotFoundException e) {
 			// citizen not found
@@ -188,11 +192,15 @@ public class WebController {
 		}
 		try {
 			// get representative data structure from the database
-			HttpRequest.getInstUser(
+			InstUser representative = HttpRequest.getInstUser(
 					representativeID,
 					password,
 					resourceMapping
 			);
+			if (representative == null) {
+				model.addAttribute("nation", nation);
+				return "inst_web/login";
+			}
 			return "inst_web/home";
 		} catch (NotFoundException e) {
 			// representative not found
