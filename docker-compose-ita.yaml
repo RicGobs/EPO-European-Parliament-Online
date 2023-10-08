@@ -16,6 +16,7 @@ services:
       - network-ita
     environment:
       - REST_URL=http://rest:8080
+      - NATION=IT
 
   rest:
     image: epo/rest
