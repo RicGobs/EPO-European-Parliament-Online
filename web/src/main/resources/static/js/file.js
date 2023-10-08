@@ -7,20 +7,15 @@ var BROADCAST_FRA_URL = 'http://localhost:8086/';
 var BROADCAST_GER_URL = 'http://localhost:8090/';
 
 // index.html
-function selection() {
-	var selectedCountry = document.getElementById('country').value;
+function selection(nation) {
 	var selectedRole = document.getElementById('role').value;
-	console.log(selectedRole);
 	var redirect_path = '/'
 
-	if (selectedCountry == "IT" || selectedCountry == "FR" || selectedCountry == "DE") {
+	 // set nation cookie
+	 document.cookie = 'nation='+ nation +'; Path=/;';
 
-		// set nation cookie
-		document.cookie = 'nation='+ selectedCountry +'; Path=/;';
-
-		if (selectedRole == "citizen") redirect_path = 'citizen';
-		else redirect_path = 'inst/login';
-	}
+	if (selectedRole == "citizen") redirect_path = 'citizen?nation=' + nation;
+	else redirect_path = 'inst/login?nation=' + nation;
 
 	location.href = redirect_path;
 }
