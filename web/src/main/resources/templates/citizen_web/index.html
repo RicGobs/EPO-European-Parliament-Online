@@ -10,20 +10,21 @@
 	<script>
 		const queryString = window.location.search;
 		const urlParams = new URLSearchParams(queryString);
-		if (!urlParams.equals(null)) window.location.replace('http://localhost:8080/citizen');
+		const nation = getCookie('nation');
+		if (urlParams.size > 1) window.location.replace('http://localhost:8080/citizen');
 	</script>
 
 
 	<div class="center">
 		<div class="img">
-			<img th:src="@{/images/european-union.png}">
+			<img th:src="@{${'/images/' + nation + '.png'}}">
 		</div>
 		<h1>European Parliament</h1>
 		<h3>Citizen Access</h3>
 
-		<button class=button onclick="location.href = '/citizen/registration';">Registration</button>
+		<button class=button onclick="location.href = '/citizen/registration?nation=' + nation ">Registration</button>
 		<br><br>
-		<button class=button onclick="location.href = '/citizen/login';">Login</button>
+		<button class=button onclick="location.href = '/citizen/login?nation=' + nation ">Login</button>
 
 	</div>
 
