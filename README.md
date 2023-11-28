@@ -1,14 +1,5 @@
 # European-Referendum-Online
 
-## People
-
-| People | Linkedin | Github |
-|--- |--- |--- |
-| Riccardo Gobbato | [Linkedin](https://www.linkedin.com/in/riccardo-gobbato-380674251/) | [Github](https://github.com/RicGobs) |
-| Simone Scaccia | [Linkedin](https://www.linkedin.com/in/simone-scaccia-40b631210/) | [Github](https://github.com/simonescaccia) |
-| Pasquale Mocerino | [Linkedin](https://www.linkedin.com/in/pasquale-mocerino-29088b1a2/) | [Github](https://github.com/pasqualemocerino) |
-| Chiara Maggi | [Linkedin](https://github.com/Chiaggi) | [Github](https://github.com/Chiaggi) |
-
 ## Introduction
 
 The purpose of this report is to describe our 3 months work in the context of an implementation of a distributed system. This project outlines the objectives of a system ideally commissioned by the European Union. The system is designed to facilitate inter-nation communication, enabling consensus-building and the ex-change of locally collected data and public opinions. It aims to provide participating countries with essential resources for the accurate formulation of new referendums, subject to the vote of both national and European citizenship.
@@ -143,3 +134,13 @@ sudo docker system prune --all --force
 The main purpose of this project is to experiment the consensus in a distributed voting system across nations. Despite the implementation of a distributed algorithm, which overcomes the limitation of the legacy centralized voting environment and make the system more secure by design, security is not the main focus of our system. But this is a crucial aspect in the real world.
 
 In fact, the vast majority of recent e-voting systems are based on blockchain, which guarantees the confidentiality (absence of unauthorized disclosure of information), the integrity (absence of unauthorized system alterations) and the validity (respected logical constraints) of the voting process, as well as availability for authorized actions. In detail, a common used method to is the Proof-of-Voting (PoV), preferred over the common PoW for its lower cost and lower power consumption, by keeping security satisfied. An example of these systems is, where hierarchical voting roles are defined, each one associated to a smart contract. The method used to reach consensus is PoV, useful also to identify Byzantine processes in order to remove them from the blockchain. The main idea is to assure that only a specific voter could have cast his own vote. Other recent systems seem to be all different implementations of the same blockchain-based solution idea. So, it seems natural to think that a future improvement of our system can be to integrate some security measures in order to avoid attacks to the system functioning principle.
+
+
+## People
+
+| People | Linkedin | Github |
+|--- |--- |--- |
+| Riccardo Gobbato | [Linkedin](https://www.linkedin.com/in/riccardo-gobbato-380674251/) | [Github](https://github.com/RicGobs) |
+| Simone Scaccia | [Linkedin](https://www.linkedin.com/in/simone-scaccia-40b631210/) | [Github](https://github.com/simonescaccia) |
+| Pasquale Mocerino | [Linkedin](https://www.linkedin.com/in/pasquale-mocerino-29088b1a2/) | [Github](https://github.com/pasqualemocerino) |
+| Chiara Maggi | [Linkedin](https://github.com/Chiaggi) | [Github](https://github.com/Chiaggi) |
